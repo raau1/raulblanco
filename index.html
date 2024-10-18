@@ -6,11 +6,21 @@
     <title>Raul Blanco - Portfolio</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="projects-page"> <!-- Added class here -->
+<body class="projects-page">
 
+
+    <!-- Booting Sequence Overlay -->
+    <div id="boot-screen">
+        <h2>Booting...</h2>
+        <div id="loading-bar">
+            <div id="loading-bar-progress"></div>
+        </div>
+        <p>Nearly There...</p>
+    </div>
+    
     <!-- Header with Nav -->
     <header>
-        <h1>Raul Blanco - Portfolio</h1>
+        <h1>Raul Blanco Vazquez</h1>
         <nav>
             <ul>
                 <li><a href="index.html">Projects</a></li>
@@ -18,8 +28,26 @@
                 <li><a href="contact.html">Contact</a></li>
             </ul>
         </nav>
-    </header> 
-   
+    </header>
+
+    <!-- Scroll-triggered Menu Button -->
+    <button id="menu-button" class="menu-btn">
+        <svg width="40" height="40" viewBox="0 0 40 40">
+            <rect class="st0" width="40" height="6"></rect>
+            <rect y="12" class="st0" width="40" height="6"></rect>
+            <rect y="24" class="st0" width="40" height="6"></rect>
+        </svg>
+    </button>
+
+    <!-- Fullscreen Navigation Overlay -->
+    <div id="nav-overlay" class="fullscreen-nav">
+        <ul>
+            <li><a href="index.html">Projects</a></li>
+            <li><a href="skills.html">Skills</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </div>
+
     <!-- Projects Section -->
     <main class="container">
         <h2>My Projects</h2>
@@ -27,9 +55,7 @@
             <!-- Project 1 -->
             <div class="project-item">
                 <a href="TechCon2023/index.html" class="project-link">TechCon 2023 Website</a>
-                <!-- Date of completion -->
                 <p class="project-date">30 NOVEMBER 2023</p>
-                <!-- Tech Buttons -->
                 <div class="tech-buttons">
                     <span class="tech-btn">HTML</span>
                     <span class="tech-btn">CSS</span>
@@ -49,7 +75,6 @@
                 </div>
                 <p class="project-description">A group project focused on improving the efficiency and management of university room bookings.</p>
                 <p class="project-description">I led the data collection phase, gathering key requirements through surveys and interviews, which I used to develop both the functional and non-functional requirements.</p>
-                <p class="project-description">I ensured the system addressed critical user needs, such as room availability, ease of use, and integration with university services.</p>
                 <p class="project-description">Additionally, I oversaw the overall project flow, ensuring the final system was both efficient and user-centered.</p>
             </div>
 
@@ -66,10 +91,87 @@
             </div>
         </div>
     </main>
+
     <!-- Footer -->
     <footer>
         <p>© 2024 Raul Blanco Vazquez</p>
     </footer>
+    
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Check if the booting sequence has already been shown in the current session
+        if (!sessionStorage.getItem('bootCompleted')) {
+            const bootScreen = document.getElementById('boot-screen');
+            const loadingBar = document.getElementById('loading-bar-progress');
+            const mainContent = document.getElementById('main-content');
+
+            let width = 1;
+            const totalTime = 3000; // Total time for the booting sequence (3 seconds)
+            const intervalTime = 30; // Time for each interval (30ms)
+            const increment = (100 / (totalTime / intervalTime)); // Calculate percentage increment
+
+            const loading = setInterval(() => {
+                if (width >= 100) {
+                    clearInterval(loading);
+                    // Once loading is complete, hide boot screen and show main content
+                    bootScreen.style.display = 'none';
+                    mainContent.style.display = 'block';
+                    // Mark the boot sequence as completed in sessionStorage
+                    sessionStorage.setItem('bootCompleted', 'true');
+                } else {
+                    width += increment;
+                    loadingBar.style.width = width + '%'; // Increase width of loading bar
+                }
+            }, intervalTime); // Speed of the loading sequence
+        } else {
+            // If boot sequence has already been shown, just show the main content
+            document.getElementById('boot-screen').style.display = 'none';
+            document.getElementById('main-content').style.display = 'block';
+        }
+    });
+    </script>
+
+    <script>
+        // Scroll-triggered menu button
+        const menuButton = document.getElementById("menu-button");
+        const navOverlay = document.getElementById("nav-overlay");
+    
+        // Variable to track the last scroll position
+        let lastScrollY = window.scrollY;
+    
+        // Show/hide menu button based on scroll
+        window.addEventListener("scroll", function () {
+            // Show the menu button after scrolling down 200px
+            if (window.scrollY > 200) {
+                menuButton.classList.add("visible");
+            } else {
+                menuButton.classList.remove("visible");
+            }
+    
+            // Close the overlay only if fully scrolled back up (e.g., < 100px from the top)
+            if (window.scrollY < 100 && navOverlay.classList.contains("open")) {
+                navOverlay.classList.remove("open");
+                menuButton.classList.remove("hidden"); // Show the button when the menu is closed
+            }
+    
+            // Update lastScrollY
+            lastScrollY = window.scrollY;
+        });
+    
+        // Toggle the full-screen navigation and hide the hamburger icon
+        menuButton.addEventListener("click", function () {
+            navOverlay.classList.toggle("open");
+            menuButton.classList.toggle("hidden"); // Hide the button when menu is open
+        });
+    
+        // Close the menu when clicking on the overlay and show the hamburger button
+        navOverlay.addEventListener("click", function () {
+            navOverlay.classList.remove("open");
+            menuButton.classList.remove("hidden"); // Show the button when menu is closed
+        });
+    </script>
+    
+    
 
 </body>
 </html>
