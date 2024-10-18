@@ -100,8 +100,13 @@ html, body {
 
 /* About Me Section */
 .about-me {
+    display: flex;
+    flex-direction: column; /* Arranged the paragraphs vertically */
     text-align: center;
-    padding: 2rem 0; /* Add some padding for spacing */
+    align-items: center; /* Center the content horizontally */
+    padding: 2rem 0; /* Added some padding for spacing */
+    margin: 0 auto; /* Added some margin for breathing room */
+    max-width: 800px; /* Limit the width to prevent text from spreading too far */
     color: #525252; /* Darker text for better contrast */
 }
 
