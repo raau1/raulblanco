@@ -143,7 +143,7 @@ html, body {
 }
 
 /* Ensure the paragraph wraps correctly */
-#about-paragraph-1, #about-paragraph-2, #about-paragraph-3, #about-paragraph-4 {
+#about-paragraph-1, #about-paragraph-2, #about-paragraph-3 {
     white-space: normal; /* Allow word wrapping */
     overflow: hidden;
     display: inline-block;
