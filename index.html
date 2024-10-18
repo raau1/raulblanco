@@ -8,7 +8,6 @@
 </head>
 <body class="projects-page">
 
-
     <!-- Booting Sequence Overlay -->
     <div id="boot-screen">
         <h2>Booting...</h2>
@@ -18,9 +17,9 @@
         <p>Nearly There...</p>
     </div>
     
+    
     <!-- Header with Nav -->
     <header>
-        <h1>Raul Blanco Vazquez</h1>
         <nav>
             <ul>
                 <li><a href="index.html">Projects</a></li>
@@ -29,6 +28,8 @@
             </ul>
         </nav>
     </header>
+
+    
 
     <!-- Scroll-triggered Menu Button -->
     <button id="menu-button" class="menu-btn">
@@ -48,8 +49,22 @@
         </ul>
     </div>
 
+
+    <!-- About Me Section -->
+    <section class="about-me">
+        <h2>About Me</h2>
+        <p id="about-paragraph-1" data-text="Hello! I'm Raul Blanco Vazquez, a passionate Computer Science Student based in Leicester, UK."></p>
+        <p id="about-paragraph-2" data-text="With a strong foundation in front-end and back-end technologies."></p>
+        <p id="about-paragraph-3" data-text="I focus on creating seamless user experiences and efficient solutions."></p>
+        <p id="about-paragraph-4" data-text="My interests range from web design to problem-solving in the tech space. Welcome to my portfolio!"></p>
+    </section>
+
+
+
+
+
     <!-- Projects Section -->
-    <main class="container">
+    <main class="container" id="main-content" style="display: none;">
         <h2>My Projects</h2>
         <div class="projects-list">
             <!-- Project 1 -->
@@ -96,6 +111,48 @@
     <footer>
         <p>© 2024 Raul Blanco Vazquez</p>
     </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const paragraphs = [
+                document.getElementById('about-paragraph-1'),
+                document.getElementById('about-paragraph-2'),
+                document.getElementById('about-paragraph-3'),
+                document.getElementById('about-paragraph-4')
+            ];
+    
+            // Function to start typing for a specific paragraph
+            function startTyping(paragraph, text, delay, isLast) {
+                paragraph.textContent = '';  // Empty paragraph content before typing
+                setTimeout(() => {
+                    let charIndex = 0;
+                    const interval = setInterval(() => {
+                        paragraph.textContent += text[charIndex];
+                        charIndex++;
+                        if (charIndex === text.length) {
+                            clearInterval(interval);
+                            if (isLast) {
+                                // Add blinking cursor inside the paragraph, without a new line
+                                const cursor = document.createElement('span');
+                                cursor.classList.add('blinking-cursor');
+                                paragraph.appendChild(cursor);
+                            }
+                        }
+                    }, 30); // Adjust typing speed here
+                }, delay);
+            }
+    
+            // Sequential typing with delay for each paragraph
+            let delay = 0;
+            paragraphs.forEach((paragraph, index) => {
+                const text = paragraph.getAttribute('data-text');  // Get the paragraph text from data attribute
+                const isLast = index === paragraphs.length - 1;
+                startTyping(paragraph, text, delay, isLast);
+                delay += (text.length * 30) + 1000; // Delay between paragraphs based on text length and extra 1s wait
+            });
+        });
+    </script>
+    
     
     <script>
     document.addEventListener("DOMContentLoaded", function () {
@@ -170,8 +227,5 @@
             menuButton.classList.remove("hidden"); // Show the button when menu is closed
         });
     </script>
-    
-    
-
 </body>
 </html>

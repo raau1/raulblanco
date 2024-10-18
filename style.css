@@ -8,10 +8,44 @@
     font-style: normal;
 }
 
+/* VT323 Font */
+@font-face {
+    font-family: 'VT323';
+    src: url('Fonts/VT323-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* Chill Font */
+
+@font-face {
+    font-family: 'Chill';
+    src: url('Fonts/chill.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
 /* Google Fonts for Lato and Merriweather */
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Merriweather:wght@400;700&display=swap');
 
+:root {
+    --black-text: #525252;  /* Dark gray color for black text */
+    --primary-bg: #CFFFE5;  /* Background color */
+    --muted-red: #a00000;   /* Muted red for headings */
+    --cursor-color: #525252;   /* Cursor color */
+}
 
+/* Hide scrollbar but allow scrolling */
+html, body {
+    overflow: -moz-scrollbars-none;  /* Hide scrollbar for Firefox */
+    -ms-overflow-style: none;  /* Hide scrollbar for IE/Edge */
+    scrollbar-width: none;     /* Hide scrollbar for modern Firefox */
+}
+
+html::-webkit-scrollbar {
+    display: none;  /* Hide scrollbar for WebKit (Chrome, Safari) */
+}
 /* Booting Sequence Overlay */
 #boot-screen {
     position: fixed;
@@ -19,8 +53,8 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: #333; /* Dark background */
-    color: #CFFFE5; 
+    background-color: var(--cursor-color); /* Dark background */
+    color: var(--primary-bg); 
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -31,14 +65,14 @@
 #boot-screen h2 {
     font-size: 2rem;
     margin-bottom: 1rem;
-    color: #CFFFE5; /* Booting text color (independent from background) */
+    color: var(--primary-bg); /* Booting text color (independent from background) */
 }
 
 /* Loading bar container */
 #loading-bar {
     width: 80%;
     height: 30px;
-    border: 2px dashed #CFFFE5;
+    border: 2px dashed var(--primary-bg);
     margin-bottom: 1rem;
 }
 
@@ -46,7 +80,7 @@
 #loading-bar-progress {
     width: 1%; /* Start at 1% */
     height: 100%;
-    background-color: #CFFFE5;
+    background-color: var(--primary-bg);
     transition: width 0.3s; /* Smooth transition */
 }
 
@@ -59,8 +93,8 @@
 /* General Styling */
 body, header, footer {
     font-family: 'PublicPixel', sans-serif; /* Primary font set to PublicPixel */
-    background-color: #CFFFE5;  /* Pastel Mint Green for a unified background */
-    color: #333333;  /* Darker text for contrast */
+    background-color: var(--primary-bg);  /* Pastel Mint Green for a unified background */
+    color: var(--black-text);  /* Darker text for contrast */
     margin: 0;
     padding: 0;
 }
@@ -75,32 +109,75 @@ html, body {
 }
 
 
-/* Header */
-header {
+/* About Me Section */
+.about-me {
     text-align: center;
-    padding: 2rem;
+    padding: 2rem 0; /* Add some padding for spacing */
+    color: #525252; /* Darker text for better contrast */
 }
 
-h1 {
-    margin: 1;
-    margin-left: 4rem;
-    font-size: 2rem;
-    font-family: 'PublicPixel', 'Merriweather', serif; /* Use PublicPixel, fallback to Merriweather */
-    font-weight: bold;
-    text-align: center;
-    letter-spacing: 0.0em;
-    color: #1a1a1a;  /* Darker text for header */
+.about-me h2 {
+    font-family: 'PublicPixel', sans-serif; /* Keep the pixel aesthetic */
+    color: var(--muted-red); /* Muted red for heading */
+    font-size: 2em; /* Adjust size for emphasis */
+    margin-bottom: 1.9rem; /* Spacing between heading and paragraph */
+    margin-left: 3rem;
 }
+
+.about-me p {
+    font-family: 'VT323', sans-serif; /* Lighter font for paragraph text */
+    font-size: 2.2rem; /* Slightly larger for readability */
+    line-height: 1.8; /* Improve line spacing for readability */
+    max-width: 900px; /* Limit the width of the text */
+    margin: 0 auto; /* Center align the paragraph */
+    text-align: left;
+    padding: 0 1.5rem; /* Add some padding on smaller screens */
+    color: var(--black-text); /* Keep it consistent with the rest of the text */
+}
+
+/* Blinking cursor style */
+.blinking-cursor {
+    display: inline-block;
+    width: 6px;
+    height: 0.8em;
+    background-color: var(--cursor-color); /* Dark color for the cursor */
+    vertical-align: bottom; /* Align cursor with the text */
+    animation: blink 0.75s step-end infinite;
+    margin-left: 2.9px; /* Slight margin to the left of the cursor */
+    margin-bottom: 20px;
+}
+
+@keyframes blink {
+    50% {
+        opacity: 0;
+    }
+}
+
+
+
+/* Ensure the paragraph wraps correctly */
+#about-paragraph-1, #about-paragraph-2, #about-paragraph-3, #about-paragraph-4 {
+    white-space: normal; /* Allow word wrapping */
+    overflow: hidden;
+    display: inline-block;
+    width: 100%; /* Full width for proper word wrapping */
+    animation: none; /* We'll control the animation with JS */
+    border-right: none; /* Remove cursor from all except the last paragraph */
+}
+
+
+
 
 nav ul {
     display: flex;
     justify-content: center;
     padding: 0;
+    margin-left: 2.1rem;
 }
 
 nav ul li {
     list-style: none;
-    margin-left: 3.5rem;
+    margin-left: 0rem;
     margin-top: 1rem;
 }
 
@@ -109,13 +186,11 @@ nav ul li a {
     text-decoration: none;
     font-size: 1.1rem;
     padding: 0.5rem 1rem;
-    border-radius: 20px;
     transition: all 0.3s ease-in-out;
 }
 
 nav ul li a:hover {
-    background-color: #a00000;  /* Muted red hover effect */
-    color: #fff;
+    color: var(--muted-red);
 }
 
 /* Scroll-triggered Menu Button */
@@ -142,7 +217,7 @@ nav ul li a:hover {
 
 /* Hamburger icon styling */
 .menu-btn svg {
-    fill: #333; /* Color of the hamburger icon */
+    fill: var(--cursor-color); /* Color of the hamburger icon */
     width: 40px; /* Larger size for the icon */
     height: 40px; /* Larger size for the icon */
 }
@@ -183,7 +258,7 @@ nav ul li a:hover {
 
 .fullscreen-nav ul li a {
     font-size: 2rem;
-    color: #CFFFE5; /* Light green text color */
+    color: var(--primary-bg); /* Light green text color */
     text-decoration: none;
     transition: color 0.3s;
 }
@@ -197,23 +272,22 @@ nav ul li a:hover {
     padding: 3rem 0;
 }
 
-h2 {
+.container h2 {
     text-align: center;
-    color: #a00000;  /* Muted red for headings */
-    font-size: 2.5rem;
+    color: var(--muted-red);  /* Muted red for headings */
+    font-size: 2em;
     font-family: 'PublicPixel', 'Merriweather', serif; /* Use PublicPixel for headings */
-    margin-bottom: 6rem;
+    margin-bottom: 3rem;
     margin-left: 3.5rem;
     font-weight: bold;
 }
-
 
 /* Project links and buttons */
 .projects-list {
     display: flex;
     flex-direction: column;
     align-items: center; /* Center links horizontally */
-    gap: 9rem; /* Add space between links */
+    gap: 5rem; /* Add space between links */
 }
 
 .project-item {
@@ -229,25 +303,16 @@ h2 {
     border-radius: 3rem;
     text-decoration: none;
     display: inline-block;
-    font-size: 1.3rem;
+    font-size: 1.2em;
     font-family: 'PublicPixel', sans-serif; /* Use PublicPixel for project links */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     transition: all 0.3s ease-in-out;
     width: 100%; /* Make sure links take the full width */
 }
 
-/* Project description styling */
-.project-description {
-    font-size: 1rem;  /* Slightly smaller text for descriptions */
-    color: #333333;   /* Darker text */
-    margin-top: 3rem; /* Space between the button and description */
-    margin-left: 3.5rem;
-    line-height: 2; /* Adjust the line height to add more space between lines */
-    text-align: center;
-}
 
 .project-link:hover {
-    background-color: #a00000;  /* Dark red hover */
+    background-color: var(--muted-red);  /* Dark red hover */
     color: #fff;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
     transform: translateY(-5px);  /* Subtle hover lift effect */
@@ -255,11 +320,21 @@ h2 {
 
 /* Project date styling */
 .project-date {
-    font-size: 1rem;  /* Same size as description */
+    font-size: 1.2em;  /* Same size as description */
     color: #555555;   /* Slightly lighter color than normal text */
-    margin-top: 1.1rem;
+    margin-top: 1.5rem;
     margin-bottom: 0.5rem;
     margin-left: 3rem;
+}
+
+/* Project description styling */
+.project-description {
+    font-size: 1rem;  /* Slightly smaller text for descriptions */
+    color: var(--black-text);   /* Darker text */
+    margin-top: 3rem; /* Space between the button and description */
+    margin-left: 3.5rem;
+    line-height: 2; /* Adjust the line height to add more space between lines */
+    text-align: center;
 }
 
 /* Tech Buttons */
@@ -275,57 +350,73 @@ h2 {
 .tech-btn {
     font-size: 0.9rem;
     padding: 0.5rem 1rem;
-    border: 2px dotted #333333; /* Dotted border */
+    border: 2px dotted var(--black-text); /* Dotted border */
     background-color: transparent; /* Transparent background */
-    color: #333333;
+    color: var(--black-text);
     border-radius: 5px;
     transition: all 0.3s ease-in-out;
 }
 
 .tech-btn:hover {
-    border-color: #a00000; /* Change border color on hover */
-    color: #a00000; /* Change text color on hover */
+    border-color: var(--muted-red); /* Change border color on hover */
+    color: var(--muted-red); /* Change text color on hover */
 }
 
-/* Skills and Contact List */
-.skills-list li, .contact-info p {
-    font-size: 1.5rem;
-    padding: 0.5rem;
-    color: #333333;  /* Darker color for text */
-}
+/* Skills List Styling */
 
 .skills-list li {
+    font-size: 1.5rem;
+    padding: 0.5rem;
+    color: #fff;  /* Darker color for text */
     font-family: 'PublicPixel', sans-serif; /* Use PublicPixel for the skills */
     margin: 1rem 0;
     transition: color 0.3s ease-in-out;
 }
 
 .skills-list li:hover {
-    color: #a00000;
+    background-color: var(--muted-red);  /* Dark red hover */
+    color: #fff;
 }
 
 
-/* Adjustments for spacing and visibility */
-.skills, .contact {
+/* Contact Info Styling */
+
+
+.contact {
     text-align: center;
-    margin: 2rem 0;
-    padding: 2rem 0;
+    margin: auto;
 }
 
-.skills-list {
-    list-style: none;
-    padding: 0;
-}
-
-.skills-list li {
-    margin: 0.5rem 0;
-}
 
 .contact-info p {
+    font-size: 1.2rem;
+    padding: 0.5rem;
+    color: var(--black-text);  /* Darker color for text */
     margin: 1rem 0;
+    margin-top: 3rem;
     font-family: 'PublicPixel', sans-serif; /* Use PublicPixel for contact info */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease-in-out;
 }
 
+.contact-info p:hover {
+    background-color: var(--muted-red);  /* Dark red hover */
+    color: #fff;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+    transform: translateY(-5px);  /* Subtle hover lift effect */
+}
+/* Suppress a:-webkit-any-link */
+.contact-info a:-webkit-any-link {
+    color: inherit !important; /* Inherit the text color from the parent */
+    text-decoration: none !important; /* Remove any default text decoration */
+}
+
+.click-me {
+    font-size: 0.9;
+    text-align: right;
+    margin-top: 2em;
+
+}
 /* Animation for cards */
 @keyframes fadeIn {
     0% { opacity: 0; }
@@ -345,5 +436,6 @@ footer {
     font-family: 'PublicPixel', sans-serif; /* Use PublicPixel for footer */
     color: #1a1a1f;     /* Darker gray for better visibility */
     margin-top: auto; /* Pushes the footer to the bottom */
+    margin-left: 2rem;
 
 }
