@@ -2,52 +2,94 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Raul Blanco - Portfolio</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
     <style>
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-            text-align: center;
         }
         header {
             background-color: #333;
-            color: #fff;
-            padding: 20px 0;
+            color: white;
+            text-align: center;
+            padding: 2rem;
         }
         h1 {
             margin: 0;
-            font-size: 2.5rem;
+            font-size: 3rem;
+        }
+        nav ul {
+            display: flex;
+            justify-content: center;
+            padding: 0;
+        }
+        nav ul li {
+            list-style: none;
+            margin: 0 1rem;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
         }
         .projects {
-            margin: 20px;
+            padding: 2rem;
+            text-align: center;
         }
         .project-link {
-            display: inline-block;
-            padding: 15px 25px;
-            margin: 20px;
             background-color: #333;
-            color: #fff;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 0.5rem;
             text-decoration: none;
-            font-size: 1.2rem;
-            border-radius: 5px;
+            display: inline-block;
+            margin: 1rem;
         }
         .project-link:hover {
             background-color: #555;
         }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+        }
     </style>
 </head>
 <body>
+
+    <!-- Header with Nav -->
     <header>
         <h1>Raul Blanco - Portfolio</h1>
+        <nav>
+            <ul>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
     </header>
 
-    <div class="projects">
+    <!-- Projects Section -->
+    <main class="container" id="projects">
         <h2>My Projects</h2>
-        <!-- Adjusted link to the TechCon project -->
-        <a href="TechCon2023/index.html" class="project-link">TechCon 2023 Website</a>
-    </div>
+        <div class="grid">
+            <!-- TechCon Project -->
+            <a href="TechCon2023/index.html" class="project-link">TechCon 2023 Website</a>
+            
+            <!-- Group PDF Project (opens in a new tab) -->
+            <a href="https://github.com/raau1/raulblanco/raw/main/University_Room_Booking_System.pdf" target="_blank" class="project-link">Group PDF Project</a>
+            
+            <!-- Startup Commissioned Website (you can update this with the actual link later) -->
+            <a href="#" class="project-link">Startup Commissioned Website</a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2024 Raul Blanco Vazquez</p>
+    </footer>
+
 </body>
 </html>
