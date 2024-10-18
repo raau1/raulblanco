@@ -1,20 +1,39 @@
-/* style.css */
-
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+/* Add the PublicPixel font */
+@font-face {
+    font-family: 'PublicPixel';
+    src: url('Fonts/PublicPixel.woff2') format('woff2'),
+         url('Fonts/PublicPixel.woff') format('woff'),
+         url('Fonts/PublicPixel.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
 }
 
+/* Google Fonts for Lato and Merriweather */
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Merriweather:wght@400;700&display=swap');
+
+/* General Styling */
+body, header, footer {
+    font-family: 'PublicPixel', sans-serif; /* Primary font set to PublicPixel */
+    background-color: #CFFFE5;  /* Pastel Mint Green for a unified background */
+    color: #333333;  /* Darker text for contrast */
+    margin: 0;
+    padding: 0;
+}
+
+/* Header */
 header {
-    background-color: #333;
-    color: white;
     text-align: center;
     padding: 2rem;
 }
 
 h1 {
-    margin: 0;
-    font-size: 3rem;
+    margin: 1;
+    font-size: 2rem;
+    font-family: 'PublicPixel', 'Merriweather', serif; /* Use PublicPixel, fallback to Merriweather */
+    font-weight: bold;
+    text-align: center;
+    letter-spacing: 0.0em;
+    color: #1a1a1a;  /* Darker text for header */
 }
 
 nav ul {
@@ -25,31 +44,109 @@ nav ul {
 
 nav ul li {
     list-style: none;
-    margin: 0 1rem;
+    margin-left: 3.5rem;
+    margin-top: 1rem;
 }
 
 nav ul li a {
-    color: white;
+    color: #1a1a1a;  /* Darker text for nav links */
     text-decoration: none;
+    font-size: 1.1rem;
+    padding: 0.5rem 1rem;
+    transition: all 0.3s ease-in-out;
 }
 
-.projects, .skills, .contact {
-    padding: 2rem;
+nav ul li a:hover {
+    background-color: #a00000;  /* Muted red hover effect */
+    border-radius: 5px;
+    color: #fff;
+}
+
+/* Main content styling */
+.container {
+    padding: 3rem 0;
+}
+
+h2 {
     text-align: center;
+    color: #a00000;  /* Muted red for headings */
+    font-size: 2.5rem;
+    font-family: 'PublicPixel', 'Merriweather', serif; /* Use PublicPixel for headings */
+    margin-bottom: 6rem;
+    margin-left: 3.5rem;
+    font-weight: bold;
+}
+
+
+/* Project links and buttons */
+.projects-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center links horizontally */
+    gap: 9rem; /* Add space between links */
+}
+
+.project-item {
+    width: 100%;
+    max-width: 400px; /* Restrict width for better control */
+    text-align: center; /* Center content within */
 }
 
 .project-link {
-    background-color: #333;
-    color: white;
-    padding: 1rem 2rem;
-    border-radius: 0.5rem;
+    background-color: #2a2a2a;  /* Slightly darker background */
+    color: #f0f0f0;
+    padding: 1.5rem 1.5rem;
+    border-radius: 3rem;
     text-decoration: none;
     display: inline-block;
-    margin: 1rem;
+    font-size: 1.3rem;
+    font-family: 'PublicPixel', sans-serif; /* Use PublicPixel for project links */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease-in-out;
+    width: 100%; /* Make sure links take the full width */
+}
+
+/* Project description styling */
+.project-description {
+    font-size: 1rem;  /* Slightly smaller text for descriptions */
+    color: #333333;   /* Darker text */
+    margin-top: 3rem; /* Space between the button and description */
+    margin-left: 3.5rem;
+    line-height: 2; /* Adjust the line height to add more space between lines */
+    text-align: center;
+    max-width: 350px;
 }
 
 .project-link:hover {
-    background-color: #555;
+    background-color: #a00000;  /* Dark red hover */
+    color: #fff;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+    transform: translateY(-5px);  /* Subtle hover lift effect */
+}
+
+/* Skills and Contact List */
+.skills-list li, .contact-info p {
+    font-size: 1.5rem;
+    padding: 0.5rem;
+    color: #333333;  /* Darker color for text */
+}
+
+.skills-list li {
+    font-family: 'PublicPixel', sans-serif; /* Use PublicPixel for the skills */
+    margin: 1rem 0;
+    transition: color 0.3s ease-in-out;
+}
+
+.skills-list li:hover {
+    color: #a00000;
+}
+
+
+/* Adjustments for spacing and visibility */
+.skills, .contact {
+    text-align: center;
+    margin: 2rem 0;
+    padding: 2rem 0;
 }
 
 .skills-list {
@@ -58,18 +155,30 @@ nav ul li a {
 }
 
 .skills-list li {
-    font-size: 1.2rem;
-    padding: 0.5rem;
+    margin: 0.5rem 0;
 }
 
-.contact-info {
-    font-size: 1.2rem;
+.contact-info p {
     margin: 1rem 0;
+    font-family: 'PublicPixel', sans-serif; /* Use PublicPixel for contact info */
 }
 
+/* Animation for cards */
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+.project-link {
+    animation: fadeIn 1.2s ease-in-out;
+}
+
+
+/* Footer */
 footer {
-    background-color: #333;
-    color: white;
     text-align: center;
-    padding: 1rem;
+    padding: 2rem;
+    font-size: 1.1rem;  /* Slightly larger font size for readability */
+    font-family: 'PublicPixel', sans-serif; /* Use PublicPixel for footer */
+    color: #1a1a1f;     /* Darker gray for better visibility */
 }

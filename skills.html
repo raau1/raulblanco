@@ -2,10 +2,65 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Raul Blanco - Skills</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
-    <link rel="stylesheet" href="style.css"> <!-- Link to the CSS file -->
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Ensure the body doesn't scroll */
+        body, html {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;  /* Disable scrolling */
+            height: 100%;
+        }
+
+        /* Skills Container */
+        .skills-container {
+            position: relative;
+            height: calc(100vh - 100px);  /* Footer height adjustment */
+            width: 100%;
+            overflow: hidden;
+        }
+
+        /* Skills List */
+        .skills-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Each skill element */
+        .skills-list li {
+            position: absolute;
+            padding: 1rem 1.5rem;
+            background-color: #2a2a2a;
+            color: #fff;
+            border-radius: 8px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-align: center;
+            white-space: nowrap; /* Ensure long text doesn't wrap */
+            display: inline-block;
+        }
+
+        /* Hover scaling effect */
+        .skills-list li:hover {
+            background-color: #a00000;
+            transform: scale(1.2);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 1.1rem;
+            background-color: #333;
+            color: #fff;
+            position: relative;
+        }
+    </style>
 </head>
 <body>
 
@@ -22,17 +77,16 @@
     </header>
 
     <!-- Skills Section -->
-    <section class="skills">
-        <h2>Skills</h2>
+    <section class="skills-container">
         <ul class="skills-list">
-            <li>Python</li>
-            <li>Java</li>
-            <li>HTML/CSS/JavaScript</li>
-            <li>Git, GitLab</li>
-            <li>Incident Detection and Response</li>
-            <li>Network Security</li>
-            <li>Linux</li>
-            <li>SQL</li>
+            <li id="skill1">Python</li>
+            <li id="skill2">Java</li>
+            <li id="skill3">HTML/CSS/JavaScript</li>
+            <li id="skill4">Git, GitLab</li>
+            <li id="skill5">Incident Detection</li>
+            <li id="skill6">Network Security</li>
+            <li id="skill7">Linux</li>
+            <li id="skill8">SQL</li>
         </ul>
     </section>
 
@@ -41,5 +95,150 @@
         <p>© 2024 Raul Blanco Vazquez</p>
     </footer>
 
+    <!-- Matter.js Physics Engine -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.17.1/matter.min.js"></script>
+    <script>
+        // Create a Matter.js engine
+        const { Engine, Render, Runner, Bodies, Composite, Body, Events } = Matter;
+
+        // Create an engine
+        const engine = Engine.create();
+        const world = engine.world;
+
+        // Disable gravity so skills float
+        engine.world.gravity.y = 0; // No gravity
+
+        // Create a renderer
+        const render = Render.create({
+            element: document.querySelector('.skills-container'),
+            engine: engine,
+            options: {
+                width: window.innerWidth,
+                height: window.innerHeight - 100,  // Adjust height to fit within footer
+                wireframes: false,
+                background: 'transparent',
+            }
+        });
+
+        Render.run(render);
+
+        // Create runner (for the animation loop)
+        const runner = Runner.create();
+        Runner.run(runner, engine);
+
+        // Helper function to convert DOM elements into Matter.js bodies
+        function createSkillBody(skillElement) {
+            const rect = skillElement.getBoundingClientRect();
+            const randomX = Math.random() * (window.innerWidth - rect.width);  // Random X position
+            const randomY = Math.random() * (window.innerHeight - rect.height - 150); // Random Y position, leaving space for footer
+            return Bodies.rectangle(
+                randomX + rect.width / 2,  // X position for the center
+                randomY + rect.height / 2,  // Y position for the center
+                rect.width,  // Exact width of the element
+                rect.height,  // Exact height of the element
+                {
+                    restitution: 1,  // Make them bounce
+                    frictionAir: 0,  // Remove air resistance to keep them moving
+                    render: {
+                        fillStyle: '#2a2a2a',
+                    }
+                }
+            );
+        }
+
+        // Get all the skill elements
+        const skills = document.querySelectorAll('.skills-list li');
+        const skillBodies = [];
+
+        // Create physics bodies for each skill
+        skills.forEach(skill => {
+            const skillBody = createSkillBody(skill);
+            skillBodies.push(skillBody);
+            Composite.add(world, skillBody);
+        });
+
+        // Create boundaries (walls) to keep the skills within the container
+        const boundaryThickness = 50;
+        const boundaries = [
+            // Top
+            Bodies.rectangle(window.innerWidth / 2, -boundaryThickness / 2, window.innerWidth, boundaryThickness, { isStatic: true }),
+            // Bottom - Adjusted to just above the footer
+            Bodies.rectangle(window.innerWidth / 2, window.innerHeight - 100 - boundaryThickness / 2, window.innerWidth, boundaryThickness, { isStatic: true }),
+            // Left
+            Bodies.rectangle(-boundaryThickness / 2, window.innerHeight / 2, boundaryThickness, window.innerHeight, { isStatic: true }),
+            // Right - Prevent skills from floating out of bounds
+            Bodies.rectangle(window.innerWidth + boundaryThickness / 2 - 50, window.innerHeight / 2, boundaryThickness, window.innerHeight, { isStatic: true }),
+        ];
+
+        Composite.add(world, boundaries);
+
+        // Add random velocity to each skill body to make them float and move
+        skillBodies.forEach(body => {
+            // Apply an initial random velocity
+            Body.setVelocity(body, {
+                x: (Math.random() * 4 - 2), // Random speed between -2 and 2 for horizontal movement
+                y: (Math.random() * 4 - 2)  // Random speed between -2 and 2 for vertical movement
+            });
+        });
+
+        // Max and Min velocity values
+        const maxVelocity = 3;
+        const minVelocity = 0.5;
+
+        // Ensure continuous movement without stopping
+        Events.on(engine, 'beforeUpdate', function() {
+            skillBodies.forEach(body => {
+                // Ensure the skills never stop moving
+                if (Math.abs(body.velocity.x) < minVelocity) {
+                    Body.setVelocity(body, {
+                        x: Math.sign(body.velocity.x) * minVelocity,
+                        y: body.velocity.y
+                    });
+                }
+                if (Math.abs(body.velocity.y) < minVelocity) {
+                    Body.setVelocity(body, {
+                        x: body.velocity.x,
+                        y: Math.sign(body.velocity.y) * minVelocity
+                    });
+                }
+
+                // Limit the X and Y velocity to the maxVelocity
+                if (Math.abs(body.velocity.x) > maxVelocity) {
+                    Body.setVelocity(body, {
+                        x: Math.sign(body.velocity.x) * maxVelocity,
+                        y: body.velocity.y
+                    });
+                }
+                if (Math.abs(body.velocity.y) > maxVelocity) {
+                    Body.setVelocity(body, {
+                        x: body.velocity.x,
+                        y: Math.sign(body.velocity.y) * maxVelocity
+                    });
+                }
+            });
+        });
+
+        // Keep DOM elements in sync with Matter.js physics bodies
+        function syncSkillPositions() {
+            skills.forEach((skill, i) => {
+                const { position } = skillBodies[i];
+                skill.style.transform = `translate(${position.x - skill.clientWidth / 2}px, ${position.y - skill.clientHeight / 2}px)`;
+            });
+
+            requestAnimationFrame(syncSkillPositions);
+        }
+
+        syncSkillPositions();
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            render.options.width = window.innerWidth;
+            render.options.height = window.innerHeight - 100; // Adjust for footer
+            Render.lookAt(render, {
+                min: { x: 0, y: 0 },
+                max: { x: window.innerWidth, y: window.innerHeight }
+            });
+        });
+    </script>
 </body>
 </html>

@@ -4,10 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Raul Blanco - Portfolio</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="projects-page"> <!-- Added class here -->
 
     <!-- Header with Nav -->
     <header>
@@ -20,14 +19,24 @@
             </ul>
         </nav>
     </header> 
-  
+   
     <!-- Projects Section -->
     <main class="container">
         <h2>My Projects</h2>
-        <div class="grid">
-            <a href="TechCon2023/index.html" class="project-link">TechCon 2023 Website</a>
-            <a href="https://raau1.github.io/raulblanco/University_Room_Booking_System.pdf" target="_blank" class="project-link">Group PDF Project</a>
-            <a href="#" class="project-link">Startup Commissioned Website</a>
+        <div class="projects-list">
+            <!-- Wrap each project link inside its own div -->
+            <div class="project-item">
+                <a href="TechCon2023/index.html" class="project-link">TechCon 2023 Website</a>
+                <p class="project-description">This is the website built for TechCon 2023, showcasing the event details, speakers, and schedule.</p>
+            </div>
+            <div class="project-item">
+                <a href="https://raau1.github.io/raulblanco/University_Room_Booking_System.pdf" target="_blank" class="project-link">Group PDF Project</a>
+                <p class="project-description">A group project on university room booking systems, designed to improve booking efficiency and management.</p>
+            </div>
+            <div class="project-item">
+                <a href="#" class="project-link">Startup Commissioned Website</a>
+                <p class="project-description">Currently in progress: A custom website for a tech startup, focusing on branding and UX.</p>
+            </div>
         </div>
     </main>
 
