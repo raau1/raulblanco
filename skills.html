@@ -82,7 +82,7 @@
             <li id="skill2">Java</li>
             <li id="skill3">HTML/CSS/JavaScript</li>
             <li id="skill4">Git, GitLab</li>
-            <li id="skill5">Incident Detection</li>
+            <li id="skill5">Incident Response</li>
             <li id="skill6">Network Security</li>
             <li id="skill7">Linux</li>
             <li id="skill8">SQL</li>
@@ -92,147 +92,135 @@
     <!-- Matter.js Physics Engine -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.17.1/matter.min.js"></script>
     <script>
-        // Create a Matter.js engine
-        const { Engine, Render, Runner, Bodies, Composite, Body, Events } = Matter;
+        // Function to check if the user is on a mobile device (width <= 768px)
+        function isMobile() {
+            return window.innerWidth <= 768;
+        }
 
-        // Create an engine
-        const engine = Engine.create();
-        const world = engine.world;
-
-        // Disable gravity so skills float
-        engine.world.gravity.y = 0; // No gravity
-
-        // Create a renderer
-        const render = Render.create({
-            element: document.querySelector('.skills-container'),
-            engine: engine,
-            options: {
-                width: window.innerWidth,
-                height: window.innerHeight - 100,  // Adjust height to fit within footer
-                wireframes: false,
-                background: 'transparent',
-            }
-        });
-
-        Render.run(render);
-
-        // Create runner (for the animation loop)
-        const runner = Runner.create();
-        Runner.run(runner, engine);
-
-        // Helper function to convert DOM elements into Matter.js bodies
-        function createSkillBody(skillElement) {
-            const rect = skillElement.getBoundingClientRect();
-            const randomX = Math.random() * (window.innerWidth - rect.width);  // Random X position
-            const randomY = Math.random() * (window.innerHeight - rect.height - 150); // Random Y position, leaving space for footer
-            return Bodies.rectangle(
-                randomX + rect.width / 2,  // X position for the center
-                randomY + rect.height / 2,  // Y position for the center
-                rect.width,  // Exact width of the element
-                rect.height,  // Exact height of the element
-                {
-                    restitution: 1,  // Make them bounce
-                    frictionAir: 0,  // Remove air resistance to keep them moving
-                    render: {
-                        fillStyle: '#2a2a2a',
+        // Run the Matter.js engine only if it's not a mobile device
+        if (!isMobile()) {
+            // Create a Matter.js engine
+            const { Engine, Render, Runner, Bodies, Composite, Body, Events } = Matter;
+    
+            const engine = Engine.create();
+            const world = engine.world;
+    
+            engine.world.gravity.y = 0; // No gravity
+    
+            const render = Render.create({
+                element: document.querySelector('.skills-container'),
+                engine: engine,
+                options: {
+                    width: window.innerWidth,
+                    height: window.innerHeight - 100,  // Adjust height to fit within footer
+                    wireframes: false,
+                    background: 'transparent',
+                }
+            });
+    
+            Render.run(render);
+            const runner = Runner.create();
+            Runner.run(runner, engine);
+    
+            function createSkillBody(skillElement) {
+                const rect = skillElement.getBoundingClientRect();
+                const randomX = Math.random() * (window.innerWidth - rect.width);
+                const randomY = Math.random() * (window.innerHeight - rect.height - 150); 
+                return Bodies.rectangle(
+                    randomX + rect.width / 2,  
+                    randomY + rect.height / 2,  
+                    rect.width,  
+                    rect.height,  
+                    {
+                        restitution: 1,  
+                        frictionAir: 0,  
+                        render: {
+                            fillStyle: '#2a2a2a',
+                        }
                     }
-                }
-            );
-        }
-
-        // Get all the skill elements
-        const skills = document.querySelectorAll('.skills-list li');
-        const skillBodies = [];
-
-        // Create physics bodies for each skill
-        skills.forEach(skill => {
-            const skillBody = createSkillBody(skill);
-            skillBodies.push(skillBody);
-            Composite.add(world, skillBody);
-        });
-
-        // Create boundaries (walls) to keep the skills within the container
-        const boundaryThickness = 50;
-        const boundaries = [
-            // Top
-            Bodies.rectangle(window.innerWidth / 2, -boundaryThickness / 2, window.innerWidth, boundaryThickness, { isStatic: true }),
-            // Bottom - Adjusted to just above the footer
-            Bodies.rectangle(window.innerWidth / 2, window.innerHeight - 100 - boundaryThickness / 2, window.innerWidth, boundaryThickness, { isStatic: true }),
-            // Left
-            Bodies.rectangle(-boundaryThickness / 2, window.innerHeight / 2, boundaryThickness, window.innerHeight, { isStatic: true }),
-            // Right - Prevent skills from floating out of bounds
-            Bodies.rectangle(window.innerWidth + boundaryThickness / 2 - 50, window.innerHeight / 2, boundaryThickness, window.innerHeight, { isStatic: true }),
-        ];
-
-        Composite.add(world, boundaries);
-
-        // Add random velocity to each skill body to make them float and move
-        skillBodies.forEach(body => {
-            // Apply an initial random velocity
-            Body.setVelocity(body, {
-                x: (Math.random() * 4 - 2), // Random speed between -2 and 2 for horizontal movement
-                y: (Math.random() * 4 - 2)  // Random speed between -2 and 2 for vertical movement
+                );
+            }
+    
+            const skills = document.querySelectorAll('.skills-list li');
+            const skillBodies = [];
+    
+            skills.forEach(skill => {
+                const skillBody = createSkillBody(skill);
+                skillBodies.push(skillBody);
+                Composite.add(world, skillBody);
             });
-        });
-
-        // Max and Min velocity values
-        const maxVelocity = 3;
-        const minVelocity = 0.5;
-
-        // Ensure continuous movement without stopping
-        Events.on(engine, 'beforeUpdate', function() {
+    
+            const boundaryThickness = 50;
+            const boundaries = [
+                Bodies.rectangle(window.innerWidth / 2, -boundaryThickness / 2, window.innerWidth, boundaryThickness, { isStatic: true }),
+                Bodies.rectangle(window.innerWidth / 2, window.innerHeight - 100 - boundaryThickness / 2, window.innerWidth, boundaryThickness, { isStatic: true }),
+                Bodies.rectangle(-boundaryThickness / 2, window.innerHeight / 2, boundaryThickness, window.innerHeight, { isStatic: true }),
+                Bodies.rectangle(window.innerWidth + boundaryThickness / 2 - 50, window.innerHeight / 2, boundaryThickness, window.innerHeight, { isStatic: true }),
+            ];
+    
+            Composite.add(world, boundaries);
+    
             skillBodies.forEach(body => {
-                // Ensure the skills never stop moving
-                if (Math.abs(body.velocity.x) < minVelocity) {
-                    Body.setVelocity(body, {
-                        x: Math.sign(body.velocity.x) * minVelocity,
-                        y: body.velocity.y
-                    });
-                }
-                if (Math.abs(body.velocity.y) < minVelocity) {
-                    Body.setVelocity(body, {
-                        x: body.velocity.x,
-                        y: Math.sign(body.velocity.y) * minVelocity
-                    });
-                }
-
-                // Limit the X and Y velocity to the maxVelocity
-                if (Math.abs(body.velocity.x) > maxVelocity) {
-                    Body.setVelocity(body, {
-                        x: Math.sign(body.velocity.x) * maxVelocity,
-                        y: body.velocity.y
-                    });
-                }
-                if (Math.abs(body.velocity.y) > maxVelocity) {
-                    Body.setVelocity(body, {
-                        x: body.velocity.x,
-                        y: Math.sign(body.velocity.y) * maxVelocity
-                    });
-                }
+                Body.setVelocity(body, {
+                    x: (Math.random() * 4 - 2),
+                    y: (Math.random() * 4 - 2)
+                });
             });
-        });
-
-        // Keep DOM elements in sync with Matter.js physics bodies
-        function syncSkillPositions() {
-            skills.forEach((skill, i) => {
-                const { position } = skillBodies[i];
-                skill.style.transform = `translate(${position.x - skill.clientWidth / 2}px, ${position.y - skill.clientHeight / 2}px)`;
+    
+            const maxVelocity = 3;
+            const minVelocity = 0.5;
+    
+            Events.on(engine, 'beforeUpdate', function() {
+                skillBodies.forEach(body => {
+                    if (Math.abs(body.velocity.x) < minVelocity) {
+                        Body.setVelocity(body, {
+                            x: Math.sign(body.velocity.x) * minVelocity,
+                            y: body.velocity.y
+                        });
+                    }
+                    if (Math.abs(body.velocity.y) < minVelocity) {
+                        Body.setVelocity(body, {
+                            x: body.velocity.x,
+                            y: Math.sign(body.velocity.y) * minVelocity
+                        });
+                    }
+    
+                    if (Math.abs(body.velocity.x) > maxVelocity) {
+                        Body.setVelocity(body, {
+                            x: Math.sign(body.velocity.x) * maxVelocity,
+                            y: body.velocity.y
+                        });
+                    }
+                    if (Math.abs(body.velocity.y) > maxVelocity) {
+                        Body.setVelocity(body, {
+                            x: body.velocity.x,
+                            y: Math.sign(body.velocity.y) * maxVelocity
+                        });
+                    }
+                });
             });
-
-            requestAnimationFrame(syncSkillPositions);
+    
+            function syncSkillPositions() {
+                skills.forEach((skill, i) => {
+                    const { position } = skillBodies[i];
+                    skill.style.transform = `translate(${position.x - skill.clientWidth / 2}px, ${position.y - skill.clientHeight / 2}px)`;
+                });
+    
+                requestAnimationFrame(syncSkillPositions);
+            }
+    
+            syncSkillPositions();
+    
+            window.addEventListener('resize', () => {
+                render.options.width = window.innerWidth;
+                render.options.height = window.innerHeight - 100;
+                Render.lookAt(render, {
+                    min: { x: 0, y: 0 },
+                    max: { x: window.innerWidth, y: window.innerHeight }
+                });
+            });
         }
-
-        syncSkillPositions();
-
-        // Handle window resize
-        window.addEventListener('resize', () => {
-            render.options.width = window.innerWidth;
-            render.options.height = window.innerHeight - 100; // Adjust for footer
-            Render.lookAt(render, {
-                min: { x: 0, y: 0 },
-                max: { x: window.innerWidth, y: window.innerHeight }
-            });
-        });
     </script>
+    
 </body>
 </html>

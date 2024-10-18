@@ -1,3 +1,5 @@
+/* Google Fonts for Lato and Merriweather */
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Merriweather:wght@400;700&display=swap');
 /* Add the PublicPixel font */
 @font-face {
     font-family: 'PublicPixel';
@@ -16,18 +18,6 @@
     font-style: normal;
 }
 
-/* Chill Font */
-
-@font-face {
-    font-family: 'Chill';
-    src: url('Fonts/chill.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
-
-/* Google Fonts for Lato and Merriweather */
-@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Merriweather:wght@400;700&display=swap');
 
 :root {
     --black-text: #525252;  /* Dark gray color for black text */
@@ -36,16 +26,17 @@
     --cursor-color: #525252;   /* Cursor color */
 }
 
-/* Hide scrollbar but allow scrolling */
+/* Hide scrollbar but allow scrolling for all browsers */
 html, body {
-    overflow: -moz-scrollbars-none;  /* Hide scrollbar for Firefox */
-    -ms-overflow-style: none;  /* Hide scrollbar for IE/Edge */
-    scrollbar-width: none;     /* Hide scrollbar for modern Firefox */
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
 }
 
 html::-webkit-scrollbar {
-    display: none;  /* Hide scrollbar for WebKit (Chrome, Safari) */
+    display: none;  /* Chrome, Safari, and WebKit browsers */
 }
+
+
 /* Booting Sequence Overlay */
 #boot-screen {
     position: fixed;
@@ -89,7 +80,6 @@ html::-webkit-scrollbar {
     margin-top: 1rem;
 }
 
-
 /* General Styling */
 body, header, footer {
     font-family: 'PublicPixel', sans-serif; /* Primary font set to PublicPixel */
@@ -107,7 +97,6 @@ html, body {
     display: flex;
     flex-direction: column; /* Flexbox to arrange content */
 }
-
 
 /* About Me Section */
 .about-me {
@@ -153,8 +142,6 @@ html, body {
     }
 }
 
-
-
 /* Ensure the paragraph wraps correctly */
 #about-paragraph-1, #about-paragraph-2, #about-paragraph-3, #about-paragraph-4 {
     white-space: normal; /* Allow word wrapping */
@@ -165,9 +152,7 @@ html, body {
     border-right: none; /* Remove cursor from all except the last paragraph */
 }
 
-
-
-
+/* Navigation styles */
 nav ul {
     display: flex;
     justify-content: center;
@@ -196,17 +181,18 @@ nav ul li a:hover {
 /* Scroll-triggered Menu Button */
 #menu-button {
     position: fixed;
-    top: 20px; /* Distance from the top */
-    left: 20px; /* Position on the left corner */
+    top: 20px;
+    left: 20px;
     background: none;
     border: none;
     cursor: pointer;
-    z-index: 20; /* Ensures it's on top */
-    opacity: 0; /* Initially invisible */
-    transform: scale(1.3); /* Bigger button size */
-    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out; /* Smooth fade-in and scale effect */
-    pointer-events: none; /* Prevent interaction when invisible */
+    z-index: 20;
+    opacity: 0;
+    transform: scale(1.3);
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+    pointer-events: none;
 }
+
 
 /* Make button visible after scrolling with fade-in */
 #menu-button.visible {
@@ -310,7 +296,6 @@ nav ul li a:hover {
     width: 100%; /* Make sure links take the full width */
 }
 
-
 .project-link:hover {
     background-color: var(--muted-red);  /* Dark red hover */
     color: #fff;
@@ -363,30 +348,30 @@ nav ul li a:hover {
 }
 
 /* Skills List Styling */
-
 .skills-list li {
+    position: absolute;
+    padding: 1rem 1.5rem;
+    background-color: #2a2a2a;
+    color: #fff;
+    border-radius: 8px;
     font-size: 1.5rem;
-    padding: 0.5rem;
-    color: #fff;  /* Darker color for text */
-    font-family: 'PublicPixel', sans-serif; /* Use PublicPixel for the skills */
-    margin: 1rem 0;
-    transition: color 0.3s ease-in-out;
+    font-weight: bold;
+    text-align: center;
+    white-space: nowrap;
+    display: inline-block;
 }
+
 
 .skills-list li:hover {
     background-color: var(--muted-red);  /* Dark red hover */
     color: #fff;
 }
 
-
 /* Contact Info Styling */
-
-
 .contact {
     text-align: center;
     margin: auto;
 }
-
 
 .contact-info p {
     font-size: 1.2rem;
@@ -405,6 +390,7 @@ nav ul li a:hover {
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
     transform: translateY(-5px);  /* Subtle hover lift effect */
 }
+
 /* Suppress a:-webkit-any-link */
 .contact-info a:-webkit-any-link {
     color: inherit !important; /* Inherit the text color from the parent */
@@ -415,8 +401,8 @@ nav ul li a:hover {
     font-size: 0.9;
     text-align: right;
     margin-top: 2em;
-
 }
+
 /* Animation for cards */
 @keyframes fadeIn {
     0% { opacity: 0; }
@@ -427,7 +413,6 @@ nav ul li a:hover {
     animation: fadeIn 1.2s ease-in-out;
 }
 
-
 /* Footer */
 footer {
     text-align: center;
@@ -437,5 +422,64 @@ footer {
     color: #1a1a1f;     /* Darker gray for better visibility */
     margin-top: auto; /* Pushes the footer to the bottom */
     margin-left: 2rem;
+}
+
+/* Responsive Design */
+@media only screen and (max-width: 768px) {
+    .about-me p {
+        font-size: 1.8rem; /* Adjust font size for smaller screens */
+    }
+
+    .container h2, .about-me h2 {
+        font-size: 1.5rem; /* Reduce heading size for smaller screens */
+        margin-left: 0;
+    }
+
+    .container {
+        padding: 2rem 1rem; /* Adjust padding for small screens */
+    }
+
+    nav ul {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    nav ul li {
+        margin-left: 0;
+        margin-top: 1.5rem;
+    }
+
+    .project-link, .contact-info p {
+        font-size: 1rem;
+    }
+
+    .project-item {
+        max-width: 100%;
+    }
+
+    .skills-list li {
+        position: relative !important; /* Override absolute position */
+        color: var(--black-text) !important;
+        display: block !important; /* Stack vertically */
+        width: auto !important;
+        margin: 1rem auto !important;
+        transform: none !important;
+        background-color: transparent !important;
+        border-radius: 8px;
+        font-size: 1.2rem !important;
+        padding: 1rem !important;
+    }
+    
+    /* Disable the floating animation on mobile */
+    .skills-container {
+        margin-top: 2rem;
+        height: auto; /* Adjust height to fit content */
+        overflow: visible; /* Allow content to scroll if needed */
+    }
+
+    /* Remove hover scaling effect on mobile */
+    .skills-list li:hover {
+        transform: none;
+    }
 
 }
