@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - TechCon 2023</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    
+    <video autoplay loop muted id="background-video">
+        <source src="images/2.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <header>
+        <nav>
+            <ul>
+                <li class="nav-item"><a href="index.html">Home</a></li>
+                <li class="nav-item"><a href="register.html">Register</a></li>
+                <li class="nav-item"><a href="schedule.html">Schedule</a></li>
+                <li class="nav-item"><a href="speakers.html">Speakers</a></li>
+                <li class="nav-item"><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>     
+    </header>
+    <main>
+        <section id="registration-form">
+            <h1>Register for TechCon 2023</h1>
+            <form action="" method="post" novalidate> <!-- Used novalidate to disable the browsers built in validation mechanism, instead of relying on this, I use Javascript to handle the form validation, https://www.w3schools.com/tags/att_form_novalidate.asp -->
+                <label for="name">Full Name:</label>
+                <input type="text" id="name" name="name" required>
+    
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+    
+                <label for="ticket-type">Ticket Type:</label>
+                <select id="ticket-type" name="ticket-type">
+                    <option value="standard">Standard</option>
+                    <option value="vip">VIP</option>
+                    <option value="student">Student</option>
+                </select>
+    
+                <label for="comments">Comments:</label>
+                <textarea id="comments" name="comments"></textarea>
+                <input type="submit" value="Submit">
+            </form>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2023 TechCon. All Rights Reserved.</p>
+        <p>Follow us on <a href="">Twitter</a> and <a href="">Instagram</a>.</p>    </footer>
+
+        <!-- Script for client-side form validation and handling -->
+        <script> // https://www.youtube.com/watch?v=SBmSRK3feww , Used for basic understanding
+            document.addEventListener('DOMContentLoaded', function() { // https://www.w3schools.com/jsref/met_document_addeventlistener.asp , event listener, once the DOMContentLoaded event is fired, the function is ran
+                var form = document.querySelector('#registration-form form'); // https://www.w3schools.com/jsref/met_document_queryselector.asp , returning the first form element within the element with the id registration-form and stores it
+
+                function validateEmail(email) {
+                    var re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Combination of regex patterns to validate an email address. https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expressions , https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expressions/Character_classes , https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expressions/Assertions
+                    return re.test(email.toLowerCase()); // https://www.w3schools.com/jsref/jsref_regexp_test.asp , test returns true if the string matches the pattern, indicating a valid email
+                }
+
+                function showError(input, message) {
+                    var container = input.parentElement;
+                    var error = container.querySelector('.error-message');
+                    if (!error) {
+                        error = document.createElement('div'); // Creating an element and appending it to the container https://www.w3schools.com/jsref/met_document_createelement.asp
+                        error.className = 'error-message'; // Asigned class for CSS
+                        container.appendChild(error); // https://www.w3schools.com/jsref/met_node_appendchild.asp
+                    }
+                    error.innerText = message; // Setting the text of the error message
+                    input.classList.add('error'); // For more CSS design, added -error- class to the input
+                }
+
+                function clearError(input) {
+                    var container = input.parentElement; // Getting the parent element of the input https://www.w3schools.com/jsref/prop_node_parentelement.asp
+                    var error = container.querySelector('.error-message'); // Searching for an element with class 'error-message' within the container
+                    if (error) {
+                        container.removeChild(error); // Removing error message element if existing
+                    }
+                    input.classList.remove('error'); // Removing -error- class from input
+                }
+
+                form.addEventListener('submit', function(event) {
+                    var isValid = true; // Keeping track of form validity
+                    var name = document.getElementById('name'); // Grabbing the -name- input element
+                    var email = document.getElementById('email'); // Grabbing the -email- input element
+
+                    clearError(name);
+                    clearError(email);
+
+                    if (name.value.trim() === '') {
+                        showError(name, 'Please enter your full name.'); // Showing error if -name- field is empty
+                        isValid = false; // Updating value on line 87
+                    }
+
+                    if (email.value.trim() === '') {
+                        showError(email, 'Please enter your email.'); // Showing error if -email- field is empty
+                        isValid = false;
+                    } else if (!validateEmail(email.value)) {
+                        showError(email, 'Please enter a valid email address.'); // Showing error if -email- is not valid
+                        isValid = false;
+                    }
+
+                    if (!isValid) {
+                        event.preventDefault(); // https://www.w3schools.com/jsref/event_preventdefault.asp , Preventing form submission if form is invalid
+                    } else {
+                        // "Faking" a successful submission
+                        event.preventDefault(); // Preventing default form submission action
+                        alert('Form submitted successfully!'); // Alerting user of successful submission
+                        form.reset(); // Resetting form
+                    }
+                });
+            });
+        </script>
+    
+</body>
+</html>

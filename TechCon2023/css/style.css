@@ -1,0 +1,664 @@
+/* Global Styles */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+/* https://www.w3schools.com/cssref/pr_import_rule.php , here, I imported a style sheet containing the font Poppins into this one. The imported style sheet uses the @font-face Rule. https://www.w3schools.com/cssref/css3_pr_font-face_rule.php ,
+the font was selected from Google Fonts, https://fonts.google.com/specimen/Poppins */
+
+:root {
+    --primary-color: #00befd;
+    --nav-hover-color: #62defd;
+    --text-color: #4e5763;
+    --background-color: rgba(28, 30, 33, 0.8);
+    --font-size-standard: 1.1em; /* Base font size */
+}
+
+/* https://www.w3schools.com/css/css3_variables.asp , using variables for easy theme management. */
+
+html {
+    font-family: 'Poppins', 'Segoe UI', 'Tahoma', 'Geneva', 'Verdana', sans-serif;
+    text-align: center;
+    color: var(--text-color);
+    scrollbar-width: none;
+}   
+
+html::-webkit-scrollbar {
+    display: none;
+}
+
+/* Here, both line 21 and 24-25 are used to hide the scroll bar for firefox and WebKit-based Browsers respectively (which includes Chrome and Safari) https://www.w3schools.com/howto/howto_css_hide_scrollbars.asp */
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+/* First instance of the use of flexbox, line 31-32, the use of flexbox is often used to design complex layouts easily and responsively, https://www.youtube.com/watch?v=G3e-cpL7ofc */
+
+header, footer {
+    background-color: var(--background-color);
+    color: white;
+    padding: 9px 0;
+    width: 100%;
+    z-index: 10;
+    text-shadow: 0 0 3px rgba(0, 0, 0, 0.7); 
+}
+
+/* The z-index is used to position the header and the footer (in this case) over the background video (line 93) which has a z-index of -1 to ensure that the background video stays under the necessary elements*/
+
+main {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;   /* Ensures the direction is in column form */
+    justify-content: center;  /* Which in turn centers the items vertically with justify-content: center */
+    align-items: center;
+    z-index: 10;
+}
+
+nav ul {
+    list-style: none; /* Having list-style set to none overrides the list-style-type: disc used in the user agent stylesheet, this can be demonstrated by unchecking list-style: none; in Chrome's developer tools */
+    padding: 0;
+}
+
+.nav-item {
+    display: inline; 
+    margin: 0 20px;
+}
+
+.nav-item a {   
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: bold;
+    font-size: var(--font-size-standard);
+}
+
+.nav-item a:hover {  /* Hover used to change appearance of the CSS when the mouse is hovering an element, covered in https://www.youtube.com/watch?v=G3e-cpL7ofc */
+    color: var(--nav-hover-color);
+    transition: color 0.2s ease 0s;
+}
+
+
+/* Background video styles */
+#background-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -1;
+
+    /* Cross-Browser Compatibility */
+    background-size: cover; /* Standard CSS property to set the size of the background image */
+    -webkit-background-size: cover; /* To ensure it works in older webkit-based browsers*/
+    -moz-background-size: cover;    /* Firefox, moz standing for "Mozilla", mainly to ensure it works with old versions of Firefox */ 
+    -o-background-size: cover;      /* Same applies for Opera -o- */
+}
+
+/* Footer Styles */
+
+:root {
+    --footer-link-color: #1DA1F2;
+    --footer-text-color: white;
+    --font-size-standard: 1em;
+}
+
+footer a {
+    color: var(--footer-link-color);
+    font-weight: bold;
+    text-decoration: none;
+    font-size: var(--font-size-standard);
+}
+
+footer p {
+    font-size: var(--font-size-standard);
+    margin: 10px;
+}
+
+
+
+/* Index Page Specific */
+
+:root {
+    --white-color: rgb(255, 255, 255);
+    --cta-button-color: #0f70ca;
+    --cta-button-shadow: rgba(0, 0, 0, 0.2);
+    --cta-hover-shadow: rgba(0, 0, 0, 0.3);
+    --font-size-large: 3em;
+    --font-size-medium: 1.2em;
+}
+
+#conference-overview {
+    flex-grow: 1;
+    color: var(--white-color);
+    padding: 40px 20px;
+    margin-top: 50px;
+}
+
+#conference-text, #conference-overview h1 {
+    color: var(--white-color);
+}
+
+#conference-overview h1 {
+    font-size: var(--font-size-large);
+    margin-bottom: 0.5em;
+}
+
+.cta-button {
+    display: block;
+    padding: 15px 30px;
+    margin: 0 auto 20px;
+    background-color: var(--cta-button-color);
+    color: var(--white-color);
+    text-decoration: none;
+    border-radius: 40px;
+    font-size: var(--font-size-medium);
+    font-weight: bold;
+    transition: all 0.3s ease 0s;
+    box-shadow: 0 2px 4px var(--cta-button-shadow);
+    max-width: 200px;
+}
+
+.cta-button:hover {
+    background-color: var(--primary-color);
+    box-shadow: 0 4px 8px var(--cta-hover-shadow);
+    transform: translateY(-3px);
+}
+
+
+
+/* Register Page Specific */
+
+:root {
+    --form-background-color: rgba(28, 30, 33, 0.8);
+    --form-text-color: white;
+    --form-border-color: rgba(255, 255, 255, 0.75); /* Lighter white for borders */
+    --form-error-color: red;
+    --input-background-color: #333; /* Dark background for inputs */
+    --button-background-color: #0d6efd;
+    --button-text-color: white;
+    --border-radius: 4px;
+    --font-size-standard: 1em;
+}
+
+#registration-form {
+    max-width: 600px;
+    margin: 15px auto; /* Centered horizontally */
+    padding: 20px;
+    background: var(--form-background-color);
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Stronger box-shadow for depth */
+    color: var(--form-text-color);
+    text-align: left; /* Align text to the left */
+}
+
+#registration-form h1 {
+    margin-bottom: 1em;
+    text-align: center; /* Centering the heading */
+}
+
+#registration-form form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+#registration-form label {
+    font-weight: bold;
+    color: var(--form-border-color); /* Lighter text for labels */
+}
+
+#registration-form input[type="text"],
+#registration-form input[type="email"],
+#registration-form select,
+#registration-form textarea {
+    padding: 10px;
+    border: 1px solid var(--form-border-color);
+    border-radius: var(--border-radius);
+    background-color: var(--input-background-color); /* Slightly visible background */
+    color: var(--form-text-color);
+    box-sizing: border-box;
+}
+
+#registration-form select {
+    font-family: Poppins;
+    appearance: none; /* My aim here is to remove the dropdown arrow for aesthetics */
+    -webkit-appearance: none; /* Same compatibility reasons as berfore */
+    -moz-appearance: none;    /* Same compatibility reasons as berfore */
+}
+
+#registration-form select option {
+    background: var(--background-color);
+    color: var(--form-text-color);
+}
+
+#registration-form input[type="submit"] {
+    padding: 10px 20px;
+    background: var(--button-background-color);
+    color: var(--button-text-color);
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 1.1em;
+    transition: all 0.3s ease 0s;
+    margin-top: 15px; /* Added space above the submit button */
+}
+
+#registration-form input[type="submit"]:hover,
+#registration-form input[type="submit"]:focus {
+    background: var(--primary-color);
+    transform: translateY(-3px);
+}
+
+
+/* Error Form Script */
+
+:root {
+    --form-error-color: #ff0000;
+}
+
+.error-message { /* Assigned class in line 70 of register.html and 74 of contact.html*/
+    color: var(--form-error-color);
+    font-size: 0.8em;
+    margin-top: 5px;
+}
+
+input.error {
+    border: 1px solid var(--form-error-color); /* Created on line 74 of register.html and 78 of contact.html */
+}
+
+
+
+/* Schedule Page Specific */
+
+:root {
+    --schedule-border-color: rgba(255, 255, 255, 0.2);
+    --schedule-background-color: rgba(0, 0, 0, 0.8);
+    --text-color-white: #ffffff;
+    --text-color-white-transparent: rgba(255, 255, 255, 0.75);
+    --border-radius-standard: 8px;
+    --padding-standard: 20px;
+    --day-button-colour: #0f70ca;
+    --day-button-shadow: rgba(0, 0, 0, 0.2);
+    --day-hover-shadow: rgba(0, 0, 0, 0.3);
+}
+
+/* Initial visibility for schedule */
+#schedule-section h2:not(#day1),
+#schedule-section table:not(:first-of-type) {
+    display: none;
+}
+
+#schedule-section {
+    margin: 20px;
+    padding: var(--padding-standard);
+    border: 1px solid var(--schedule-border-color);
+    border-radius: var(--border-radius-standard);
+    background-color: var(--schedule-background-color);
+}
+
+#schedule-section h1,
+#schedule-section h2 {
+    color: var(--text-color-white);
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+#schedule-section table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#schedule-section th,
+#schedule-section td {
+    color: var(--text-color-white-transparent);
+    padding: 10px;
+    border: 1px solid var(--text-color-white-transparent);
+}
+
+/* General button styling */
+#day-filters button {
+    background-color: var(--day-button-colour);
+    border: none;
+    color: var(--text-color-white);
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 8px;
+    cursor: pointer;
+    border-radius: var(--border-radius-standard);
+    transition-duration: 0.4s;
+  }
+  
+  
+  /* Button hover effects */
+  #day-filters button:hover {
+    color: white;
+    background-color: var(--primary-color);
+    box-shadow: 0 4px 8px var(--day-hover-shadow);
+    transform: translateY(-3px); /* Same CSS properties as the CTA button */
+  }
+  
+/* Speaker Page Specific */
+
+:root {
+    --text-color-white: #ffffff;
+    --text-color-white-transparent: rgba(255, 255, 255, 0.75);
+    --font-size-standard: 1em;
+    --font-size-large: 2em;
+    --overlay-background-color: rgba(0, 0, 0, 0.5);
+    --padding-standard: 20px;
+    --margin-small: 10px;
+    --margin-medium: 20px;
+    --speaker-image-height: 200px;
+}
+
+#speakers-section {
+    color: var(--text-color-white);
+    text-align: center;
+    padding: var(--padding-standard);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+#speakers-section h1 {
+    text-align: center;
+    font-size: var(--font-size-large);
+    width: 100%;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 20;
+}
+
+.speaker {
+    margin-bottom: 40px;
+    position: relative;
+    cursor: pointer;
+    flex: 1 0 200px;
+    max-width: calc(50% - 20px);
+}
+
+.speaker img {
+    width: 100%;
+    height: var(--speaker-image-height);
+    transition: opacity 0.3s ease;
+    object-fit: cover;
+    margin-bottom: 20px;
+}
+
+.speaker .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 99%;
+    height: 70%;
+    background: var(--overlay-background-color);
+    color: var(--text-color-white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    text-align: center;
+    border: 2px solid white;
+}
+
+
+/* Display the overlay on hover */
+.speaker:hover .overlay {
+    opacity: 1;
+}
+
+.speaker:hover img {
+    opacity: 0.7;
+}
+
+.speaker h2 {
+    margin: var(--margin-small) 0;
+}
+
+.speaker p {
+    margin-bottom: var(--margin-medium);
+    color: var(--text-color-white-transparent);
+    font-size: var(--font-size-standard);
+}
+
+
+
+/* Contact Page Specific */
+
+:root {
+    --contact-background-color: rgba(28, 30, 33, 0.8);
+    --text-color-white: #ffffff;
+    --text-color-white-transparent: rgba(255, 255, 255, 0.75);
+    --input-background-color: rgba(255, 255, 255, 0.1);
+    --button-background-color: #0d6efd;
+    --border-radius-standard: 8px;
+    --border-radius-large: 20px;
+    --font-size-standard: 1em;
+    --font-size-medium: 1.1em;
+    --padding-standard: 20px;
+    --margin-standard: 25px;
+    --gap-standard: 13px;
+}
+
+#contact-section {
+    max-width: 600px;
+    margin: var(--margin-standard) auto;
+    padding: var(--padding-standard);
+    background: var(--contact-background-color);
+    border-radius: var(--border-radius-standard);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    color: var(--text-color-white);
+    text-align: left;
+}
+
+#contact-section h1 {
+    color: var(--text-color-white);
+    margin-bottom: 1em;
+    text-align: center;
+}
+
+#contact-section form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-standard);
+}
+
+#contact-section label {
+    font-weight: bold;
+    color: var(--text-color-white-transparent);
+}
+
+#contact-section input[type="text"],
+#contact-section input[type="email"],
+#contact-section textarea {
+    padding: 10px;
+    border: 1px solid var(--text-color-white-transparent);
+    border-radius: var(--border-radius-standard);
+    background-color: var(--input-background-color);
+    color: var(--text-color-white);
+    box-sizing: border-box;
+}
+
+#contact-section input[type="submit"] {
+    padding: 10px 20px;
+    background: var(--button-background-color);
+    color: var(--text-color-white);
+    border: none;
+    border-radius: var(--border-radius-large);
+    cursor: pointer;
+    font-size: var(--font-size-medium);
+    transition: all 0.3s ease;
+    margin-top: 15px;
+}
+
+#contact-section input[type="submit"]:hover,
+#contact-section input[type="submit"]:focus {
+    background: var(--primary-color);
+    transform: translateY(-3px);
+}
+
+#additional-contact-info {
+    margin-top: 20px;
+    padding: 10px;
+    background: var(--contact-background-color);
+    border-radius: var(--border-radius-standard);
+    color: var(--text-color-white);
+    text-align: left;
+}
+
+#additional-contact-info p {
+    margin: 8px 0;
+}
+
+
+/* Modal Styles */
+
+:root {
+    --modal-background-color: rgba(0, 0, 0, 0.4);
+    --modal-content-background: #fefefe;
+    --modal-content-border-color: #888;
+    --modal-text-color: #333;
+    --close-button-color: #aaa;
+    --close-button-hover-color: black;
+    --border-radius-small: 5px;
+    --font-size-large: 28px;
+    --padding-standard: 20px;
+}
+
+.modal {  /* Styling of the modal boxes and content, https://www.w3schools.com/howto/howto_css_modals.asp */
+    display: none;
+    position: fixed;
+    z-index: 10;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: var(--modal-background-color);
+}
+
+.modal-content {
+    background-color: var(--modal-content-background);
+    padding: var(--padding-standard);
+    border: 1px solid var(--modal-content-border-color);
+    width: 60%;
+    border-radius: var(--border-radius-small);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    color: var(--modal-text-color);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.close {
+    color: var(--close-button-color);
+    float: right;
+    font-size: var(--font-size-large);
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: var(--close-button-hover-color);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+
+@media (max-width: 768px) {  /* https://www.w3schools.com/cssref/css3_pr_mediaquery.php , the use of media queries "to apply different styles for different media types/devices" */
+    :root {
+        --responsive-width: 90%;
+        --small-padding: 10px;
+        --small-margin-top: 20px;
+        --small-font-size: 0.8em;
+        --cell-padding-small: 8px;
+    }
+
+    #registration-form {
+        width: var(--responsive-width);
+        padding: var(--small-padding);
+        margin-top: var(--small-margin-top);
+    }
+
+    #registration-form input[type="submit"] {
+        width: 100%;
+        padding: 15px;
+    }
+
+    #schedule-section {
+        width: var(--responsive-width);
+        margin: 0 auto;
+        padding: var(--small-padding);
+    }
+
+    #schedule-section table {
+        font-size: var(--small-font-size);
+    }
+
+    #schedule-section th,
+    #schedule-section td {
+        padding: var(--cell-padding-small);
+    }
+
+    #schedule-section th:nth-child(4),
+    #schedule-section td:nth-child(4) {
+        display: none;
+    }
+
+    #contact-section {
+        width: var(--responsive-width);
+        padding: var(--small-padding);
+        margin-top: var(--small-margin-top);
+    }
+
+    #contact-section input[type="submit"] {
+        width: 100%;
+        padding: 15px;
+    }
+
+    #additional-contact-info {
+        background: none;
+    }
+
+    #speakers-section h1 {
+        position: relative;
+        transform: translateX(0);
+        left: 0;
+        top: 0;
+        padding: 20px 0;
+    }
+
+    #speakers-section {
+        padding-top: 0;
+    }
+
+    .speaker {
+        max-width: 100%;
+    }
+
+    .speaker img {
+        height: auto;
+        max-width: 100%;
+    }
+
+    .speaker .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+}

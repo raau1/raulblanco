@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speakers - TechCon 2023</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <video autoplay loop muted id="background-video">
+        <source src="images/2.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <header>
+        <nav>
+            <ul>
+                <li class="nav-item"><a href="index.html">Home</a></li>
+                <li class="nav-item"><a href="register.html">Register</a></li>
+                <li class="nav-item"><a href="schedule.html">Schedule</a></li>
+                <li class="nav-item"><a href="speakers.html">Speakers</a></li>
+                <li class="nav-item"><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>     
+    </header>
+
+    <main>
+        <section id="speakers-section">
+            <h1>Meet Our Speakers</h1>
+            <!-- Speaker 1 -->
+            <div class="speaker" onclick="openModal('modalDiana')"> <!-- Using the HTML onclick Attribute to call the open function on line 100 https://www.w3schools.com/tags/att_onclick.asp -->
+                <img src="images/diana.webp" alt="Diana Prince">
+                <div class="overlay">Click to learn more</div>
+                <h2>Diana Prince</h2>
+            </div>
+            <!-- Speaker 2 -->
+            <div class="speaker" onclick="openModal('modalBarry')"> 
+                <img src="images/barry.webp" alt="David Kim">
+                <div class="overlay">Click to learn more</div>
+                <h2>Barry Allen</h2>
+            </div>
+            <!-- Speaker 3 -->
+            <div class="speaker" onclick="openModal('modalNicole')">
+                <img src="images/nicole.webp" alt="Nicole Fury">
+                <div class="overlay">Click to learn more</div>
+                <h2>Nicole Fury</h2>
+            </div>
+            <!-- Speaker 4 -->
+            <div class="speaker" onclick="openModal('modalJor')">
+                <img src="images/jor.webp" alt="Jor-El">
+                <div class="overlay">Click to learn more</div>
+                <h2>Jor-El</h2>
+            </div>
+
+            <!-- Modals for each speaker -->
+
+            <!-- Modal for Diana Prince -->
+            <div id="modalDiana" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="closeModal('modalDiana')">&times;</span> <!-- Stating that when the "x" is clicked, the function "closeModal" from line 106 will run, https://www.w3schools.com/howto/howto_css_modals.asp -->
+                    <h2>Diana Prince</h2>
+                    <p>Diana Prince is a leading expert in blockchain technology with over a decade of experience in the field. She will be speaking on the topic "Blockchain Beyond Cryptocurrencies", exploring the vast potentials of blockchain in various industries.</p>
+                </div>
+            </div>
+            <!-- Modal for Barry Allen -->
+            <div id="modalBarry" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="closeModal('modalBarry')">&times;</span>
+                    <h2>Barry Allen</h2>
+                    <p>Barry Allen is an AI researcher with a focus on the ethical development of artificial intelligence. His talk "Ethical Considerations in AI" will discuss the importance of ethical practices in the rapidly evolving field of AI.</p>
+                </div>
+            </div>
+            <!-- Modal for Nicole Fury -->
+            <div id="modalNicole" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="closeModal('modalNicole')">&times;</span>
+                    <h2>Nicole Fury</h2>
+                    <p>Nicole Fury is a cybersecurity specialist with extensive experience in network security and threat analysis. Her session "New Age Cybersecurity Challenges" will address current and emerging threats in the digital space.</p>
+                </div>
+            </div>
+            <!-- Modal for Jor-El -->
+            <div id="modalJor" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="closeModal('modalJor')">&times;</span>
+                    <h2>Jor-El</h2>
+                    <p>Jor-El is a renowned software architect known for his work on scalable application frameworks. His presentation will delve into "Architectural Patterns for Scalable Applications", providing insights into building robust software architectures.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 TechCon. All Rights Reserved.</p>
+        <p>Follow us on <a href="">Twitter</a> and <a href="">Instagram</a>.</p>
+    </footer>
+
+    <script> // https://www.youtube.com/watch?v=SBmSRK3feww Used for basic understanding
+        // Simple function to open a modal window https://www.w3schools.com/howto/howto_css_modals.asp 
+        function openModal(modalId) { 
+            var modal = document.getElementById(modalId);
+            modal.style.display = "block";
+        }
+
+        // Function to close the modal window
+        function closeModal(modalId) {
+            var modal = document.getElementById(modalId);
+            modal.style.display = "none";
+        }
+ 
+        // Clicking anywhere outside of the modal will close it
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>

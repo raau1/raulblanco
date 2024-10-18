@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schedule - TechCon 2023</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Initial visibility for schedule */
+        #schedule-section h2:not(#day1),
+        #schedule-section table:not(:first-of-type) {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <video autoplay loop muted id="background-video">
+        <source src="images/2.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <header>
+        <nav>
+            <ul>
+                <li class="nav-item"><a href="index.html">Home</a></li>
+                <li class="nav-item"><a href="register.html">Register</a></li>
+                <li class="nav-item"><a href="schedule.html">Schedule</a></li>
+                <li class="nav-item"><a href="speakers.html">Speakers</a></li>
+                <li class="nav-item"><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>     
+    </header>
+
+    <main>
+        <section id="schedule-section">
+            <h1>Event Schedule</h1>
+
+            <!-- Day selection buttons -->
+            <div id="day-filters">
+                <button onclick="filterSchedule('day1')">Day 1</button>
+                <button onclick="filterSchedule('day2')">Day 2</button>
+                <button onclick="filterSchedule('day3')">Day 3</button>
+                <button onclick="filterSchedule('day4')">Day 4</button>
+            </div>
+
+            <!-- Schedule for Day 1 -->
+            <h2 id="day1">Day 1: July 12</h2>
+            <table>
+                <tr>
+                    <th>Time</th>
+                    <th>Session</th>
+                    <th>Speaker</th>
+                    <th>Location</th>
+                </tr>
+                <tr>
+                    <td>9:00 AM - 10:00 AM</td>
+                    <td>Welcome Session</td>
+                    <td>Diana Prince</td>
+                    <td>Main Hall</td>
+                </tr>
+                <tr>
+                    <td>10:15 AM - 11:00 AM</td>
+                    <td>The Future of AI</td>
+                    <td>Barry Allen</td>
+                    <td>Room 101</td>
+                </tr>
+                <tr>
+                    <td>11:15 AM - 12:00 PM</td>
+                    <td>Breakthroughs in Quantum Computing</td>
+                    <td>Nicole Fury</td>
+                    <td>Room 102</td>
+                </tr>
+            </table>
+
+            <!-- Schedule for Day 2 -->
+            <h2 id="day2">Day 2: July 13</h2>
+            <table>
+                <tr>
+                    <th>Time</th>
+                    <th>Session</th>
+                    <th>Speaker</th>
+                    <th>Location</th>
+                </tr>
+                <tr>
+                    <td>9:00 AM - 10:00 AM</td>
+                    <td>Exploring Cybersecurity Trends</td>
+                    <td>Jor-El</td>
+                    <td>Main Hall</td>
+                </tr>
+                <tr>
+                    <td>10:15 AM - 11:00 PM</td>
+                    <td>Panel Discussion: The Internet of Things</td>
+                    <td>Various Speakers</td>
+                    <td>Room 102</td>
+                </tr>
+            </table>
+
+            <!-- Schedule for Day 3 -->
+            <h2 id="day3">Day 3: July 14</h2>
+            <table>
+                <tr>
+                    <th>Time</th>
+                    <th>Session</th>
+                    <th>Speaker</th>
+                    <th>Location</th>
+                </tr>
+                <tr>
+                    <td>10:00 AM - 11:00 AM</td>
+                    <td>Blockchain Beyond Cryptocurrencies</td>
+                    <td>Diana Prince</td>
+                    <td>Main Hall</td>
+                </tr>
+            </table>
+
+            <!-- Schedule for Day 4 -->
+            <h2 id="day4">Day 4: July 15</h2>
+            <table>
+                <tr>
+                    <th>Time</th>
+                    <th>Session</th>
+                    <th>Speaker</th>
+                    <th>Location</th>
+                </tr>
+                <tr>
+                    <td>10:00 AM - 11:00 AM</td>
+                    <td>Ethical Considerations in AI</td>
+                    <td>Barry Allen</td>
+                    <td>Room 101</td>
+                </tr>
+            </table>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 TechCon. All Rights Reserved.</p>
+        <p>Follow us on <a href="">Twitter</a> and <a href="">Instagram</a>.</p>
+    </footer>
+
+    <script>
+        function filterSchedule(day) { // Define the filterSchedule function
+            // Hide all days
+            var days = document.querySelectorAll('#schedule-section > h2, #schedule-section > table'); // Select all <h2> elements and <table> elements that are direct children of the element with ID -schedule-section-
+            days.forEach(function(elem) { // Iterates over each element in days, https://www.w3schools.com/jsref/jsref_foreach.asp  
+                elem.style.display = 'none'; // Set the display CSS property of each element to 'none' to hide them
+            });
+
+            // Show selected day
+            document.getElementById(day).style.display = 'block'; // Selecting the element with the specific ID matching the -day- argument and set its display property to -block- to show it
+            document.getElementById(day).nextElementSibling.style.display = 'block'; // nextElementSibling selects the next sibling element in the DOM, https://www.w3schools.com/jsref/prop_element_nextelementsibling.asp
+        }
+    </script>
+</body>
+</html>
