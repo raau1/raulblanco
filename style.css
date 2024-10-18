@@ -88,7 +88,7 @@ h2 {
 
 .project-item {
     width: 100%;
-    max-width: 400px; /* Restrict width for better control */
+    max-width: 450px; /* Restrict width for better control */
     text-align: center; /* Center content within */
 }
 
@@ -114,7 +114,6 @@ h2 {
     margin-left: 3.5rem;
     line-height: 2; /* Adjust the line height to add more space between lines */
     text-align: center;
-    max-width: 350px;
 }
 
 .project-link:hover {
@@ -122,6 +121,40 @@ h2 {
     color: #fff;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
     transform: translateY(-5px);  /* Subtle hover lift effect */
+}
+
+/* Project date styling */
+.project-date {
+    font-size: 1rem;  /* Same size as description */
+    color: #555555;   /* Slightly lighter color than normal text */
+    margin-top: 1.1rem;
+    margin-bottom: 0.5rem;
+    margin-left: 3rem;
+}
+
+/* Tech Buttons */
+.tech-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1.9rem;
+    margin-bottom: 1rem;
+    margin-left: 3.3rem;
+}
+
+.tech-btn {
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+    border: 2px dotted #333333; /* Dotted border */
+    background-color: transparent; /* Transparent background */
+    color: #333333;
+    border-radius: 5px;
+    transition: all 0.3s ease-in-out;
+}
+
+.tech-btn:hover {
+    border-color: #a00000; /* Change border color on hover */
+    color: #a00000; /* Change text color on hover */
 }
 
 /* Skills and Contact List */
