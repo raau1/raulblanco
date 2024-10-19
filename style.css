@@ -532,4 +532,38 @@ footer {
         transform: none;
     }
 
+    /* Certifications Section */
+    .certification h3 {
+        font-size: 1rem;  /* Reduce heading size on mobile */
+        line-height: 1.4;
+    }
+
+    .certification img {
+        max-width: 94%;  /* Scale down image on smaller screens */
+    }
+
+    .certification figcaption {
+        margin-top: 1.2rem;
+    }
+
+    .certification figcaption a {
+        font-size: 1rem; /* Smaller font size for link button */
+        padding: 0.5rem; /* Adjust padding */
+        display: block; /* Ensure the button takes up full width */
+        width: 80%;
+        margin: 0 auto; /* Center the button */
+        line-height: 1.2;
+
+    }
+
+    /* Smaller footer on mobile */
+    footer {
+        font-size: 0.8rem; /* Smaller font size */
+        padding: 0.5rem;   /* Reduced padding */
+        margin-right: 2rem;
+        text-align: center;
+        line-height: 1.2;
+    }
+
+
 }
