@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Campus Essentials Locator</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Background with a light gradient overlay */
+        body {
+            background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(240, 240, 240, 0.9)), url('leicester-campus.jpg') no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Poppins', sans-serif;
+            color: #2E2E2E;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        /* Login Card Styling with Enhanced Shadow */
+        .login-card {
+            background-color: #ffffff; /* Solid white background */
+            color: #2E2E2E;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Enhanced shadow for depth */
+            padding: 40px 30px;
+            max-width: 400px;
+            text-align: center;
+            width: 100%;
+        }
+
+        .login-card h2 {
+            color: #e4042c; /* University red color */
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        /* Login button styling */
+        .login-button {
+            background-color: #e4042c;
+            border: none;
+            color: #ffffff;
+            font-weight: 500;
+            border-radius: 5px;
+            padding: 10px;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+
+        .login-button:hover {
+            background-color: #b40324;
+        }
+        
+        /* Error message styling */
+        #loginError {
+            color: #e4042c;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-card">
+        <img src="uol_logo.png" alt="University of Leicester Logo" style="width: 100px; margin-bottom: 20px;">
+        <h2>Campus Essentials Locator</h2>
+        <p class="mb-4">Sign in to access campus amenities and resources</p>
+        <div class="mb-3">
+            <input type="text" id="username" class="form-control" placeholder="Username">
+        </div>
+        <div class="mb-3">
+            <input type="password" id="password" class="form-control" placeholder="Password">
+        </div>
+        <p id="loginError" style="display: none;">Invalid credentials, try again.</p>
+        <button onclick="handleLogin()" class="btn login-button">Login</button>
+    </div>
+
+    <script src="login.js"></script>
+</body>
+</html>

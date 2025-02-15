@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reviews with Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.Default.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .star-rating {
+            color: blue;
+            font-size: 2em;
+            cursor: pointer;
+        }
+        .review-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .review-item {
+            margin-bottom: 1em;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 0.5em;
+        }
+        #map {
+            height: 400px;
+            margin-bottom: 20px;
+        }
+        #sidebar {
+            position: fixed;
+            right: -300px; /* Hide it by default */
+            top: 0;
+            width: 300px;
+            height: 100%;
+            background: #f4f4f4;
+            box-shadow: -2px 0px 5px rgba(0, 0, 0, 0.2);
+            overflow-y: auto;
+            transition: right 0.3s;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        #sidebar.open {
+            right: 0; /* Show sidebar when open */
+        }
+        #closeSidebar {
+            cursor: pointer;
+            float: right;
+            font-weight: bold;
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+        h2 {
+            margin: 0 0 10px 0; /* Margin for heading */
+        }
+        h1 {
+            margin: 0 0 20px 0; /* Margin for main title */
+        }
+        form {
+            margin-bottom: 20px; /* Space below the form */
+        }
+        textarea {
+            width: 100%;
+            height: 100px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            resize: none;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Leave a Review</h1>
+<form id="reviewForm">
+    <input type="text" id="name" placeholder="Your Name" required><br><br>
+    <label for="place">Choose a Place: <br></label>
+    <select id="place" required>
+        <option value="" disabled selected>Select a place</option>
+        <option value="Park Cafe" data-lat="22.2839" data-lng="114.1587">Park Cafe</option>
+        <option value="Beachside Restaurant" data-lat="22.2720" data-lng="114.2444">Beachside Restaurant</option>
+        <option value="Mountain Retreat" data-lat="22.3070" data-lng="114.1773">Mountain Retreat</option>
+        <option value="City Library" data-lat="22.3236" data-lng="114.1694">City Library</option>
+        <option value="Art Gallery" data-lat="22.2835" data-lng="114.1560">Art Gallery</option>
+    </select><br><br>
+    <label>Rating:</label><br>
+    <div id="stars" class="star-rating">
+        <span data-value="1">☆</span>
+        <span data-value="2">☆</span>
+        <span data-value="3">☆</span>
+        <span data-value="4">☆</span>
+        <span data-value="5">☆</span>
+    </div><br>
+    <textarea id="comment" placeholder="Your Comment" required></textarea><br>
+    <button type="submit">Submit</button>
+</form>
+
+<h2>Reviews</h2>
+<ul id="reviewList" class="review-list"></ul>
+<div id="map"></div>
+
+<!-- Sidebar for showing reviews -->
+<div id="sidebar">
+    <span id="closeSidebar">&times;</span>
+    <h2>Reviews</h2>
+    <ul id="sidebarReviewList" class="review-list"></ul>
+</div>
+
+<script>
+    const reviewForm = document.getElementById('reviewForm');
+    const reviewList = document.getElementById('reviewList');
+    const sidebar = document.getElementById('sidebar');
+    const sidebarReviewList = document.getElementById('sidebarReviewList');
+    const closeSidebar = document.getElementById('closeSidebar');
+    const stars = document.querySelectorAll('#stars span');
+    let rating = 0;
+    const reviewsByPlace = {};
+
+    // Initialize the map and marker cluster group
+    const map = L.map('map').setView([22.2839, 114.1587], 15);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '© OpenStreetMap'
+    }).addTo(map);
+    const markerClusterGroup = L.markerClusterGroup().addTo(map);
+
+    // Star rating handling
+    stars.forEach(star => {
+        star.addEventListener('click', () => {
+            rating = star.getAttribute('data-value');
+            updateStarDisplay(rating);
+        });
+        star.addEventListener('mouseover', () => {
+            const hoverValue = star.getAttribute('data-value');
+            updateStarDisplay(hoverValue);
+        });
+        star.addEventListener('mouseout', () => {
+            updateStarDisplay(rating);
+        });
+    });
+
+    function updateStarDisplay(value) {
+        stars.forEach(star => {
+            star.textContent = star.getAttribute('data-value') <= value ? '★' : '☆';
+        });
+    }
+
+    // Form submission handling
+    reviewForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const name = document.getElementById('name').value;
+        const placeSelect = document.getElementById('place');
+        const place = placeSelect.value;
+        const lat = parseFloat(placeSelect.options[placeSelect.selectedIndex].dataset.lat);
+        const lng = parseFloat(placeSelect.options[placeSelect.selectedIndex].dataset.lng);
+        const comment = document.getElementById('comment').value;
+
+        if (rating === 0) {
+            alert("Please select a star rating!");
+            return;
+        }
+
+        const reviewHTML = `
+            <strong>${name}</strong> - <span class="star-rating">${'★'.repeat(rating)}${'☆'.repeat(5 - rating)}</span><br>
+            <small>${new Date().toLocaleDateString()}</small><br>${comment}<br><br>
+        `;
+
+        if (!reviewsByPlace[place]) {
+            reviewsByPlace[place] = { reviews: [], lat: lat, lng: lng, marker: null };
+        }
+        reviewsByPlace[place].reviews.push(reviewHTML);
+
+        const reviewItem = document.createElement('li');
+        reviewItem.className = 'review-item';
+        reviewItem.innerHTML = `<em>${place}</em>: ${reviewHTML}`;
+        reviewList.prepend(reviewItem);
+
+        if (!reviewsByPlace[place].marker) {
+            const marker = L.marker([lat, lng]).addTo(markerClusterGroup);
+            reviewsByPlace[place].marker = marker;
+
+            // Bind a popup with the place name
+            marker.bindPopup(`<strong>${place}</strong>`);
+
+            marker.on('click', () => openSidebar(place));
+        }
+
+        reviewForm.reset();
+        updateStarDisplay(0);
+        rating = 0;
+    });
+
+    function openSidebar(place) {
+        sidebarReviewList.innerHTML = '';
+        reviewsByPlace[place].reviews.forEach(reviewHTML => {
+            const reviewItem = document.createElement('li');
+            reviewItem.className = 'review-item';
+            reviewItem.innerHTML = reviewHTML;
+            sidebarReviewList.appendChild(reviewItem);
+        });
+        sidebar.classList.add('open');
+    }
+
+    closeSidebar.addEventListener('click', () => {
+        sidebar.classList.remove('open');
+    });
+    // Add a marker for Leicester
+    var locations = [
+        { coords: [22.2839, 114.1587], popup: "Leicester, UK" },
+        { coords: [51.5074, -0.1278], popup: "London, UK" },
+        { coords: [53.4839, -2.2446], popup: "Manchester, UK" },
+        { coords: [55.9533, -3.1883], popup: "Edinburgh, UK" }
+    ];
+
+    locations.forEach(function(location) {
+        L.marker(location.coords).addTo(map)
+            .bindPopup(location.popup);
+    });
+</script>
+
+</body>
+</html>

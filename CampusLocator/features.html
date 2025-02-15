@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Essentials Locator</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="features.css"> <!-- Link to your CSS file -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+</head>
+
+    <!-- Responsive Header with Logo, Title, and Login Button -->
+    <header class="header-minimal">
+        <div class="header-container">
+            <!-- Logo and Login Button (Visible only on mobile) -->
+            <div class="logo-title-container">
+                <a href="index.html" ><img src="uol_logo.png" alt="University of Leicester" class="header-logo"></a>
+                <a href="login.html" class="login-button mobile-login">Log In</a> <!-- Visible on mobile only -->
+            </div>
+            
+            <!-- Title (Centered) -->
+            <h1 class="header-title desktop-title">Campus Essentials Locator</h1>
+            <!-- Login Button (Visible only on desktop) -->
+            <a href="#login" class="login-button desktop-login">Log In</a> <!-- Visible on desktop only -->
+        </div>
+    </header>
+
+    <section id="filter-buttons">
+        <button onclick="filterResults('group-study')">Study Spaces</button>
+        <button onclick="filterResults('microwave-stations')">Microwave Stations</button>
+        <button onclick="filterResults('bike-spaces')">Bike Spaces</button>
+        <button onclick="filterResults('water-dispensers')">Water Dispensers</button>
+    </section>
+
+    <section id="poi-list" class="building-container">
+        <div class="heading-container">
+            <h2>Buildings</h2>
+        </div>
+
+        <!-- Building Section: Sir Bob Burgess -->
+        <div class="building">
+            <h3>Sir Bob Burgess</h3>
+
+            <div class="poi-item group-study">
+                <h4>Study Space</h4>
+                <p><strong>Location:</strong> 1st Floor</p>
+                <p><strong>Directions:</strong> Take the stairs to the 1st floor, find the space on the left.</p>
+                <p><strong>Features:</strong> Charging points, heater nearby, tables with a view.</p>
+                <p><strong>Quick Tip:</strong> Quieter in early mornings and late afternoons.</p>
+                <h4>Map:</h4>
+                <p>This area displays the location of study spaces and other facilities on campus.</p>
+
+                <img src=SBB.jpeg width="500">
+            </div>
+
+            <div class="poi-item microwave-stations">
+                <h4>Microwave Station</h4>
+                <p><strong>Location:</strong> Ground Floor, Near Student Lounge</p>
+                <p><strong>Directions:</strong> Walk past reception; microwaves are on the left.</p>
+                <p><strong>Features:</strong> Two microwaves, cleaning supplies, nearby seating.</p>
+                <p><strong>Quick Tip:</strong> Avoid lunchtime by visiting early or late.</p>
+                <h4>Map:</h4>
+                <p>This area displays the location of study spaces and other facilities on campus.</p>
+                <img src=SBB.jpeg width="500">
+            </div>
+
+            <div class="poi-item bike-spaces">
+                <h4>Bike Spaces</h4>
+                <p><strong>Location:</strong> Outside Main Entrance</p>
+                <p><strong>Directions:</strong> Right outside the main entrance.</p>
+                <p><strong>Features:</strong> 20 bike racks, security cameras, lighting at night.</p>
+                <p><strong>Quick Tip:</strong> Use a sturdy lock, especially during peak hours.</p>
+                <h4>Map:</h4>
+                <p>This area displays the location of study spaces and other facilities on campus.</p>
+                <img src=SBB.jpeg width="500">
+            </div>
+
+            <div class="poi-item water-dispensers">
+                <h4>Water Dispenser</h4>
+                <p><strong>Location:</strong> 2nd Floor, Near Elevators</p>
+                <p><strong>Directions:</strong> Head to the 2nd floor; near the elevators on the west side.</p>
+                <p><strong>Features:</strong> Cold and room temperature options, cups, nearby waste bin.</p>
+                <p><strong>Quick Tip:</strong> Mornings are best to avoid queues.</p>
+                <h4>Map:</h4>
+                <p>This area displays the location of study spaces and other facilities on campus.</p>
+                <img src=SBB.jpeg width="500">
+            </div>
+        </div>
+
+        <!-- Building Section: Percy Gee -->
+        <div class="building">
+            <h3>Percy Gee</h3>
+
+            <div class="poi-item group-study">
+                <h4>Study Space</h4>
+                <p><strong>Location:</strong> Ground Floor, Near Cafeteria</p>
+                <p><strong>Directions:</strong> Next to the cafeteria on the ground floor.</p>
+                <p><strong>Features:</strong> Charging points, natural light, nearby food options.</p>
+                <p><strong>Quick Tip:</strong> Popular around lunchtime; quieter in the morning.</p>
+                <h4>Map:</h4>
+                <p>This area displays the location of study spaces and other facilities on campus.</p>
+                <img src=PG.jpeg width="500">
+            </div>
+
+            <div class="poi-item microwave-stations">
+                <h4>Microwave Station</h4>
+                <p><strong>Location:</strong> 1st Floor, Near Student Hub</p>
+                <p><strong>Directions:</strong> Walk towards the Student Hub; microwaves are next to the seating area.</p>
+                <p><strong>Features:</strong> Three microwaves, seating nearby, cleaning supplies.</p>
+                <p><strong>Quick Tip:</strong> Peak usage around noon; better availability before 11 am.</p>
+                <h4>Map:</h4>
+                <p>This area displays the location of study spaces and other facilities on campus.</p>
+                <img src=PG.jpeg width="500">
+            </div>
+
+            <div class="poi-item bike-spaces">
+                <h4>Bike Spaces</h4>
+                <p><strong>Location:</strong> South Entrance</p>
+                <p><strong>Directions:</strong> Near the south entrance of the building.</p>
+                <p><strong>Features:</strong> 15 bike racks, CCTV surveillance, well-lit area.</p>
+                <p><strong>Quick Tip:</strong> Early arrival ensures best spots.</p>
+                <h4>Map:</h4>
+                <p>This area displays the location of study spaces and other facilities on campus.</p>
+                <img src=PG.jpeg width="500">
+            </div>
+
+            <div class="poi-item water-dispensers">
+                <h4>Water Dispenser</h4>
+                <p><strong>Location:</strong> 2nd Floor, Near Study Rooms</p>
+                <p><strong>Directions:</strong> Close to the study rooms on the 2nd floor.</p>
+                <p><strong>Features:</strong> Filtered water, bottle filling option, nearby waste bin.</p>
+                <p><strong>Quick Tip:</strong> Always stocked; busiest during lunch.</p>
+                <h4>Map:</h4>
+                <p>This area displays the location of study spaces and other facilities on campus.</p>
+                <img src=PG.jpeg width="500">
+            </div>
+        </div>
+
+        <!-- Building Section: David Wilson -->
+        <div class="building">
+            <h3>David Wilson</h3>
+
+            <div class="poi-item group-study">
+                <h4>Study Space</h4>
+                <p><strong>Location:</strong> 2nd Floor, Room 205</p>
+                <p><strong>Directions:</strong> Take the stairs or elevator to 2nd floor, Room 205.</p>
+                <p><strong>Features:</strong> Whiteboards, charging ports, comfortable seating.</p>
+                <p><strong>Quick Tip:</strong> Good for group discussions; quieter in the late afternoons.</p>
+                <h4>Map:</h4>
+                <p>This area displays the location of study spaces and other facilities on campus.</p>
+                <img src=DW.jpeg width="500">
+            </div>
+
+            <div class="poi-item microwave-stations">
+                <h4>Microwave Station</h4>
+                <p><strong>Location:</strong> Ground Floor, Near Reception</p>
+                <p><strong>Directions:</strong> Located by the seating area near the reception.</p>
+                <p><strong>Features:</strong> Single microwave, ample seating, cleaning supplies.</p>
+                <p><strong>Quick Tip:</strong> Ideal for quick meals, especially outside lunch hours.</p>
+                <h4>Map:</h4>
+                <p>This area displays the location of study spaces and other facilities on campus.</p>
+                <img src=DW.jpeg width="500">
+            </div>
+
+            <div class="poi-item bike-spaces">
+                <h4>Bike Spaces</h4>
+                <p><strong>Location:</strong> West Side Entrance</p>
+                <p><strong>Directions:</strong> Accessible via the west side of the building.</p>
+                <p><strong>Features:</strong> 10 bike racks, security lighting, bike repair station nearby.</p>
+                <p><strong>Quick Tip:</strong> Bring a repair kit; tools available in the repair station.</p>
+                <h4>Map:</h4>
+                <p>This area displays the location of study spaces and other facilities on campus.</p>
+                <img src=DW.jpeg width="500">
+            </div>
+
+            <div class="poi-item water-dispensers">
+                <h4>Water Dispenser</h4>
+                <p><strong>Location:</strong> 3rd Floor, Next to Study Area</p>
+                <p><strong>Directions:</strong> Located next to the main study area on the 3rd floor.</p>
+                <p><strong>Features:</strong> Cold water, bottle filling, eco-friendly cups available.</p>
+                <p><strong>Quick Tip:</strong> Refill stations are busiest between classes.</p>
+                <h4>Map:</h4>
+                <p>This area displays the location of study spaces and other facilities on campus.</p>
+                <img src=DW.jpeg width="500">
+            </div>
+        </div>
+
+        <!-- Building Section: Charles Wilson -->
+        <div class="building">
+            <h3>Charles Wilson</h3>
+
+            <div class="poi-item group-study">
+                <h4>Study Space</h4>
+                <p><strong>Location:</strong> 1st Floor, Next to Computer Lab</p>
+                <p><strong>Directions:</strong> Just outside the computer lab on the 1st floor.</p>
+                <p><strong>Features:</strong> Charging stations, large desks, quiet zone.</p>
+                <p><strong>Quick Tip:</strong> Less crowded on Wednesdays.</p>
+                <h4>Map:</h4>
+                <p>This area displays the location of study spaces and other facilities on campus.</p>
+                <img src=CW.jpeg width="500">
+            </div>
+
+            <div class="poi-item microwave-stations">
+                <h4>Microwave Station</h4>
+                <p><strong>Location:</strong> 2nd Floor, Near Cafeteria</p>
+                <p><strong>Directions:</strong> Near the cafeteria seating on the 2nd floor.</p>
+                <p><strong>Features:</strong> Two microwaves, plenty of seating, sanitizing wipes.</p>
+                <p><strong>Quick Tip:</strong> Perfect spot for lunch, but busy around noon.</p>
+                <h4>Map:</h4>
+                <p>This area displays the location of study spaces and other facilities on campus.</p>
+                <img src=CW.jpeg width="500">
+            </div>
+
+            <div class="poi-item bike-spaces">
+                <h4>Bike Spaces</h4>
+                <p><strong>Location:</strong> North Side Entrance</p>
+                <p><strong>Directions:</strong> Near the north entrance, close to the library.</p>
+                <p><strong>Features:</strong> 12 bike racks, sheltered area, security cameras.</p>
+                <p><strong>Quick Tip:</strong> Best accessed via the library path.</p>
+                <h4>Map:</h4>
+                <p>This area displays the location of study spaces and other facilities on campus.</p>
+                <img src=CW.jpeg width="500">
+            </div>
+
+            <div class="poi-item water-dispensers">
+                <h4>Water Dispenser</h4>
+                <p><strong>Location:</strong> Basement Level, Near Restrooms</p>
+                <p><strong>Directions:</strong> Located near the restrooms on the basement level.</p>
+                <p><strong>Features:</strong> Cold water, bottle filler, cups available.</p>
+                <p><strong>Quick Tip:</strong> Accessible even during off-peak hours.</p>
+                <h4>Map:</h4>
+                <p>This area displays the location of study spaces and other facilities on campus.</p>
+                <img src=CW.jpeg width="500">
+            </div>
+        </div>
+    </section>
+
+    <script>
+        function filterResults(category) {
+            const items = document.querySelectorAll('.poi-item');
+            items.forEach(item => {
+                if (item.classList.contains(category)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+    </script>
+    <h1>Leave a Review</h1>
+    <form id="reviewForm">
+        <input type="text" id="name" placeholder="Your Name" required><br><br>
+        <label for="place">Choose a Place: <br></label>
+        <select id="place" required>
+            <option value="" disabled selected>Select a place</option>
+            <option value="Sir Bob Burgess" data-lat="52.619032812823875" data-lng="-1.1288540244389669">Sir Bob Burgess</option>
+            <option value="Percy Gee" data-lat="52.6217590380922" data-lng="-1.1252626738086524">Percy Gee</option>
+            <option value="David Wilson Library" data-lat="52.620560754450274" data-lng="-1.124926861406811">David Wilson Library</option>
+            <option value="Charles Wilson" data-lat="52.61905422565071" data-lng="-1.1291752891507674">Charles Wilson</option>
+            <option value="Art Gallery" data-lat="22.2835" data-lng="114.1560">Art Gallery</option>
+        </select><br><br>
+        <label>Rating:</label><br>
+        <div id="stars" class="star-rating">
+            <span data-value="1">☆</span>
+            <span data-value="2">☆</span>
+            <span data-value="3">☆</span>
+            <span data-value="4">☆</span>
+            <span data-value="5">☆</span>
+        </div><br>
+        <textarea id="comment" placeholder="Your Comment" required></textarea><br>
+        <button type="submit">Submit</button>
+    </form>
+    
+    <h2>All Places & Reviews</h2>
+    <div id="placesContainer"></div>
+    
+    <script>
+        const reviewForm = document.getElementById('reviewForm');
+        const placesContainer = document.getElementById('placesContainer');
+        const stars = document.querySelectorAll('#stars span');
+        let rating = 0;
+        const reviewsByPlace = {};
+    
+        // Star rating handling
+        stars.forEach(star => {
+            star.addEventListener('click', () => {
+                rating = star.getAttribute('data-value');
+                updateStarDisplay(rating);
+            });
+            star.addEventListener('mouseover', () => {
+                const hoverValue = star.getAttribute('data-value');
+                updateStarDisplay(hoverValue);
+            });
+            star.addEventListener('mouseout', () => {
+                updateStarDisplay(rating);
+            });
+        });
+    
+        function updateStarDisplay(value) {
+            stars.forEach(star => {
+                star.textContent = star.getAttribute('data-value') <= value ? '★' : '☆';
+            });
+        }
+    
+        // Form submission handling
+        reviewForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+    
+            const name = document.getElementById('name').value;
+            const placeSelect = document.getElementById('place');
+            const place = placeSelect.value;
+            const lat = parseFloat(placeSelect.options[placeSelect.selectedIndex].dataset.lat);
+            const lng = parseFloat(placeSelect.options[placeSelect.selectedIndex].dataset.lng);
+            const comment = document.getElementById('comment').value;
+    
+            if (rating === 0) {
+                alert("Please select a star rating!");
+                return;
+            }
+    
+            const reviewHTML = `
+                <strong>${name}</strong> - <span class="star-rating">${'★'.repeat(rating)}${'☆'.repeat(5 - rating)}</span><br>
+                <small>${new Date().toLocaleDateString()}</small><br>${comment}
+            `;
+    
+            if (!reviewsByPlace[place]) {
+                createPlaceSection(place, lat, lng);
+                reviewsByPlace[place] = [];
+            }
+            reviewsByPlace[place].push(reviewHTML);
+    
+            updateReviewList(place);
+            reviewForm.reset();
+            updateStarDisplay(0);
+            rating = 0;
+        });
+    
+        // Function to create a new section with a map for each place
+        function createPlaceSection(place, lat, lng) {
+            const section = document.createElement('div');
+            section.className = 'review-section';
+    
+            // Create title and map container for the new place
+            section.innerHTML = <h3>${place}</h3><div id="map-${place}" class="map-container"></div><ul id="review-list-${place}" class="review-list"></ul>;
+            placesContainer.appendChild(section);
+    
+            // Initialize the map
+            const map = L.map(map-${place}).setView([lat, lng], 15);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: '© OpenStreetMap'
+            }).addTo(map);
+    
+            // Add a marker for the place
+            const marker = L.marker([lat, lng]).addTo(map);
+            marker.bindPopup(<strong>${place}</strong>).openPopup();
+        }
+    
+        // Function to update the review list for a specific place
+        function updateReviewList(place) {
+            const reviewList = document.getElementById(review-list-${place});
+            reviewList.innerHTML = '';
+            reviewsByPlace[place].forEach(reviewHTML => {
+                const reviewItem = document.createElement('li');
+                reviewItem.className = 'review-item';
+                reviewItem.innerHTML = reviewHTML;
+                reviewList.appendChild(reviewItem);
+            });
+        }
+    </script>
+    
+        <script>
+            function filterResults(category) {
+                const items = document.querySelectorAll('.poi-item');
+                items.forEach(item => {
+                    if (item.classList.contains(category)) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            }
+        </script>
+
+
+</body>
+
+</html>

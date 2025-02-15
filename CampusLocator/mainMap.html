@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<link rel="stylesheet" href="style.css">
+<head>
+    <meta charset="UTF-8">
+    <title>Map Page</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <style>
+        #map {
+            height: 500px; /* Set map height */
+            width: 50%;   /* Set map width */
+        }
+    </style>
+</head>
+<body>
+<h3>Map Centered on Leicester, UK</h3>
+<div id="map"></div>
+
+<script>
+    // Initialize the map and set its view to Leicester, UK
+    var map = L.map('map').setView([52.62118486509846, -1.1247505198345402], 15); // Leicester coordinates
+
+    // Add the OpenStreetMap tiles
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    // Add a marker for Leicester
+    var locations = [
+        { coords: [52.61905422565071, -1.1291752891507674], popup: "Sir Bob Burgess" },
+        { coords: [52.621882788686975, -1.1252197584667025], popup: "Percy Gee" },
+        { coords: [52.62056082641992, -1.124894660315189], popup: "David Wilson Library" },
+        { coords: [52.621886439649465, -1.1240413410793741], popup: "Charles Wilson" }
+    ];
+
+    locations.forEach(function(location) {
+        L.marker(location.coords).addTo(map)
+            .bindPopup(location.popup);
+    });
+</script>
+</body>
+</html>
+
+

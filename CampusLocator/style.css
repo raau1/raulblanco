@@ -1,0 +1,286 @@
+/* Global Styles */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #FAF3F3;
+    color: #2E2E2E;
+    margin: 0;
+    padding: 0;
+}
+
+/* Header Styling */
+.header-minimal {
+    background-color: #e4042c;
+    color: #ffffff;
+    padding: 20px 0;
+    width: 100%;
+}
+
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+}
+
+.logo-title-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.header-logo {
+    height: 40px;
+}
+
+.header-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #ffffff;
+    flex: 1;
+    padding-right: 70px;
+    margin: 0;
+    text-align: center;
+}
+
+/* Button Styling */
+.login-button {
+    background-color: transparent;
+    color: #ffffff;
+    border: 1px solid #ffffff;
+    padding: 6px 15px;
+    border-radius: 5px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.login-button:hover {
+    background-color: #ffffff;
+    color: #e4042c;
+}
+
+/* Responsive Visibility */
+.mobile-login {
+    display: none;
+}
+
+.desktop-login {
+    display: inline-block;
+}
+
+/* Hero Section */
+.hero-section {
+    position: relative;
+    background-image: url('background.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+}
+
+.hero-overlay {
+    background-color: rgba(0, 0, 0, 0.6);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-text {
+    text-align: center;
+    max-width: 600px;
+    padding: 20px;
+}
+
+.hero-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.hero-description {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+.hero-button {
+    background-color: #e4042c;
+    color: #ffffff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: 500;
+    transition: 0.3s;
+    text-decoration: none;
+}
+
+.hero-button:hover {
+    background-color: #ae0020;
+}
+
+/* Section Headings */
+section h2 {
+    font-family: 'Poppins', sans-serif;
+    color: #2E2E2E;
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Filter Button Styling */
+#filter-buttons {
+    margin: 20px 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+#filter-buttons button {
+    background-color: #e4042c;
+    color: #ffffff;
+    border: none;
+    padding: 8px 16px;
+    font-weight: 500;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#filter-buttons button:hover {
+    background-color: #b70324;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+#filter-buttons button:active {
+    background-color: #8b0019;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* POI List and Map */
+#poi-list {
+    margin-top: 20px;
+    max-height: 400px; /* Set the maximum height for the list */
+    overflow-y: auto;  /* Enable vertical scrolling */
+    padding-right: 15px; /* Optional: add padding to prevent scrollbar overlap with content */
+}
+
+
+
+.poi-item {
+    border-left: 4px solid #e4042c;
+    background-color: #ffffff;
+    color: #2E2E2E;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+
+/* Testimonials Section */
+.testimonials-section {
+    background-color: #FAF3F3;
+    padding: 3rem 0;
+}
+
+.testimonials-section h2 {
+    color: #2E2E2E;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+}
+
+.testimonial-card {
+    background-color: #ffffff;
+    color: #2E2E2E;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 1rem 0;
+}
+
+.testimonial-card .card-body {
+    padding: 1rem;
+    border-top: 4px solid #FFD700;
+}
+
+.testimonial-card .card-text {
+    font-size: 1rem;
+    font-weight: 400;
+    color: #2E2E2E;
+}
+
+.testimonial-card small {
+    color: #666666;
+    display: block;
+    margin-top: 0.5rem;
+}
+
+/* QR Code Styling */
+.qr-code-wrapper {
+    text-align: center;
+    display: flex;
+    color: #2E2E2E;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 30px 0;
+}
+
+.qr-title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.qr-code-img {
+    width: 150px;
+    border: 3px solid #000000;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+/* Titles */
+.desktop-title {
+    display: block;
+}
+
+.mobile-title {
+    display: none;
+}
+
+/* Mobile-specific Styling */
+@media (max-width: 768px) {
+    .desktop-title {
+        display: none;
+    }
+    .mobile-title {
+        display: block;
+        font-size: 1.4rem;
+        font-weight: 600;
+        color: #ffffff;
+        text-align: center;
+        margin-top: 10px;
+    }
+    .mb-4 {
+        margin-top: 14px;
+    }
+}

@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Campus Essentials Locator</title>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+        <style>
+            #map{
+                height: 400px;
+                width: 100%;
+            }
+        </style>
+    </head>
+<body>
+
+
+
+    <!-- Responsive Header with Logo, Title, and Login Button -->
+    <header class="header-minimal">
+        <div class="header-container">
+            <div class="logo-title-container">
+            <img src="uol_logo.png" alt="University of Leicester" class="header-logo">
+            </div>
+            <h1 class="header-title desktop-title">Campus Essentials Locator</h1>
+            <!-- Updated Login Button -->
+            <a href="login.html" class="login-button desktop-login">Log In</a> <!-- Link updated to login.html -->
+        </div>
+    </header>
+
+    
+    
+
+    
+
+    <!-- Hero Section with Background Image -->
+    <section class="hero-section">
+        <div class="hero-overlay">x
+            <div class="hero-text">
+                <h1 class="hero-title">WELCOME TO CAMPUS ESSENTIALS!</h1>
+                <p class="hero-description">
+                    Discover all the essential amenities on campus. Whether you’re looking for quiet study spots, bike parking, or water refill stations, we've got you covered.
+                </p>
+                <div class="hero-buttons">
+                    <a href="features.html" class="btn hero-button">Explore Amenities</a>
+                    <a href="#poi-list" class="btn hero-button">View Map</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+
+    <!-- Quick Access Filters -->
+    <section class="container my-5">
+        <h2 class="text-center mb-4 section-title">Check out the project on github</h2>
+        <div id="filter-buttons" class="d-flex justify-content-center gap-3 flex-wrap">
+            <button class="btn" onclick="window.location.href='https://github.com/raau1/LeicesterCS-Hackathon-Winner'">GitHub</button>
+        </div>
+    </section>
+
+    
+    <!-- Quick Access Filters
+    <section class="container my-5">
+        <h2 class="text-center mb-4 section-title">Quick Access Filters</h2>
+        <div id="filter-buttons" class="d-flex justify-content-center gap-3 flex-wrap">
+            <button class="btn" onclick="filterPOI('all')">Show All</button>
+            <button class="btn" onclick="filterPOI('Study')">Study Spaces</button>
+            <button class="btn" onclick="filterPOI('Bike Spaces')">Bike Spaces</button>
+            <button class="btn" onclick="filterPOI('Water Dispensers')">Water Dispensers</button>
+            <button class="btn" onclick="filterPOI('Microwave')">Microwave Stations</button>            
+        </div>
+    </section> -->
+
+
+<!-- POI List and Map -->
+<section class="container my-5">
+    <div class="row">
+        <div class="col-md-6">
+            <h2 class="poi-title text-center mb-4">Points of Interest</h2>
+            <div id="poi-list" class="list-group">
+                <!-- Bike Spaces POIs -->
+                <div class="poi-item Bike Spaces list-group-item">
+                    <h4>Bike Spaces - Sir Bob Burgess</h4>
+                    <p>Location: Outside Main Entrance</p>
+                    <p>Features: 20 bike racks, security cameras, lighting at night.</p>
+                </div>
+                <div class="poi-item Bike Spaces list-group-item">
+                    <h4>Bike Spaces - Percy Gee</h4>
+                    <p>Location: South Entrance</p>
+                    <p>Features: 15 bike racks, CCTV surveillance, well-lit area.</p>
+                </div>
+                <div class="poi-item Bike Spaces list-group-item">
+                    <h4>Bike Spaces - David Wilson</h4>
+                    <p>Location: West Side Entrance</p>
+                    <p>Features: 10 bike racks, security lighting, bike repair station nearby.</p>
+                </div>
+                <div class="poi-item Bike Spaces list-group-item">
+                    <h4>Bike Spaces - Charles Wilson</h4>
+                    <p>Location: North Side Entrance</p>
+                    <p>Features: 12 bike racks, sheltered area, security cameras.</p>
+                </div>
+
+                <!-- Water Dispensers POIs -->
+                <div class="poi-item Water Dispensers list-group-item">
+                    <h4>Water Dispenser - Sir Bob Burgess</h4>
+                    <p>Location: 2nd Floor, Near Elevators</p>
+                    <p>Features: Cold and room temperature options, cups, nearby waste bin.</p>
+                </div>
+                <div class="poi-item Water Dispensers list-group-item">
+                    <h4>Water Dispenser - Percy Gee</h4>
+                    <p>Location: 2nd Floor, Near Study Rooms</p>
+                    <p>Features: Filtered water, bottle filling option, nearby waste bin.</p>
+                </div>
+                <div class="poi-item Water Dispensers list-group-item">
+                    <h4>Water Dispenser - David Wilson</h4>
+                    <p>Location: 3rd Floor, Next to Study Area</p>
+                    <p>Features: Cold water, bottle filling, eco-friendly cups available.</p>
+                </div>
+                <div class="poi-item Water Dispensers list-group-item">
+                    <h4>Water Dispenser - Charles Wilson</h4>
+                    <p>Location: Basement Level, Near Restrooms</p>
+                    <p>Features: Cold water, bottle filler, cups available.</p>
+                </div>
+
+                <!-- Microwave POIs -->
+                <div class="poi-item Microwave list-group-item">
+                    <h4>Microwave Station - Sir Bob Burgess</h4>
+                    <p>Location: Ground Floor, Near Student Lounge</p>
+                    <p>Features: Two microwaves, cleaning supplies, nearby seating.</p>
+                </div>
+                <div class="poi-item Microwave list-group-item">
+                    <h4>Microwave Station - Percy Gee</h4>
+                    <p>Location: 1st Floor, Near Student Hub</p>
+                    <p>Features: Three microwaves, seating nearby, cleaning supplies.</p>
+                </div>
+                <div class="poi-item Microwave list-group-item">
+                    <h4>Microwave Station - David Wilson</h4>
+                    <p>Location: Ground Floor, Near Reception</p>
+                    <p>Features: Single microwave, ample seating, cleaning supplies.</p>
+                </div>
+                <div class="poi-item Microwave list-group-item">
+                    <h4>Microwave Station - Charles Wilson</h4>
+                    <p>Location: 2nd Floor, Near Cafeteria</p>
+                    <p>Features: Two microwaves, plenty of seating, sanitizing wipes.</p>
+                </div>
+
+                <!-- Study POIs -->
+                <div class="poi-item Study list-group-item">
+                    <h4>Study Spot - Sir Bob Burgess</h4>
+                    <p>Location: 1st Floor</p>
+                    <p>Features: Charging points, heater nearby, tables with a view.</p>
+                </div>
+                <div class="poi-item Study list-group-item">
+                    <h4>Study Spot - Percy Gee</h4>
+                    <p>Location: Ground Floor, Near Cafeteria</p>
+                    <p>Features: Charging points, natural light, nearby food options.</p>
+                </div>
+                <div class="poi-item Study list-group-item">
+                    <h4>Study Spot - David Wilson</h4>
+                    <p>Location: 2nd Floor, Room 205</p>
+                    <p>Features: Whiteboards, charging ports, comfortable seating.</p>
+                </div>
+                <div class="poi-item Study list-group-item">
+                    <h4>Study Spot - Charles Wilson</h4>
+                    <p>Location: 1st Floor, Next to Computer Lab</p>
+                    <p>Features: Charging stations, large desks, quiet zone.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h2 class="map-title text-center mb-4">Campus Map</h2>
+            <div id="map"></div>
+        </div>
+    </div>
+</section>
+
+
+
+    <!-- QR Code Section -->
+    <section class="qr-code-wrapper text-center my-5">
+        <h2 class="qr-title">Access on Mobile</h2>
+        <p>Scan the QR code to open the Campus Essentials Locator on your mobile device.</p>
+        <img src="qr.png" alt="QR Code" class="qr-code-img">
+    </section>
+
+<!-- Scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<script>
+  // Initialize the map centered on Leicester, UK
+  var map = L.map('map').setView([52.62118486509846, -1.1247505198345402], 15);
+
+  // Add the OpenStreetMap tiles
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+  }).addTo(map);
+
+  // Define campus locations and details
+  var locations = [
+    { coords: [52.61905422565071, -1.1291752891507674], popup: "Bike Spaces - Sir Bob Burgess" },
+    { coords: [52.621882788686975, -1.1252197584667025], popup: "Bike Spaces - Percy Gee" },
+    { coords: [52.62056082641992, -1.124894660315189], popup: "Bike Spaces - David Wilson Library" },
+    { coords: [52.621886439649465, -1.1240413410793741], popup: "Bike Spaces - Charles Wilson" },
+    { coords: [52.61905422565071, -1.1291752891507674], popup: "Water Dispenser - Sir Bob Burgess" },
+    { coords: [52.621882788686975, -1.1252197584667025], popup: "Water Dispenser - Percy Gee" },
+    { coords: [52.62056082641992, -1.124894660315189], popup: "Water Dispenser - David Wilson Library" },
+    { coords: [52.621886439649465, -1.1240413410793741], popup: "Water Dispenser - Charles Wilson" },
+    { coords: [52.61905422565071, -1.1291752891507674], popup: "Microwave Station - Sir Bob Burgess" },
+    { coords: [52.621882788686975, -1.1252197584667025], popup: "Microwave Station - Percy Gee" },
+    { coords: [52.62056082641992, -1.124894660315189], popup: "Microwave Station - David Wilson Library" },
+    { coords: [52.621886439649465, -1.1240413410793741], popup: "Microwave Station - Charles Wilson" },
+    { coords: [52.61905422565071, -1.1291752891507674], popup: "Study Spot - Sir Bob Burgess" },
+    { coords: [52.621882788686975, -1.1252197584667025], popup: "Study Spot - Percy Gee" },
+    { coords: [52.62056082641992, -1.124894660315189], popup: "Study Spot - David Wilson Library" },
+    { coords: [52.621886439649465, -1.1240413410793741], popup: "Study Spot - Charles Wilson" }
+  ];
+
+  // Add markers to the map
+  locations.forEach(function(location) {
+    L.marker(location.coords).addTo(map)
+            .bindPopup(location.popup);
+  });
+</script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="app.js"></script>
+
+</body>
+</html>
