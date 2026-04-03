@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Buddy - Find Your Study Partners</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .demo-banner {
+            background: linear-gradient(135deg, #C8102E, #9E0B23);
+            color: #fff;
+            text-align: center;
+            padding: 0.6rem 1rem;
+            font-size: 0.85rem;
+            font-family: 'Inter', sans-serif;
+            position: relative;
+            z-index: 1001;
+        }
+        .demo-banner a {
+            color: #fff;
+            font-weight: 600;
+            text-decoration: underline;
+            margin-left: 0.5rem;
+        }
+        .demo-banner a:hover { opacity: 0.85; }
+    </style>
+</head>
+<body>
+    <!-- Demo Banner -->
+    <div class="demo-banner">
+        Static demonstration. Backend features require the Spring Boot server.
+        <a href="https://github.com/raau1/LeicesterCS-Hackathon-2025-2026---Team-11/tree/main" target="_blank">View Source on GitHub</a>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#" class="nav-logo" data-page="home">
+                <span class="logo-icon">📚</span>
+                Study Buddy
+            </a>
+
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+                <span class="hamburger"></span>
+            </button>
+
+            <ul class="nav-menu" id="navMenu">
+                <li class="nav-item">
+                    <a href="#" class="nav-link" data-page="browse">Browse Sessions</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" data-page="create">Create Session</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" data-page="profile">Profile</a>
+                </li>
+                <li class="nav-item auth-links" id="authLinks">
+                    <a href="#" class="nav-link" data-page="login">Login</a>
+                    <a href="#" class="nav-link btn-signup" data-page="signup">Sign Up</a>
+                </li>
+                <li class="nav-item user-menu hidden" id="userMenu">
+                    <span class="user-name" id="userName"></span>
+                    <button class="btn-logout" id="logoutBtn">Logout</button>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="main-content" id="mainContent">
+
+        <!-- Home Page -->
+        <section class="page active" id="homePage">
+            <div class="hero">
+                <h1>Find Your Perfect Study Partner</h1>
+                <p>Connect with students in your year and modules for productive study sessions</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" data-page="browse">Browse Sessions</button>
+                    <button class="btn btn-secondary" data-page="signup">Get Started</button>
+                </div>
+            </div>
+
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Match by Module</h3>
+                    <p>Find partners studying the same subjects as you</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📅</div>
+                    <h3>Flexible Scheduling</h3>
+                    <p>Create sessions that fit your timetable</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⭐</div>
+                    <h3>Rated Partners</h3>
+                    <p>Choose partners based on peer reviews</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Login Page -->
+        <section class="page" id="loginPage">
+            <div class="auth-container">
+                <div class="auth-card">
+                    <h2>Welcome Back</h2>
+                    <p class="auth-subtitle">Sign in to continue to Study Buddy</p>
+
+                    <form id="loginForm" class="auth-form">
+                        <div class="form-group">
+                            <label for="loginEmail">Email</label>
+                            <input type="email" id="loginEmail" name="email" required
+                                   placeholder="your.email@university.ac.uk">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="loginPassword">Password</label>
+                            <input type="password" id="loginPassword" name="password" required
+                                   placeholder="Enter your password">
+                        </div>
+
+                        <div class="form-error" id="loginError"></div>
+
+                        <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+                    </form>
+
+                    <p class="auth-footer">
+                        Don't have an account?
+                        <a href="#" data-page="signup">Sign up</a>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Signup Page -->
+        <section class="page" id="signupPage">
+            <div class="auth-container">
+                <div class="auth-card">
+                    <h2>Create Account</h2>
+                    <p class="auth-subtitle">Join Study Buddy to find study partners</p>
+
+                    <form id="signupForm" class="auth-form">
+                        <div class="form-group">
+                            <label for="signupName">Full Name</label>
+                            <input type="text" id="signupName" name="name" required
+                                   placeholder="John Doe">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="signupEmail">University Email</label>
+                            <input type="email" id="signupEmail" name="email" required
+                                   placeholder="your.email@university.ac.uk">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="signupYear">Year of Study</label>
+                            <select id="signupYear" name="year" required>
+                                <option value="">Select your year</option>
+                                <option value="1">Year 1</option>
+                                <option value="2">Year 2</option>
+                                <option value="3">Year 3</option>
+                                <option value="4">Year 4</option>
+                                <option value="masters">Masters</option>
+                                <option value="phd">PhD</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="signupPassword">Password</label>
+                            <input type="password" id="signupPassword" name="password" required
+                                   placeholder="Create a strong password" minlength="6">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="signupConfirm">Confirm Password</label>
+                            <input type="password" id="signupConfirm" name="confirmPassword" required
+                                   placeholder="Confirm your password">
+                        </div>
+
+                        <div class="form-error" id="signupError"></div>
+
+                        <button type="submit" class="btn btn-primary btn-block">Create Account</button>
+                    </form>
+
+                    <p class="auth-footer">
+                        Already have an account?
+                        <a href="#" data-page="login">Sign in</a>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Browse Sessions Page -->
+        <section class="page" id="browsePage">
+            <div class="container">
+                <div class="page-header">
+                    <h2>Browse Study Sessions</h2>
+                    <p>Find and join study sessions that match your needs</p>
+                </div>
+
+                <!-- Filters -->
+                <div class="filters-container">
+                    <div class="filter-group">
+                        <label for="filterYear">Year</label>
+                        <select id="filterYear">
+                            <option value="">All Years</option>
+                            <option value="1">Year 1</option>
+                            <option value="2">Year 2</option>
+                            <option value="3">Year 3</option>
+                            <option value="4">Year 4</option>
+                            <option value="masters">Masters</option>
+                            <option value="phd">PhD</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="filterModule">Module</label>
+                        <select id="filterModule">
+                            <option value="">All Modules</option>
+                            <option value="CS101">CS101 - Intro to Programming</option>
+                            <option value="CS201">CS201 - Data Structures</option>
+                            <option value="CS301">CS301 - Algorithms</option>
+                            <option value="MATH101">MATH101 - Calculus</option>
+                            <option value="MATH201">MATH201 - Linear Algebra</option>
+                        </select>
+                    </div>
+
+                    <button class="btn btn-secondary" id="applyFilters">Apply Filters</button>
+                </div>
+
+                <!-- Sessions Grid -->
+                <div class="sessions-grid" id="sessionsGrid">
+                    <!-- Session cards loaded by demo script -->
+                </div>
+
+                <div class="empty-state hidden" id="noSessions">
+                    <div class="empty-icon">📭</div>
+                    <h3>No Sessions Found</h3>
+                    <p>Try adjusting your filters or create a new session</p>
+                    <button class="btn btn-primary" data-page="create">Create Session</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Create Session Page -->
+        <section class="page" id="createPage">
+            <div class="container">
+                <div class="page-header">
+                    <h2>Create Study Session</h2>
+                    <p>Set up a new study session and find partners</p>
+                </div>
+
+                <div class="form-container">
+                    <form id="createSessionForm" class="session-form">
+                        <div class="form-section">
+                            <h3>Session Details</h3>
+
+                            <div class="form-group">
+                                <label for="sessionTitle">Session Title</label>
+                                <input type="text" id="sessionTitle" name="title" required
+                                       placeholder="e.g., Exam prep for CS201">
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="sessionYear">Target Year</label>
+                                    <select id="sessionYear" name="year" required>
+                                        <option value="">Select year</option>
+                                        <option value="1">Year 1</option>
+                                        <option value="2">Year 2</option>
+                                        <option value="3">Year 3</option>
+                                        <option value="4">Year 4</option>
+                                        <option value="masters">Masters</option>
+                                        <option value="phd">PhD</option>
+                                        <option value="any">Any Year</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="sessionModule">Module</label>
+                                    <select id="sessionModule" name="module" required>
+                                        <option value="">Select module</option>
+                                        <option value="CS101">CS101 - Intro to Programming</option>
+                                        <option value="CS201">CS201 - Data Structures</option>
+                                        <option value="CS301">CS301 - Algorithms</option>
+                                        <option value="MATH101">MATH101 - Calculus</option>
+                                        <option value="MATH201">MATH201 - Linear Algebra</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <h3>Schedule</h3>
+
+                            <div class="form-group">
+                                <label class="checkbox-label start-now-label">
+                                    <input type="checkbox" id="startNow" name="startNow">
+                                    <strong>Start Now</strong> - Open the chat room immediately
+                                </label>
+                            </div>
+
+                            <div id="scheduleFields">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="sessionDate">Date</label>
+                                        <input type="date" id="sessionDate" name="date">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="sessionTime">Time</label>
+                                        <input type="time" id="sessionTime" name="time">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="sessionDuration">Duration</label>
+                                <select id="sessionDuration" name="duration" required>
+                                    <option value="30">30 minutes</option>
+                                    <option value="60" selected>1 hour</option>
+                                    <option value="90">1.5 hours</option>
+                                    <option value="120">2 hours</option>
+                                    <option value="180">3 hours</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <h3>Preferences</h3>
+
+                            <div class="form-group">
+                                <label for="sessionMaxParticipants">Max Participants</label>
+                                <select id="sessionMaxParticipants" name="maxParticipants">
+                                    <option value="2">2 people</option>
+                                    <option value="3">3 people</option>
+                                    <option value="4" selected>4 people</option>
+                                    <option value="5">5 people</option>
+                                    <option value="6">6+ people</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Study Style</label>
+                                <div class="checkbox-group">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" name="preferences" value="quiet">
+                                        Quiet study
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" name="preferences" value="discussion">
+                                        Discussion-based
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" name="preferences" value="practice">
+                                        Practice problems
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" name="preferences" value="teaching">
+                                        Peer teaching
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="sessionDescription">Description (Optional)</label>
+                                <textarea id="sessionDescription" name="description" rows="3"
+                                          placeholder="Add any additional details about your study session..."></textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-secondary" data-page="browse">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Create Session</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Profile Page -->
+        <section class="page" id="profilePage">
+            <div class="container">
+                <div class="profile-container">
+                    <div class="profile-header">
+                        <div class="profile-avatar" id="profileAvatar">
+                            <span>RB</span>
+                        </div>
+                        <div class="profile-info">
+                            <h2 id="profileName">Raul Blanco</h2>
+                            <p class="profile-year" id="profileYear">Year 2</p>
+                            <p class="profile-email" id="profileEmail">raul.blanco@university.ac.uk</p>
+                            <div class="profile-rating">
+                                <span class="stars" id="profileStars">★★★★☆</span>
+                                <span class="rating-count" id="profileRatingCount">(12 ratings)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="profile-stats">
+                        <div class="stat-card">
+                            <div class="stat-value" id="statSessions">5</div>
+                            <div class="stat-label">Sessions Created</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="statJoined">8</div>
+                            <div class="stat-label">Sessions Joined</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="statRating">4.2</div>
+                            <div class="stat-label">Avg Rating</div>
+                        </div>
+                    </div>
+
+                    <div class="profile-section">
+                        <h3>My Sessions</h3>
+                        <div class="tabs">
+                            <button class="tab-btn active" data-tab="created">Created</button>
+                            <button class="tab-btn" data-tab="joined">Joined</button>
+                            <button class="tab-btn" data-tab="pending">Pending Requests</button>
+                            <button class="tab-btn" data-tab="blocked">Blocked Users</button>
+                        </div>
+                        <div class="tab-content" id="profileSessions">
+                            <!-- Populated by demo script -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Session View/Chat Page -->
+        <section class="page" id="sessionViewPage">
+            <div class="container">
+                <div class="session-view-container">
+                    <div class="session-details-panel">
+                        <button class="btn btn-secondary btn-back" data-page="browse">← Back to Browse</button>
+
+                        <div class="session-view-header">
+                            <h2 id="viewSessionTitle">CS201 Exam Prep</h2>
+                            <span class="live-badge" id="viewSessionLive">LIVE</span>
+                        </div>
+
+                        <div class="session-view-info">
+                            <div class="info-row">
+                                <span class="info-label">Module:</span>
+                                <span id="viewSessionModule">CS201 - Data Structures</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Date & Time:</span>
+                                <span id="viewSessionDateTime">Today at 14:00</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Duration:</span>
+                                <span id="viewSessionDuration">90 minutes</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Participants:</span>
+                                <span id="viewSessionParticipants">3/4</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Host:</span>
+                                <span id="viewSessionHost">Raul B.</span>
+                            </div>
+                        </div>
+
+                        <div class="session-description" id="viewSessionDescription">
+                            <p>Preparing for the CS201 midterm exam. Focus on binary trees, graph traversal algorithms, and hash tables. Bring your notes!</p>
+                        </div>
+
+                        <div class="session-preferences" id="viewSessionPreferences">
+                            <span class="preference-tag">discussion</span>
+                            <span class="preference-tag">practice</span>
+                        </div>
+                    </div>
+
+                    <div class="chat-panel" id="chatPanel">
+                        <div class="chat-header">
+                            <h3>Session Chat</h3>
+                            <span class="chat-status" id="chatStatus">Demo Mode</span>
+                        </div>
+
+                        <div class="chat-participants" id="chatParticipants">
+                            <div class="participants-header">
+                                <span>Participants</span>
+                                <span class="participant-count" id="participantCount">3</span>
+                            </div>
+                            <div class="participants-list" id="participantsList">
+                                <div class="participant-chip is-you">
+                                    <div class="chip-avatar">RB</div>
+                                    <span>Raul B. (You)</span>
+                                </div>
+                                <div class="participant-chip">
+                                    <div class="chip-avatar">SK</div>
+                                    <span>Sarah K.</span>
+                                </div>
+                                <div class="participant-chip">
+                                    <div class="chip-avatar">JD</div>
+                                    <span>James D.</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="chat-messages" id="chatMessages">
+                            <div class="chat-message">
+                                <div class="message-header">
+                                    <span class="message-sender">Sarah K.</span>
+                                    <span class="message-time">14:02</span>
+                                </div>
+                                <div class="message-content">Hey everyone! Should we start with binary trees?</div>
+                            </div>
+                            <div class="chat-message own">
+                                <div class="message-header">
+                                    <span class="message-sender">You</span>
+                                    <span class="message-time">14:03</span>
+                                </div>
+                                <div class="message-content">Sounds good! Here's the traversal code we covered:</div>
+                            </div>
+                            <div class="chat-message own">
+                                <div class="message-header">
+                                    <span class="message-sender">You</span>
+                                    <span class="message-time">14:03</span>
+                                </div>
+                                <div class="message-content">
+                                    <pre class="code-block"><span class="code-language">python</span><code>def inorder(node):
+    if node:
+        inorder(node.left)
+        print(node.val)
+        inorder(node.right)</code></pre>
+                                </div>
+                            </div>
+                            <div class="chat-message">
+                                <div class="message-header">
+                                    <span class="message-sender">James D.</span>
+                                    <span class="message-time">14:04</span>
+                                </div>
+                                <div class="message-content">Nice! The <code class="inline-code">/code</code> command is really handy for sharing snippets</div>
+                            </div>
+                            <div class="chat-message">
+                                <div class="message-header">
+                                    <span class="message-sender">Sarah K.</span>
+                                    <span class="message-time">14:05</span>
+                                </div>
+                                <div class="message-content">What about the time complexity for balanced vs unbalanced BSTs?</div>
+                            </div>
+                            <div class="chat-message own">
+                                <div class="message-header">
+                                    <span class="message-sender">You</span>
+                                    <span class="message-time">14:06</span>
+                                </div>
+                                <div class="message-content">Balanced is O(log n) for search/insert/delete. Unbalanced worst case is O(n) — basically a linked list.</div>
+                            </div>
+                            <div class="chat-message">
+                                <div class="message-header">
+                                    <span class="message-sender">James D.</span>
+                                    <span class="message-time">14:07</span>
+                                </div>
+                                <div class="message-content">
+                                    <pre class="code-block"><span class="code-language">java</span><code>// BFS traversal using a queue
+public void bfs(TreeNode root) {
+    Queue&lt;TreeNode&gt; queue = new LinkedList&lt;&gt;();
+    queue.add(root);
+    while (!queue.isEmpty()) {
+        TreeNode node = queue.poll();
+        System.out.print(node.val + " ");
+        if (node.left != null) queue.add(node.left);
+        if (node.right != null) queue.add(node.right);
+    }
+}</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        <form class="chat-input-form" id="chatForm">
+                            <input type="text" id="chatInput" placeholder="Type a message... (try /code)" autocomplete="off">
+                            <button type="submit" class="btn btn-primary">Send</button>
+                        </form>
+
+                        <div class="code-editor-container hidden" id="codeEditorContainer">
+                            <div class="code-editor-header">
+                                <span class="code-editor-title">Code Block</span>
+                                <button type="button" class="code-editor-close" id="closeCodeEditor">&times;</button>
+                            </div>
+                            <textarea id="codeEditorInput" class="code-editor-input" placeholder="Type or paste your code here...&#10;&#10;• Use Tab for indentation&#10;• Use Enter for new lines&#10;• Press Ctrl+Enter to send"></textarea>
+                            <div class="code-editor-footer">
+                                <input type="text" id="codeLanguage" class="code-language-input" placeholder="Language (optional, e.g., javascript, python)">
+                                <button type="button" class="btn btn-secondary btn-sm" id="cancelCodeEditor">Cancel</button>
+                                <button type="button" class="btn btn-primary btn-sm" id="sendCodeBlock">Send Code <span class="keyboard-hint">Ctrl+Enter</span></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- User Profile View Page -->
+        <section class="page" id="userProfilePage">
+            <div class="container">
+                <button class="btn btn-secondary btn-back" data-page="browse">← Back to Browse</button>
+
+                <div class="user-profile-view">
+                    <div class="profile-header">
+                        <div class="profile-avatar" id="viewUserAvatar">
+                            <span>SK</span>
+                        </div>
+                        <div class="profile-info">
+                            <h2 id="viewUserName">Sarah Khan</h2>
+                            <p id="viewUserYear">Year 2</p>
+                            <div class="profile-rating">
+                                <span id="viewUserStars">★★★★☆</span>
+                                <span id="viewUserRatingText">4.3 (8 ratings)</span>
+                            </div>
+                        </div>
+                        <div class="profile-actions">
+                            <button class="btn btn-danger" id="viewUserBlockBtn">Block User</button>
+                        </div>
+                    </div>
+
+                    <div class="profile-section">
+                        <h3>Sessions by this user</h3>
+                        <div class="sessions-grid" id="viewUserSessions">
+                            <!-- Populated by demo script -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- User Profile Modal -->
+    <div class="modal-overlay" id="userProfileModal">
+        <div class="modal-content">
+            <button class="modal-close" id="closeUserModal">&times;</button>
+            <div class="user-profile-modal">
+                <div class="modal-user-header">
+                    <div class="modal-user-avatar" id="modalUserAvatar">
+                        <span>SK</span>
+                    </div>
+                    <div class="modal-user-info">
+                        <h3 id="modalUserName">Sarah Khan</h3>
+                        <p id="modalUserEmail">sarah.khan@university.ac.uk</p>
+                        <p id="modalUserYear">Year 2</p>
+                    </div>
+                </div>
+                <div class="modal-user-rating">
+                    <div class="rating-display">
+                        <span id="modalUserStars">★★★★☆</span>
+                        <span id="modalUserRating">4.3 (8 ratings)</span>
+                    </div>
+                </div>
+                <div class="modal-rating-section" id="modalRatingSection">
+                    <h4>Rate this user</h4>
+                    <div class="star-rating" id="starRating">
+                        <span class="star" data-value="1">☆</span>
+                        <span class="star" data-value="2">☆</span>
+                        <span class="star" data-value="3">☆</span>
+                        <span class="star" data-value="4">☆</span>
+                        <span class="star" data-value="5">☆</span>
+                    </div>
+                    <button class="btn btn-primary" id="submitRating">Submit Rating</button>
+                </div>
+                <div class="modal-actions">
+                    <button class="btn btn-secondary" id="viewFullProfile">View Full Profile</button>
+                    <button class="btn btn-danger" id="blockUserBtn">Block User</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Static Demo Script (replaces Firebase + API modules) -->
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // ===== Mock Data =====
+        const mockSessions = [
+            {
+                id: '1', title: 'CS201 Exam Prep', module: 'CS201', year: '2',
+                date: '2025-03-24', time: '14:00', duration: 90,
+                maxParticipants: 4, participantCount: 3, spotsLeft: 1,
+                status: 'open', isLive: true, isScheduled: false,
+                preferences: ['discussion', 'practice'],
+                creatorName: 'Raul B.', creatorRating: 4.2,
+                description: 'Preparing for the CS201 midterm. Focus on binary trees and graph traversal.'
+            },
+            {
+                id: '2', title: 'Algorithms Practice Session', module: 'CS301', year: '3',
+                date: '2025-03-28', time: '10:00', duration: 120,
+                maxParticipants: 6, participantCount: 2, spotsLeft: 4,
+                status: 'open', isLive: false, isScheduled: false,
+                preferences: ['practice', 'teaching'],
+                creatorName: 'James D.', creatorRating: 3.8,
+                description: 'Working through dynamic programming and graph algorithm problems.'
+            },
+            {
+                id: '3', title: 'Calculus Study Group', module: 'MATH101', year: '1',
+                date: '2025-03-29', time: '16:00', duration: 60,
+                maxParticipants: 3, participantCount: 2, spotsLeft: 1,
+                status: 'open', isLive: false, isScheduled: false,
+                preferences: ['quiet'],
+                creatorName: 'Sarah K.', creatorRating: 4.3,
+                description: 'Quiet study session for integration techniques and practice problems.'
+            },
+            {
+                id: '4', title: 'Linear Algebra Review', module: 'MATH201', year: '2',
+                date: '2025-03-30', time: '11:00', duration: 90,
+                maxParticipants: 4, participantCount: 1, spotsLeft: 3,
+                status: 'open', isLive: false, isScheduled: true,
+                scheduledStartTime: '2025-03-30T11:00:00',
+                preferences: ['discussion'],
+                creatorName: 'Emily R.', creatorRating: 0,
+                description: 'Reviewing eigenvalues, eigenvectors, and matrix decomposition.'
+            },
+            {
+                id: '5', title: 'Python Intro Workshop', module: 'CS101', year: '1',
+                date: '2025-03-25', time: '09:00', duration: 120,
+                maxParticipants: 5, participantCount: 4, spotsLeft: 1,
+                status: 'open', isLive: true, isScheduled: false,
+                preferences: ['teaching', 'practice'],
+                creatorName: 'Alex M.', creatorRating: 4.7,
+                description: 'Beginner-friendly session covering loops, functions, and basic data types.'
+            }
+        ];
+
+        // ===== Navigation =====
+        function navigateTo(pageName) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            const target = document.getElementById(pageName + 'Page');
+            if (target) target.classList.add('active');
+
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('data-page') === pageName) link.classList.add('active');
+            });
+
+            // Load mock data for specific pages
+            if (pageName === 'browse') loadSessions();
+            if (pageName === 'profile') loadProfileSessions();
+
+            window.scrollTo(0, 0);
+        }
+
+        // Navigation click handler
+        document.addEventListener('click', (e) => {
+            const pageLink = e.target.closest('[data-page]');
+            if (pageLink) {
+                e.preventDefault();
+                navigateTo(pageLink.getAttribute('data-page'));
+            }
+        });
+
+        // Mobile menu toggle
+        const navToggle = document.getElementById('navToggle');
+        const navMenu = document.getElementById('navMenu');
+        if (navToggle && navMenu) {
+            navToggle.addEventListener('click', () => navMenu.classList.toggle('active'));
+            navMenu.addEventListener('click', (e) => {
+                if (e.target.classList.contains('nav-link')) navMenu.classList.remove('active');
+            });
+        }
+
+        // ===== Render Session Card =====
+        function renderCard(session) {
+            const dateObj = new Date(session.date);
+            const formattedDate = dateObj.toLocaleDateString('en-GB', {
+                weekday: 'short', day: 'numeric', month: 'short'
+            });
+            const formattedTime = session.time ? session.time.substring(0, 5) : '';
+            const preferenceTags = (session.preferences || [])
+                .map(p => '<span class="preference-tag">' + p + '</span>').join('');
+            const initials = session.creatorName
+                ? session.creatorName.split(' ').map(n => n[0]).join('').toUpperCase() : 'U';
+
+            return `
+                <div class="session-card" data-session-id="${session.id}">
+                    <div class="session-header">
+                        <div>
+                            <h3 class="session-title">${session.title}</h3>
+                            <span class="session-module">${session.module}</span>
+                        </div>
+                        <div class="session-badges">
+                            ${session.isLive ? '<span class="live-badge">LIVE</span>' : ''}
+                            ${session.isScheduled ? '<span class="scheduled-badge">SCHEDULED</span>' : ''}
+                            <span class="session-status ${session.status}">${session.status}</span>
+                        </div>
+                    </div>
+                    <div class="session-details">
+                        <div class="session-detail"><span class="session-detail-icon">📅</span>${session.isLive ? 'Started ' : ''}${formattedDate} at ${formattedTime}</div>
+                        <div class="session-detail"><span class="session-detail-icon">⏱️</span>${session.duration} minutes</div>
+                        <div class="session-detail"><span class="session-detail-icon">👥</span>${session.spotsLeft} spots left</div>
+                        <div class="session-detail"><span class="session-detail-icon">🎓</span>Year ${session.year}</div>
+                    </div>
+                    ${preferenceTags ? '<div class="session-preferences">' + preferenceTags + '</div>' : ''}
+                    <div class="session-footer">
+                        <div class="session-creator">
+                            <div class="creator-avatar">${initials}</div>
+                            <div>
+                                <div class="creator-name">${session.creatorName}</div>
+                                <div class="creator-rating">${session.creatorRating > 0 ? '⭐ ' + session.creatorRating.toFixed(1) : 'No ratings'}</div>
+                            </div>
+                        </div>
+                        <div class="session-actions">
+                            <button class="btn btn-secondary btn-sm view-btn" data-session-id="${session.id}">View</button>
+                            ${session.isScheduled
+                                ? '<span class="btn btn-locked btn-sm" style="cursor:default;">🔒 Locked</span>'
+                                : '<button class="btn btn-primary btn-sm join-btn" data-session-id="' + session.id + '">Join</button>'}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // ===== Load Sessions (with filtering) =====
+        function loadSessions() {
+            const grid = document.getElementById('sessionsGrid');
+            const noSessions = document.getElementById('noSessions');
+            const yearFilter = document.getElementById('filterYear').value;
+            const moduleFilter = document.getElementById('filterModule').value;
+
+            let filtered = mockSessions;
+            if (yearFilter) filtered = filtered.filter(s => s.year === yearFilter);
+            if (moduleFilter) filtered = filtered.filter(s => s.module === moduleFilter);
+
+            if (filtered.length === 0) {
+                grid.innerHTML = '';
+                noSessions.classList.remove('hidden');
+            } else {
+                noSessions.classList.add('hidden');
+                grid.innerHTML = filtered.map(s => renderCard(s)).join('');
+            }
+        }
+
+        // ===== Load Profile Sessions =====
+        function loadProfileSessions() {
+            const container = document.getElementById('profileSessions');
+            if (!container) return;
+            // Show the first 2 sessions as "created by you"
+            container.innerHTML = mockSessions.slice(0, 2).map(s => renderCard(s)).join('');
+        }
+
+        // ===== Load User Profile Sessions =====
+        function loadUserSessions() {
+            const container = document.getElementById('viewUserSessions');
+            if (!container) return;
+            container.innerHTML = [mockSessions[2]].map(s => renderCard(s)).join('');
+        }
+
+        // ===== Profile Tabs =====
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                const tab = e.target.getAttribute('data-tab');
+                const container = document.getElementById('profileSessions');
+
+                if (tab === 'created') {
+                    container.innerHTML = mockSessions.slice(0, 2).map(s => renderCard(s)).join('');
+                } else if (tab === 'joined') {
+                    container.innerHTML = mockSessions.slice(2, 4).map(s => renderCard(s)).join('');
+                } else if (tab === 'pending') {
+                    container.innerHTML = `
+                        <div class="pending-session-card">
+                            <div class="pending-session-header">
+                                <div>
+                                    <h4 class="pending-session-title">CS201 Exam Prep</h4>
+                                    <span class="pending-session-module">CS201</span>
+                                </div>
+                                <span class="pending-count">1 pending</span>
+                            </div>
+                            <div class="request-item">
+                                <div class="request-user-info">
+                                    <div class="creator-avatar">EM</div>
+                                    <div>
+                                        <div class="request-user-name">Emily Rodriguez</div>
+                                        <div class="request-user-details">Year 2 • No ratings</div>
+                                    </div>
+                                </div>
+                                <div class="request-actions">
+                                    <button class="btn btn-primary btn-sm" onclick="showToast('Accepted! (demo)', 'success')">Accept</button>
+                                    <button class="btn btn-secondary btn-sm" onclick="showToast('Declined (demo)', 'info')">Decline</button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                } else if (tab === 'blocked') {
+                    container.innerHTML = `
+                        <div class="empty-state">
+                            <p>No blocked users</p>
+                        </div>
+                    `;
+                }
+            });
+        });
+
+        // ===== Filter Button =====
+        document.getElementById('applyFilters').addEventListener('click', loadSessions);
+
+        // ===== View & Join Buttons (delegated) =====
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('view-btn')) {
+                const id = e.target.getAttribute('data-session-id');
+                const session = mockSessions.find(s => s.id === id);
+                if (session) {
+                    document.getElementById('viewSessionTitle').textContent = session.title;
+                    document.getElementById('viewSessionModule').textContent = session.module;
+                    document.getElementById('viewSessionDuration').textContent = session.duration + ' minutes';
+                    document.getElementById('viewSessionParticipants').textContent =
+                        session.participantCount + '/' + session.maxParticipants;
+                    document.getElementById('viewSessionHost').textContent = session.creatorName;
+                    document.getElementById('viewSessionDescription').innerHTML =
+                        '<p>' + session.description + '</p>';
+                    document.getElementById('viewSessionPreferences').innerHTML =
+                        (session.preferences || []).map(p => '<span class="preference-tag">' + p + '</span>').join('');
+
+                    const liveEl = document.getElementById('viewSessionLive');
+                    if (session.isLive) {
+                        liveEl.className = 'live-badge';
+                        liveEl.textContent = 'LIVE';
+                        liveEl.classList.remove('hidden');
+                    } else if (session.isScheduled) {
+                        liveEl.className = 'scheduled-badge';
+                        liveEl.textContent = 'SCHEDULED';
+                        liveEl.classList.remove('hidden');
+                    } else {
+                        liveEl.classList.add('hidden');
+                    }
+
+                    navigateTo('sessionView');
+                }
+            }
+            if (e.target.classList.contains('join-btn')) {
+                showToast('Join request sent! (demo)', 'success');
+            }
+        });
+
+        // ===== Chat Demo =====
+        const chatForm = document.getElementById('chatForm');
+        if (chatForm) {
+            chatForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const input = document.getElementById('chatInput');
+                const content = input.value.trim();
+                if (!content) return;
+
+                if (content === '/code') {
+                    document.getElementById('codeEditorContainer').classList.remove('hidden');
+                    chatForm.classList.add('hidden');
+                    document.getElementById('codeEditorInput').focus();
+                    input.value = '';
+                    return;
+                }
+
+                const messagesEl = document.getElementById('chatMessages');
+                const now = new Date();
+                const time = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+                const msgHTML = `
+                    <div class="chat-message own">
+                        <div class="message-header">
+                            <span class="message-sender">You</span>
+                            <span class="message-time">${time}</span>
+                        </div>
+                        <div class="message-content">${escapeHtml(content)}</div>
+                    </div>
+                `;
+                messagesEl.insertAdjacentHTML('beforeend', msgHTML);
+                messagesEl.scrollTop = messagesEl.scrollHeight;
+                input.value = '';
+            });
+        }
+
+        // Code editor handlers
+        document.getElementById('closeCodeEditor')?.addEventListener('click', closeCodeEditor);
+        document.getElementById('cancelCodeEditor')?.addEventListener('click', closeCodeEditor);
+        document.getElementById('sendCodeBlock')?.addEventListener('click', sendCodeBlock);
+
+        const codeInput = document.getElementById('codeEditorInput');
+        if (codeInput) {
+            codeInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Tab') {
+                    e.preventDefault();
+                    const start = e.target.selectionStart;
+                    e.target.value = e.target.value.substring(0, start) + '\t' + e.target.value.substring(e.target.selectionEnd);
+                    e.target.selectionStart = e.target.selectionEnd = start + 1;
+                }
+                if (e.key === 'Enter' && e.ctrlKey) { e.preventDefault(); sendCodeBlock(); }
+            });
+        }
+
+        function closeCodeEditor() {
+            document.getElementById('codeEditorContainer').classList.add('hidden');
+            document.getElementById('chatForm').classList.remove('hidden');
+            document.getElementById('chatInput').focus();
+        }
+
+        function sendCodeBlock() {
+            const code = document.getElementById('codeEditorInput').value.trim();
+            if (!code) return;
+            const lang = document.getElementById('codeLanguage').value.trim();
+            const messagesEl = document.getElementById('chatMessages');
+            const now = new Date();
+            const time = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            const langLabel = lang ? '<span class="code-language">' + escapeHtml(lang) + '</span>' : '';
+
+            messagesEl.insertAdjacentHTML('beforeend', `
+                <div class="chat-message own">
+                    <div class="message-header">
+                        <span class="message-sender">You</span>
+                        <span class="message-time">${time}</span>
+                    </div>
+                    <div class="message-content">
+                        <pre class="code-block">${langLabel}<code>${escapeHtml(code)}</code></pre>
+                    </div>
+                </div>
+            `);
+            messagesEl.scrollTop = messagesEl.scrollHeight;
+            document.getElementById('codeEditorInput').value = '';
+            document.getElementById('codeLanguage').value = '';
+            closeCodeEditor();
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // ===== Auth Forms Demo =====
+        document.getElementById('loginForm')?.addEventListener('submit', (e) => {
+            e.preventDefault();
+            showToast('Login requires the Spring Boot backend (demo mode)', 'info');
+        });
+        document.getElementById('signupForm')?.addEventListener('submit', (e) => {
+            e.preventDefault();
+            showToast('Signup requires the Spring Boot backend (demo mode)', 'info');
+        });
+        document.getElementById('createSessionForm')?.addEventListener('submit', (e) => {
+            e.preventDefault();
+            showToast('Session created! (demo)', 'success');
+            navigateTo('browse');
+        });
+
+        // Start Now checkbox toggle
+        const startNow = document.getElementById('startNow');
+        const scheduleFields = document.getElementById('scheduleFields');
+        if (startNow && scheduleFields) {
+            startNow.addEventListener('change', (e) => {
+                scheduleFields.style.display = e.target.checked ? 'none' : 'block';
+            });
+        }
+
+        // ===== Modal =====
+        document.getElementById('closeUserModal')?.addEventListener('click', () => {
+            document.getElementById('userProfileModal').classList.remove('active');
+        });
+        document.getElementById('userProfileModal')?.addEventListener('click', (e) => {
+            if (e.target.id === 'userProfileModal')
+                document.getElementById('userProfileModal').classList.remove('active');
+        });
+
+        // Star rating hover/click in modal
+        const stars = document.querySelectorAll('#starRating .star');
+        let selectedRating = 0;
+        stars.forEach(star => {
+            star.addEventListener('mouseenter', () => {
+                const val = parseInt(star.getAttribute('data-value'));
+                stars.forEach((s, i) => { s.textContent = i < val ? '★' : '☆'; });
+            });
+            star.addEventListener('mouseleave', () => {
+                stars.forEach((s, i) => { s.textContent = i < selectedRating ? '★' : '☆'; });
+            });
+            star.addEventListener('click', () => {
+                selectedRating = parseInt(star.getAttribute('data-value'));
+                stars.forEach((s, i) => { s.textContent = i < selectedRating ? '★' : '☆'; });
+            });
+        });
+        document.getElementById('submitRating')?.addEventListener('click', () => {
+            if (selectedRating > 0) showToast('Rating submitted! (demo)', 'success');
+            else showToast('Please select a rating', 'error');
+        });
+        document.getElementById('viewFullProfile')?.addEventListener('click', () => {
+            document.getElementById('userProfileModal').classList.remove('active');
+            loadUserSessions();
+            navigateTo('userProfile');
+        });
+
+        // Participant chip click -> modal
+        document.querySelectorAll('.participant-chip:not(.is-you)').forEach(chip => {
+            chip.addEventListener('click', () => {
+                document.getElementById('userProfileModal').classList.add('active');
+            });
+        });
+
+        // ===== Toast =====
+        window.showToast = function(message, type) {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = 'toast ' + (type || 'info');
+            toast.innerHTML = '<span>' + message + '</span>';
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.style.animation = 'slideIn 0.3s ease reverse';
+                setTimeout(() => toast.remove(), 300);
+            }, 3500);
+        };
+
+        // ===== Initial Load =====
+        navigateTo('home');
+    });
+    </script>
+</body>
+</html>

@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Buddy - Find Your Study Partners</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#" class="nav-logo" data-page="home">
+                <span class="logo-icon">📚</span>
+                Study Buddy
+            </a>
+
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+                <span class="hamburger"></span>
+            </button>
+
+            <ul class="nav-menu" id="navMenu">
+                <li class="nav-item">
+                    <a href="#" class="nav-link" data-page="browse">Browse Sessions</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" data-page="create">Create Session</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" data-page="profile">Profile</a>
+                </li>
+                <li class="nav-item auth-links" id="authLinks">
+                    <a href="#" class="nav-link" data-page="login">Login</a>
+                    <a href="#" class="nav-link btn-signup" data-page="signup">Sign Up</a>
+                </li>
+                <li class="nav-item user-menu hidden" id="userMenu">
+                    <span class="user-name" id="userName"></span>
+                    <button class="btn-logout" id="logoutBtn">Logout</button>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="main-content" id="mainContent">
+
+        <!-- Home Page -->
+        <section class="page active" id="homePage">
+            <div class="hero">
+                <h1>Find Your Perfect Study Partner</h1>
+                <p>Connect with students in your year and modules for productive study sessions</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" data-page="browse">Browse Sessions</button>
+                    <button class="btn btn-secondary" data-page="signup">Get Started</button>
+                </div>
+            </div>
+
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Match by Module</h3>
+                    <p>Find partners studying the same subjects as you</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📅</div>
+                    <h3>Flexible Scheduling</h3>
+                    <p>Create sessions that fit your timetable</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⭐</div>
+                    <h3>Rated Partners</h3>
+                    <p>Choose partners based on peer reviews</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Login Page -->
+        <section class="page" id="loginPage">
+            <div class="auth-container">
+                <div class="auth-card">
+                    <h2>Welcome Back</h2>
+                    <p class="auth-subtitle">Sign in to continue to Study Buddy</p>
+
+                    <form id="loginForm" class="auth-form">
+                        <div class="form-group">
+                            <label for="loginEmail">Email</label>
+                            <input type="email" id="loginEmail" name="email" required
+                                   placeholder="your.email@university.ac.uk">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="loginPassword">Password</label>
+                            <input type="password" id="loginPassword" name="password" required
+                                   placeholder="Enter your password">
+                        </div>
+
+                        <div class="form-error" id="loginError"></div>
+
+                        <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+                    </form>
+
+                    <p class="auth-footer">
+                        Don't have an account?
+                        <a href="#" data-page="signup">Sign up</a>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Signup Page -->
+        <section class="page" id="signupPage">
+            <div class="auth-container">
+                <div class="auth-card">
+                    <h2>Create Account</h2>
+                    <p class="auth-subtitle">Join Study Buddy to find study partners</p>
+
+                    <form id="signupForm" class="auth-form">
+                        <div class="form-group">
+                            <label for="signupName">Full Name</label>
+                            <input type="text" id="signupName" name="name" required
+                                   placeholder="John Doe">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="signupEmail">University Email</label>
+                            <input type="email" id="signupEmail" name="email" required
+                                   placeholder="your.email@university.ac.uk">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="signupYear">Year of Study</label>
+                            <select id="signupYear" name="year" required>
+                                <option value="">Select your year</option>
+                                <option value="1">Year 1</option>
+                                <option value="2">Year 2</option>
+                                <option value="3">Year 3</option>
+                                <option value="4">Year 4</option>
+                                <option value="masters">Masters</option>
+                                <option value="phd">PhD</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="signupPassword">Password</label>
+                            <input type="password" id="signupPassword" name="password" required
+                                   placeholder="Create a strong password" minlength="6">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="signupConfirm">Confirm Password</label>
+                            <input type="password" id="signupConfirm" name="confirmPassword" required
+                                   placeholder="Confirm your password">
+                        </div>
+
+                        <div class="form-error" id="signupError"></div>
+
+                        <button type="submit" class="btn btn-primary btn-block">Create Account</button>
+                    </form>
+
+                    <p class="auth-footer">
+                        Already have an account?
+                        <a href="#" data-page="login">Sign in</a>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Browse Sessions Page -->
+        <section class="page" id="browsePage">
+            <div class="container">
+                <div class="page-header">
+                    <h2>Browse Study Sessions</h2>
+                    <p>Find and join study sessions that match your needs</p>
+                </div>
+
+                <!-- Filters -->
+                <div class="filters-container">
+                    <div class="filter-group">
+                        <label for="filterYear">Year</label>
+                        <select id="filterYear">
+                            <option value="">All Years</option>
+                            <option value="1">Year 1</option>
+                            <option value="2">Year 2</option>
+                            <option value="3">Year 3</option>
+                            <option value="4">Year 4</option>
+                            <option value="masters">Masters</option>
+                            <option value="phd">PhD</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="filterModule">Module</label>
+                        <select id="filterModule">
+                            <option value="">All Modules</option>
+                            <option value="CS101">CS101 - Intro to Programming</option>
+                            <option value="CS201">CS201 - Data Structures</option>
+                            <option value="CS301">CS301 - Algorithms</option>
+                            <option value="MATH101">MATH101 - Calculus</option>
+                            <option value="MATH201">MATH201 - Linear Algebra</option>
+                        </select>
+                    </div>
+
+                    <button class="btn btn-secondary" id="applyFilters">Apply Filters</button>
+                </div>
+
+                <!-- Sessions Grid -->
+                <div class="sessions-grid" id="sessionsGrid">
+                    <!-- Session cards will be loaded here -->
+                </div>
+
+                <div class="empty-state hidden" id="noSessions">
+                    <div class="empty-icon">📭</div>
+                    <h3>No Sessions Found</h3>
+                    <p>Try adjusting your filters or create a new session</p>
+                    <button class="btn btn-primary" data-page="create">Create Session</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Create Session Page -->
+        <section class="page" id="createPage">
+            <div class="container">
+                <div class="page-header">
+                    <h2>Create Study Session</h2>
+                    <p>Set up a new study session and find partners</p>
+                </div>
+
+                <div class="form-container">
+                    <form id="createSessionForm" class="session-form">
+                        <div class="form-section">
+                            <h3>Session Details</h3>
+
+                            <div class="form-group">
+                                <label for="sessionTitle">Session Title</label>
+                                <input type="text" id="sessionTitle" name="title" required
+                                       placeholder="e.g., Exam prep for CS201">
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="sessionYear">Target Year</label>
+                                    <select id="sessionYear" name="year" required>
+                                        <option value="">Select year</option>
+                                        <option value="1">Year 1</option>
+                                        <option value="2">Year 2</option>
+                                        <option value="3">Year 3</option>
+                                        <option value="4">Year 4</option>
+                                        <option value="masters">Masters</option>
+                                        <option value="phd">PhD</option>
+                                        <option value="any">Any Year</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="sessionModule">Module</label>
+                                    <select id="sessionModule" name="module" required>
+                                        <option value="">Select module</option>
+                                        <option value="CS101">CS101 - Intro to Programming</option>
+                                        <option value="CS201">CS201 - Data Structures</option>
+                                        <option value="CS301">CS301 - Algorithms</option>
+                                        <option value="MATH101">MATH101 - Calculus</option>
+                                        <option value="MATH201">MATH201 - Linear Algebra</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <h3>Schedule</h3>
+
+                            <div class="form-group">
+                                <label class="checkbox-label start-now-label">
+                                    <input type="checkbox" id="startNow" name="startNow">
+                                    <strong>Start Now</strong> - Open the chat room immediately
+                                </label>
+                            </div>
+
+                            <div id="scheduleFields">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="sessionDate">Date</label>
+                                        <input type="date" id="sessionDate" name="date">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="sessionTime">Time</label>
+                                        <input type="time" id="sessionTime" name="time">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="sessionDuration">Duration</label>
+                                <select id="sessionDuration" name="duration" required>
+                                    <option value="30">30 minutes</option>
+                                    <option value="60" selected>1 hour</option>
+                                    <option value="90">1.5 hours</option>
+                                    <option value="120">2 hours</option>
+                                    <option value="180">3 hours</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <h3>Preferences</h3>
+
+                            <div class="form-group">
+                                <label for="sessionMaxParticipants">Max Participants</label>
+                                <select id="sessionMaxParticipants" name="maxParticipants">
+                                    <option value="2">2 people</option>
+                                    <option value="3">3 people</option>
+                                    <option value="4" selected>4 people</option>
+                                    <option value="5">5 people</option>
+                                    <option value="6">6+ people</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Study Style</label>
+                                <div class="checkbox-group">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" name="preferences" value="quiet">
+                                        Quiet study
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" name="preferences" value="discussion">
+                                        Discussion-based
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" name="preferences" value="practice">
+                                        Practice problems
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" name="preferences" value="teaching">
+                                        Peer teaching
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="sessionDescription">Description (Optional)</label>
+                                <textarea id="sessionDescription" name="description" rows="3"
+                                          placeholder="Add any additional details about your study session..."></textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-secondary" data-page="browse">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Create Session</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Profile Page -->
+        <section class="page" id="profilePage">
+            <div class="container">
+                <div class="profile-container">
+                    <div class="profile-header">
+                        <div class="profile-avatar" id="profileAvatar">
+                            <span>JD</span>
+                        </div>
+                        <div class="profile-info">
+                            <h2 id="profileName">Loading...</h2>
+                            <p class="profile-year" id="profileYear">Loading...</p>
+                            <p class="profile-email" id="profileEmail"></p>
+                            <div class="profile-rating">
+                                <span class="stars" id="profileStars">☆☆☆☆☆</span>
+                                <span class="rating-count" id="profileRatingCount">(0 ratings)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="profile-stats">
+                        <div class="stat-card">
+                            <div class="stat-value" id="statSessions">0</div>
+                            <div class="stat-label">Sessions Created</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="statJoined">0</div>
+                            <div class="stat-label">Sessions Joined</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="statRating">-</div>
+                            <div class="stat-label">Avg Rating</div>
+                        </div>
+                    </div>
+
+                    <div class="profile-section">
+                        <h3>My Sessions</h3>
+                        <div class="tabs">
+                            <button class="tab-btn active" data-tab="created">Created</button>
+                            <button class="tab-btn" data-tab="joined">Joined</button>
+                            <button class="tab-btn" data-tab="pending">Pending Requests</button>
+                            <button class="tab-btn" data-tab="blocked">Blocked Users</button>
+                        </div>
+                        <div class="tab-content" id="profileSessions">
+                            <div class="empty-state">
+                                <p>No sessions yet</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Session View/Chat Page -->
+        <section class="page" id="sessionViewPage">
+            <div class="container">
+                <div class="session-view-container">
+                    <div class="session-details-panel">
+                        <button class="btn btn-secondary btn-back" data-page="browse">← Back to Browse</button>
+
+                        <div class="session-view-header">
+                            <h2 id="viewSessionTitle">Loading...</h2>
+                            <span class="live-badge hidden" id="viewSessionLive">LIVE</span>
+                        </div>
+
+                        <div class="session-view-info">
+                            <div class="info-row">
+                                <span class="info-label">Module:</span>
+                                <span id="viewSessionModule">-</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Date & Time:</span>
+                                <span id="viewSessionDateTime">-</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Duration:</span>
+                                <span id="viewSessionDuration">-</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Participants:</span>
+                                <span id="viewSessionParticipants">-</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Host:</span>
+                                <span id="viewSessionHost">-</span>
+                            </div>
+                        </div>
+
+                        <div class="session-description" id="viewSessionDescription">
+                        </div>
+
+                        <div class="session-preferences" id="viewSessionPreferences">
+                        </div>
+
+                        <div class="pending-requests-section hidden" id="pendingRequestsSection">
+                            <h3>Pending Join Requests</h3>
+                            <div id="pendingRequestsList"></div>
+                        </div>
+                    </div>
+
+                    <div class="chat-panel" id="chatPanel">
+                        <div class="chat-header">
+                            <h3>Session Chat</h3>
+                            <span class="chat-status" id="chatStatus">Connected</span>
+                        </div>
+
+                        <div class="chat-participants" id="chatParticipants">
+                            <div class="participants-header">
+                                <span>Participants</span>
+                                <span class="participant-count" id="participantCount">0</span>
+                            </div>
+                            <div class="participants-list" id="participantsList">
+                            </div>
+                        </div>
+
+                        <div class="chat-messages" id="chatMessages">
+                            <div class="chat-empty">
+                                <p>No messages yet. Start the conversation!</p>
+                            </div>
+                        </div>
+
+                        <form class="chat-input-form" id="chatForm">
+                            <input type="text" id="chatInput" placeholder="Type a message... (try /code)" autocomplete="off">
+                            <button type="submit" class="btn btn-primary">Send</button>
+                        </form>
+
+                        <div class="code-editor-container hidden" id="codeEditorContainer">
+                            <div class="code-editor-header">
+                                <span class="code-editor-title">Code Block</span>
+                                <button type="button" class="code-editor-close" id="closeCodeEditor">&times;</button>
+                            </div>
+                            <textarea id="codeEditorInput" class="code-editor-input" placeholder="Type or paste your code here...&#10;&#10;• Use Tab for indentation&#10;• Use Enter for new lines&#10;• Press Ctrl+Enter to send"></textarea>
+                            <div class="code-editor-footer">
+                                <input type="text" id="codeLanguage" class="code-language-input" placeholder="Language (optional, e.g., javascript, python)">
+                                <button type="button" class="btn btn-secondary btn-sm" id="cancelCodeEditor">Cancel</button>
+                                <button type="button" class="btn btn-primary btn-sm" id="sendCodeBlock">Send Code <span class="keyboard-hint">Ctrl+Enter</span></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- User Profile View Page -->
+        <section class="page" id="userProfilePage">
+            <div class="container">
+                <button class="btn btn-secondary btn-back" data-page="browse">← Back to Browse</button>
+
+                <div class="user-profile-view">
+                    <div class="profile-header">
+                        <div class="profile-avatar" id="viewUserAvatar">
+                            <span>U</span>
+                        </div>
+                        <div class="profile-info">
+                            <h2 id="viewUserName">User Name</h2>
+                            <p id="viewUserYear">Year 1</p>
+                            <div class="profile-rating">
+                                <span id="viewUserStars">☆☆☆☆☆</span>
+                                <span id="viewUserRatingText">No ratings yet</span>
+                            </div>
+                        </div>
+                        <div class="profile-actions">
+                            <button class="btn btn-danger" id="viewUserBlockBtn">Block User</button>
+                        </div>
+                    </div>
+
+                    <div class="profile-section">
+                        <h3>Sessions by this user</h3>
+                        <div class="sessions-grid" id="viewUserSessions">
+                            <div class="empty-state">
+                                <p>No sessions yet</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- User Profile Modal -->
+    <div class="modal-overlay" id="userProfileModal">
+        <div class="modal-content">
+            <button class="modal-close" id="closeUserModal">&times;</button>
+            <div class="user-profile-modal">
+                <div class="modal-user-header">
+                    <div class="modal-user-avatar" id="modalUserAvatar">
+                        <span>JD</span>
+                    </div>
+                    <div class="modal-user-info">
+                        <h3 id="modalUserName">John Doe</h3>
+                        <p id="modalUserEmail">john@example.com</p>
+                        <p id="modalUserYear">Year 2</p>
+                    </div>
+                </div>
+                <div class="modal-user-rating">
+                    <div class="rating-display">
+                        <span id="modalUserStars">☆☆☆☆☆</span>
+                        <span id="modalUserRating">No ratings yet</span>
+                    </div>
+                </div>
+                <div class="modal-rating-section" id="modalRatingSection">
+                    <h4>Rate this user</h4>
+                    <div class="star-rating" id="starRating">
+                        <span class="star" data-value="1">☆</span>
+                        <span class="star" data-value="2">☆</span>
+                        <span class="star" data-value="3">☆</span>
+                        <span class="star" data-value="4">☆</span>
+                        <span class="star" data-value="5">☆</span>
+                    </div>
+                    <button class="btn btn-primary" id="submitRating">Submit Rating</button>
+                </div>
+                <div class="modal-actions">
+                    <button class="btn btn-secondary" id="viewFullProfile">View Full Profile</button>
+                    <button class="btn btn-warning" id="kickUserBtn" style="display: none;">Kick User</button>
+                    <button class="btn btn-danger" id="blockUserBtn">Block User</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
+
+    <!-- App Scripts -->
+    <script src="js/firebase-config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/sessions.js"></script>
+    <script src="js/chat.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
