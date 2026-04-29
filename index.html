@@ -286,16 +286,25 @@
     @media (max-width: 768px) {
       nav { padding: 0 1rem; }
       .nav-links { display: none; }
+      .status-badge { display: none; }
+      .nav-right { gap: 0.5rem; }
       #hero, section { padding: 3rem 1.5rem; }
+      .hero-name { font-size: clamp(1.8rem, 10vw, 3rem); }
+      .hero-meta { gap: 1rem; }
       .about-grid { grid-template-columns: 1fr; }
+      .cases-grid { grid-template-columns: 1fr; }
+      .case-card.full-width { grid-column: 1; }
+      .fyp-inner { grid-template-columns: 1fr; }
+      .fyp-stats { min-width: 0; }
+      .toolkit-grid { grid-template-columns: 1fr; }
       .cert-card { grid-template-columns: 1fr; }
       .cert-img-wrap { width: 100%; max-width: 260px; }
       .contact-grid { grid-template-columns: 1fr; }
       footer { padding: 1rem 1.5rem; flex-direction: column; gap: 0.5rem; text-align: center; }
       #boot { padding: 2rem 1.5rem; }
       .boot-line { font-size: 0.75rem; white-space: normal; }
-      .fyp-inner { grid-template-columns: 1fr; }
-      .fyp-stats { min-width: 0; }
+      .hero-ctas { flex-direction: column; align-items: flex-start; }
+      .btn { width: 100%; justify-content: center; }
     }
 
     /* ── FADE IN ── */
