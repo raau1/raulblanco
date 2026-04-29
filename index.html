@@ -1,272 +1,921 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Raul Blanco - Portfolio</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Raul Blanco Vazquez // Blue Team</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,700;1,300&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:     #080c10;
+      --bg2:    #0d1318;
+      --bg3:    #111921;
+      --border: #1c2a35;
+      --green:  #00ff88;
+      --blue:   #00cfff;
+      --red:    #ff3b3b;
+      --amber:  #ffb800;
+      --text:   #c8d6df;
+      --muted:  #4a6070;
+      --white:  #eaf4ff;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'JetBrains Mono', monospace;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* Scanlines */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background: repeating-linear-gradient(
+        0deg, transparent, transparent 2px,
+        rgba(0,0,0,0.07) 2px, rgba(0,0,0,0.07) 4px
+      );
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    .hex-bg {
+      position: fixed; inset: 0;
+      background-image:
+        radial-gradient(circle at 20% 50%, rgba(0,207,255,0.04) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(0,255,136,0.04) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── BOOT ── */
+    #boot {
+      position: fixed; inset: 0;
+      background: #000;
+      z-index: 10000;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 3rem 4rem;
+    }
+
+    #boot-lines { width: 100%; max-width: 700px; }
+
+    .boot-line {
+      font-size: 0.85rem;
+      color: var(--green);
+      line-height: 1.8;
+      opacity: 0;
+      white-space: nowrap;
+    }
+
+    .boot-line.amber { color: var(--amber); }
+    .boot-line.blue  { color: var(--blue); }
+    .boot-line.white { color: var(--white); }
+
+    #boot-bar-wrap { margin-top: 1.5rem; width: 100%; max-width: 500px; }
+    #boot-bar-label { font-size: 0.75rem; color: var(--muted); margin-bottom: 0.4rem; }
+    #boot-bar { height: 6px; background: #1a2a20; border: 1px solid #1c3a28; position: relative; overflow: hidden; }
+    #boot-bar-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--green), #00ffcc); transition: width 0.05s linear; box-shadow: 0 0 8px var(--green); }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      height: 52px;
+      background: rgba(8,12,16,0.95);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      z-index: 100;
+      backdrop-filter: blur(8px);
+    }
+
+    .nav-logo { font-size: 0.8rem; font-weight: 700; color: var(--green); letter-spacing: 0.1em; text-decoration: none; }
+    .nav-logo span { color: var(--muted); }
+
+    .nav-links { display: flex; gap: 0; list-style: none; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.72rem; letter-spacing: 0.08em; padding: 0.4rem 0.9rem; transition: color 0.2s; border-left: 1px solid var(--border); }
+    .nav-links a:hover { color: var(--green); }
+
+    .nav-right { display: flex; align-items: center; gap: 0.8rem; }
+
+    .status-badge { display: flex; align-items: center; gap: 0.4rem; color: var(--muted); padding: 0.25rem 0.6rem; border: 1px solid var(--border); font-size: 0.68rem; }
+    .status-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); box-shadow: 0 0 6px var(--green); animation: pulse 2s ease-in-out infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+    /* Lang toggle */
+    .lang-toggle { display: flex; border: 1px solid var(--border); overflow: hidden; }
+    .lang-btn {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem; letter-spacing: 0.1em;
+      padding: 0.28rem 0.7rem;
+      background: transparent; color: var(--muted);
+      border: none; cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+    }
+    .lang-btn + .lang-btn { border-left: 1px solid var(--border); }
+    .lang-btn.active { background: var(--green); color: #000; }
+    .lang-btn:not(.active):hover { color: var(--text); }
+
+    /* ── MAIN ── */
+    main { position: relative; z-index: 1; padding-top: 52px; }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 4rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hero-eyebrow { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.2em; margin-bottom: 1.2rem; }
+    .hero-eyebrow span { color: var(--green); }
+
+    .hero-name {
+      font-size: clamp(2.4rem, 6vw, 5rem);
+      font-weight: 700; color: var(--white);
+      line-height: 1.05; letter-spacing: -0.02em;
+      position: relative;
+    }
+
+    .hero-name::before, .hero-name::after {
+      content: attr(data-text);
+      position: absolute; top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+    }
+    .hero-name::before { color: var(--blue); clip-path: polygon(0 30%,100% 30%,100% 50%,0 50%); transform: translateX(-3px); animation: glitch1 8s infinite; }
+    .hero-name::after  { color: var(--red);  clip-path: polygon(0 60%,100% 60%,100% 75%,0 75%); transform: translateX(3px);  animation: glitch2 8s infinite; }
+    @keyframes glitch1 { 0%,94%,100%{opacity:0;transform:translateX(0)} 95%{opacity:1;transform:translateX(-3px)} 97%{opacity:0} }
+    @keyframes glitch2 { 0%,94%,100%{opacity:0;transform:translateX(0)} 96%{opacity:1;transform:translateX(3px)}  98%{opacity:0} }
+
+    .hero-role { font-size: clamp(1rem, 2vw, 1.4rem); color: var(--green); font-weight: 300; margin-top: 0.8rem; letter-spacing: 0.05em; }
+    .hero-role .cursor { display: inline-block; width: 2px; height: 1.1em; background: var(--green); vertical-align: bottom; margin-left: 2px; animation: blink 1s step-end infinite; }
+    @keyframes blink { 50%{opacity:0} }
+
+    .hero-bio { font-family: 'Space Grotesk', sans-serif; font-size: 1rem; line-height: 1.7; color: var(--text); max-width: 560px; margin-top: 2rem; opacity: 0.85; }
+
+    .hero-ctas { display: flex; align-items: center; gap: 1rem; margin-top: 2.5rem; flex-wrap: wrap; }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem; letter-spacing: 0.1em;
+      padding: 0.7rem 1.4rem;
+      text-decoration: none; border: 1px solid;
+      transition: all 0.2s; cursor: pointer; font-weight: 500;
+    }
+    .btn-primary { background: var(--green); color: #000; border-color: var(--green); }
+    .btn-primary:hover { background: transparent; color: var(--green); box-shadow: 0 0 16px rgba(0,255,136,0.3); }
+    .btn-secondary { background: transparent; color: var(--blue); border-color: var(--blue); }
+    .btn-secondary:hover { background: rgba(0,207,255,0.08); box-shadow: 0 0 16px rgba(0,207,255,0.2); }
+    .btn-ghost { background: transparent; color: var(--muted); border-color: var(--border); }
+    .btn-ghost:hover { color: var(--text); border-color: var(--muted); }
+
+    .hero-meta { display: flex; gap: 2rem; margin-top: 3rem; flex-wrap: wrap; }
+    .meta-item { font-size: 0.7rem; color: var(--muted); letter-spacing: 0.1em; }
+    .meta-item span { color: var(--text); display: block; margin-top: 0.2rem; font-size: 0.82rem; }
+
+    /* ── SECTIONS ── */
+    section { padding: 5rem 4rem; border-bottom: 1px solid var(--border); position: relative; }
+
+    .section-header { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 3rem; }
+    .section-label { font-size: 0.65rem; color: var(--muted); letter-spacing: 0.25em; border: 1px solid var(--border); padding: 0.2rem 0.5rem; }
+    .section-title { font-size: 1.5rem; font-weight: 700; color: var(--white); letter-spacing: -0.01em; }
+    .section-line { flex: 1; height: 1px; background: var(--border); }
+
+    /* ── ABOUT ── */
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+    .about-card { background: var(--bg2); border: 1px solid var(--border); padding: 2rem; }
+    .about-card-label { font-size: 0.65rem; color: var(--green); letter-spacing: 0.2em; margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.5rem; }
+    .about-card-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    .about-text { font-family: 'Space Grotesk', sans-serif; font-size: 0.95rem; line-height: 1.8; color: var(--text); }
+    .about-text + .about-text { margin-top: 0.8rem; }
+
+    .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); }
+    .stat-item { background: var(--bg2); padding: 1.2rem 1.5rem; }
+    .stat-value { font-size: 1.8rem; font-weight: 700; color: var(--white); line-height: 1; }
+    .stat-value.green { color: var(--green); }
+    .stat-value.blue  { color: var(--blue); }
+    .stat-label { font-size: 0.65rem; color: var(--muted); letter-spacing: 0.1em; margin-top: 0.3rem; }
+
+    /* ── PROJECTS ── */
+    .cases-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); border-top: 1px solid var(--border); border-left: 1px solid var(--border); }
+
+    .case-card {
+      background: var(--bg2); padding: 1.8rem;
+      display: flex; flex-direction: column;
+      transition: background 0.2s; position: relative; overflow: hidden;
+      border-right: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    }
+    .case-card::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 0; background: var(--green); transition: height 0.3s; }
+    .case-card:hover::before { height: 100%; }
+    .case-card:hover { background: var(--bg3); }
+    .case-card.highlight::before { background: var(--amber); }
+    .case-card.full-width { grid-column: 1 / -1; }
+
+    .case-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; }
+    .case-id { font-size: 0.6rem; color: var(--muted); letter-spacing: 0.15em; }
+    .case-badge { font-size: 0.55rem; padding: 0.2rem 0.5rem; letter-spacing: 0.1em; font-weight: 600; }
+    .badge-green { border: 1px solid var(--green); color: var(--green); }
+    .badge-amber { border: 1px solid var(--amber); color: var(--amber); }
+    .badge-blue  { border: 1px solid var(--blue);  color: var(--blue); }
+
+    .case-title { font-size: 1.05rem; font-weight: 600; color: var(--white); margin-bottom: 0.4rem; line-height: 1.3; }
+    .case-date  { font-size: 0.65rem; color: var(--muted); margin-bottom: 1rem; }
+    .case-desc  { font-family: 'Space Grotesk', sans-serif; font-size: 0.88rem; line-height: 1.65; color: var(--text); opacity: 0.85; flex: 1; margin-bottom: 1.2rem; }
+
+    .case-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.4rem; }
+    .tag { font-size: 0.62rem; padding: 0.2rem 0.5rem; background: var(--bg3); border: 1px solid var(--border); color: var(--muted); letter-spacing: 0.05em; }
+
+    .case-link { font-size: 0.7rem; color: var(--green); text-decoration: none; letter-spacing: 0.1em; display: inline-flex; align-items: center; gap: 0.4rem; transition: gap 0.2s; background: none; border: none; cursor: pointer; }
+    .case-link:hover { gap: 0.7rem; }
+    .case-link.disabled { color: var(--muted); pointer-events: none; }
+
+    /* FYP layout */
+    .fyp-inner { display: grid; grid-template-columns: 1fr auto; gap: 2rem; align-items: start; }
+    .fyp-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); min-width: 280px; flex-shrink: 0; }
+    .fyp-stat { background: var(--bg3); padding: 1rem 1.2rem; }
+    .fyp-stat-val { font-size: 1.6rem; font-weight: 700; line-height: 1; }
+    .fyp-stat-label { font-size: 0.6rem; color: var(--muted); letter-spacing: 0.1em; margin-top: 0.2rem; }
+
+    /* ── TOOLKIT ── */
+    .toolkit-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); border-top: 1px solid var(--border); border-left: 1px solid var(--border); }
+    .toolkit-group { background: var(--bg2); padding: 1.8rem; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .toolkit-group-title { font-size: 0.65rem; color: var(--blue); letter-spacing: 0.2em; margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.5rem; }
+    .toolkit-group-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+    .skill-item { display: flex; align-items: flex-start; gap: 0.5rem; margin-bottom: 0.9rem; }
+    .skill-name { font-size: 0.8rem; color: var(--text); flex: 1; line-height: 1.4; }
+    .skill-bar { width: 80px; height: 3px; background: var(--border); position: relative; flex-shrink: 0; margin-top: 0.45em; }
+    .skill-bar-fill { position: absolute; left: 0; top: 0; height: 100%; background: var(--green); box-shadow: 0 0 6px var(--green); transition: width 1s ease; width: 0; }
+    .skill-bar-fill.blue  { background: var(--blue);  box-shadow: 0 0 6px var(--blue); }
+    .skill-bar-fill.amber { background: var(--amber); box-shadow: 0 0 6px var(--amber); }
+
+    /* ── CERTS ── */
+    .cert-card { display: grid; grid-template-columns: auto 1fr; gap: 2.5rem; background: var(--bg2); border: 1px solid var(--border); padding: 2rem; max-width: 780px; }
+    .cert-img-wrap { width: 200px; flex-shrink: 0; border: 1px solid var(--border); overflow: hidden; }
+    .cert-img-wrap img { width: 100%; display: block; filter: saturate(0.7) brightness(0.9); transition: filter 0.3s; }
+    .cert-card:hover .cert-img-wrap img { filter: saturate(1) brightness(1); }
+    .cert-info { display: flex; flex-direction: column; gap: 0.8rem; justify-content: center; }
+    .cert-issuer { font-size: 0.65rem; color: var(--muted); letter-spacing: 0.15em; }
+    .cert-name { font-size: 1.2rem; font-weight: 600; color: var(--white); line-height: 1.3; }
+    .cert-desc { font-family: 'Space Grotesk', sans-serif; font-size: 0.88rem; color: var(--text); line-height: 1.6; opacity: 0.85; }
+
+    /* ── CONTACT ── */
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); max-width: 700px; border: 1px solid var(--border); }
+    .contact-item { background: var(--bg2); padding: 1.6rem 1.8rem; display: flex; flex-direction: column; gap: 0.4rem; text-decoration: none; transition: background 0.2s, box-shadow 0.2s; cursor: pointer; }
+    .contact-item:hover { background: var(--bg3); box-shadow: inset 3px 0 0 var(--green); }
+    .contact-key { font-size: 0.62rem; color: var(--muted); letter-spacing: 0.15em; }
+    .contact-val { font-size: 0.92rem; color: var(--white); font-weight: 500; }
+    .contact-val { font-size: 0.85rem; color: var(--text); }
+    .contact-item:hover .contact-val { color: var(--green); }
+
+    /* ── FOOTER ── */
+    footer { padding: 1.5rem 4rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.65rem; color: var(--muted); letter-spacing: 0.1em; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 0 1rem; }
+      .nav-links { display: none; }
+      #hero, section { padding: 3rem 1.5rem; }
+      .about-grid { grid-template-columns: 1fr; }
+      .cert-card { grid-template-columns: 1fr; }
+      .cert-img-wrap { width: 100%; max-width: 260px; }
+      .contact-grid { grid-template-columns: 1fr; }
+      footer { padding: 1rem 1.5rem; flex-direction: column; gap: 0.5rem; text-align: center; }
+      #boot { padding: 2rem 1.5rem; }
+      .boot-line { font-size: 0.75rem; white-space: normal; }
+      .fyp-inner { grid-template-columns: 1fr; }
+      .fyp-stats { min-width: 0; }
+    }
+
+    /* ── FADE IN ── */
+    .fade-in { opacity: 0; transform: translateY(16px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .fade-in.visible { opacity: 1; transform: none; }
+  </style>
 </head>
-<body class="projects-page">
+<body>
+<div class="hex-bg"></div>
 
-    <!-- Booting Sequence Overlay -->
-    <div id="boot-screen">
-        <h2>Booting...</h2>
-        <div id="loading-bar">
-            <div id="loading-bar-progress"></div>
+<!-- BOOT -->
+<div id="boot">
+  <div id="boot-lines">
+    <div class="boot-line">> INITIALIZING SECURE SESSION...</div>
+    <div class="boot-line amber">> LOADING ANALYST PROFILE // RBV-2025</div>
+    <div class="boot-line">> VERIFYING CREDENTIALS... <span style="color:var(--green)">OK</span></div>
+    <div class="boot-line">> ESTABLISHING TLS 1.3 HANDSHAKE... <span style="color:var(--green)">OK</span></div>
+    <div class="boot-line blue">> MOUNTING PROJECT FILES... 7 RECORDS FOUND</div>
+    <div class="boot-line">> RUNNING INTEGRITY CHECK... <span style="color:var(--green)">CLEAN</span></div>
+    <div class="boot-line white">> ACCESS GRANTED. WELCOME.</div>
+  </div>
+  <div id="boot-bar-wrap">
+    <div id="boot-bar-label">> LOADING PORTFOLIO...</div>
+    <div id="boot-bar"><div id="boot-bar-fill"></div></div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">RBV<span>/</span>PORTFOLIO</a>
+  <ul class="nav-links">
+    <li><a href="#about"   data-i18n="nav.profile"></a></li>
+    <li><a href="#cases"   data-i18n="nav.projects"></a></li>
+    <li><a href="#toolkit" data-i18n="nav.toolkit"></a></li>
+    <li><a href="#certs"   data-i18n="nav.certs"></a></li>
+    <li><a href="#contact" data-i18n="nav.contact"></a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="status-badge"><div class="status-dot"></div><span data-i18n="nav.online"></span></div>
+    <div class="lang-toggle">
+      <button class="lang-btn active" onclick="setLang('en')">EN</button>
+      <button class="lang-btn"        onclick="setLang('es')">ES</button>
+    </div>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<main id="main" style="display:none;">
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-eyebrow" data-i18n-html="hero.eyebrow"></div>
+    <h1 class="hero-name" data-text="RAUL BLANCO VAZQUEZ">RAUL BLANCO VAZQUEZ</h1>
+    <div class="hero-role"><span id="typed-role"></span><span class="cursor"></span></div>
+    <p class="hero-bio" data-i18n="hero.bio"></p>
+    <div class="hero-ctas">
+      <a id="cv-download-btn" href="Raul_BlancoVazquez_CV_EN.pdf" download="Raul_BlancoVazquez_CV_EN.pdf" class="btn btn-primary" data-i18n="hero.cv"></a>
+      <a href="https://github.com/raau1" target="_blank" class="btn btn-secondary">⌥ GITHUB</a>
+      <a href="#contact" class="btn btn-ghost" data-i18n="hero.contact_btn"></a>
+    </div>
+    <div class="hero-meta">
+      <div class="meta-item"><span data-i18n="meta.location_label"></span><span data-i18n="meta.location_val"></span></div>
+      <div class="meta-item"><span data-i18n="meta.status_label"></span><span style="color:var(--green)" data-i18n="meta.status_val"></span></div>
+      <div class="meta-item"><span data-i18n="meta.focus_label"></span><span data-i18n="meta.focus_val"></span></div>
+      <div class="meta-item"><span data-i18n="meta.edu_label"></span><span data-i18n="meta.edu_val"></span></div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-header fade-in">
+      <div class="section-label">01</div>
+      <h2 class="section-title" data-i18n="about.title"></h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="about-grid">
+      <div class="about-card fade-in">
+        <div class="about-card-label" data-i18n="about.briefing_label"></div>
+        <p class="about-text" data-i18n="about.p1"></p>
+        <p class="about-text" data-i18n="about.p2"></p>
+        <p class="about-text" data-i18n="about.p3"></p>
+      </div>
+      <div class="fade-in">
+        <div class="stat-grid">
+          <div class="stat-item"><div class="stat-value green">6+</div><div class="stat-label" data-i18n="stats.projects"></div></div>
+          <div class="stat-item"><div class="stat-value blue">4</div><div class="stat-label" data-i18n="stats.hackathons"></div></div>
+          <div class="stat-item"><div class="stat-value" style="color:var(--amber)">1</div><div class="stat-label" data-i18n="stats.won"></div></div>
+          <div class="stat-item"><div class="stat-value">1</div><div class="stat-label" data-i18n="stats.cert"></div></div>
         </div>
-        <p>Nearly There...</p>
+      </div>
     </div>
-    
-    
-    <!-- Header w Nav -->
-    <header>
-        <nav>
-            <ul>
-                <li><a href="index.html">Projects</a></li>
-                <li><a href="skills.html">Skills</a></li>
-                <li><a href="cert.html">Certifications</a></li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
+  </section>
 
-    
-
-    <!-- Scroll-triggered Menu Button -->
-    <button id="menu-button" class="menu-btn">
-        <svg width="40" height="40" viewBox="0 0 40 40">
-            <rect class="st0" width="40" height="6"></rect>
-            <rect y="12" class="st0" width="40" height="6"></rect>
-            <rect y="24" class="st0" width="40" height="6"></rect>
-        </svg>
-    </button>
-
-    <!-- Fullscreen Navigation Overlay -->
-    <div id="nav-overlay" class="fullscreen-nav">
-        <ul>
-            <li><a href="index.html">Projects</a></li>
-            <li><a href="skills.html">Skills</a></li>
-            <li><a href="contact.html">Contact</a></li>
-        </ul>
+  <!-- PROJECTS -->
+  <section id="cases">
+    <div class="section-header fade-in">
+      <div class="section-label">02</div>
+      <h2 class="section-title" data-i18n="projects.title"></h2>
+      <div class="section-line"></div>
     </div>
+    <div class="cases-grid">
 
-
-    <!-- About Me Section -->
-    <section class="about-me">
-        <h2>About Me</h2>
-        <p id="about-paragraph-1" data-text="Hello! I'm Raul Blanco Vazquez, a passionate Computer Science Student based in Leicester, UK. With a strong foundation in front-end and back-end technologies."></p>
-        <p id="about-paragraph-2" data-text="I focus on creating seamless user experiences and efficient solutions."></p>
-        <p id="about-paragraph-3" data-text="My interests span web design, machine learning, AI, cybersecurity, and problem-solving within the tech space. Welcome to my portfolio!"></p>
-    </section>
-
-
-
-
-
-    <!-- Projects Section -->
-    <main class="container" id="main-content" style="display: none;">
-        <h2>My Projects</h2>
-        <div class="projects-list">
-
-            <div class="project-item">
-                <a href="StudyBuddy/index.html" class="project-link">Study Buddy</a>
-                <p class="project-date">22 MARCH 2025</p>
-                <div class="tech-buttons">
-                    <span class="tech-btn">Java</span>
-                    <span class="tech-btn">Spring Boot</span>
-                    <span class="tech-btn">Firebase</span>
-                    <span class="tech-btn">HTML</span>
-                    <span class="tech-btn">CSS</span>
-                    <span class="tech-btn">JavaScript</span>
-                </div>
-                <p class="project-description">Team Hackathon Project - A full-stack web application for students to find and connect with study partners by year, module, and preferences, featuring real-time chat with code sharing</p>
+      <!-- FYP - Full Width -->
+      <div class="case-card highlight full-width fade-in">
+        <div class="case-header">
+          <div class="case-id">CASE-000 // CO3201 <span data-i18n="fyp.subtitle"></span></div>
+          <div class="case-badge badge-green" data-i18n="badge.completed"></div>
+        </div>
+        <div class="fyp-inner">
+          <div>
+            <div class="case-title" style="font-size:1.3rem;" data-i18n="fyp.title"></div>
+            <div class="case-date" data-i18n="fyp.date"></div>
+            <p class="case-desc" style="max-width:700px;" data-i18n="fyp.desc"></p>
+            <div class="case-tags">
+              <span class="tag">Python</span><span class="tag">PyTorch</span>
+              <span class="tag">XceptionNet</span><span class="tag">EfficientNet-B4</span>
+              <span class="tag">LSTM</span><span class="tag">FastAPI</span>
+              <span class="tag">Docker / CUDA</span><span class="tag">Grad-CAM</span>
             </div>
+          </div>
+          <div class="fyp-stats">
+            <div class="fyp-stat"><div class="fyp-stat-val" style="color:var(--green)">99.99%</div><div class="fyp-stat-label">AUC — CELEB-DF V2</div></div>
+            <div class="fyp-stat"><div class="fyp-stat-val" style="color:var(--blue)">99.87%</div><div class="fyp-stat-label">AUC — FACEFORENSICS++</div></div>
+            <div class="fyp-stat"><div class="fyp-stat-val" style="color:var(--amber)">+27pp</div><div class="fyp-stat-label" data-i18n="fyp.stat_lift"></div></div>
+            <div class="fyp-stat"><div class="fyp-stat-val" style="color:var(--white)">4</div><div class="fyp-stat-label" data-i18n="fyp.stat_models"></div></div>
+          </div>
+        </div>
+        <a href="https://github.com/raau1/Deepfake-and-Face-Spoofing-Detection-System" target="_blank" class="case-link" data-i18n="link.github"></a>
+      </div>
 
-            <div class="project-item">
-                <a href="https://github.com/raau1/Double-EMA-Trading-Bot" class="project-link">Forex Trading Bot</a>
-                <p class="project-date">25 OCTOBER 2024</p>
-                <div class="tech-buttons">
-                    <span class="tech-btn">Python</span>
-                    <span class="tech-btn">GitHub</span>
-                    <span class="tech-btn">Pandas</span>
-                    <span class="tech-btn">API</span>
-                </div>
-                <p class="project-description"> Team Hackathon Project that uses the Exponential Moving Average (EMA) strategy to analyze market trends and make informed trading decisions.</p>
-            </div>
+      <!-- Study Buddy -->
+      <div class="case-card fade-in">
+        <div class="case-header">
+          <div class="case-id">CASE-001</div>
+          <div class="case-badge badge-green" data-i18n="badge.completed"></div>
+        </div>
+        <div class="case-title">Study Buddy</div>
+        <div class="case-date" data-i18n="p1.date"></div>
+        <p class="case-desc" data-i18n="p1.desc"></p>
+        <div class="case-tags"><span class="tag">Java</span><span class="tag">Spring Boot</span><span class="tag">Firebase</span><span class="tag">HTML/CSS/JS</span></div>
+        <a href="StudyBuddy/index.html" class="case-link" data-i18n="link.view"></a>
+      </div>
 
-            <div class="project-item">
-                <a href="https://github.com/raau1/FinanceAdviceChatbot" class="project-link">Finance AI Chatbot</a>
-                <p class="project-date">9 FEBRUARY 2025</p>
-                <div class="tech-buttons">
-                    <span class="tech-btn">Java</span>
-                    <span class="tech-btn">Spring</span>
-                    <span class="tech-btn">GitHub</span>
-                    <span class="tech-btn">HTML</span>
-                    <span class="tech-btn">CSS</span>
-                    <span class="tech-btn">JavaScript</span>
-                    <span class="tech-btn">API</span>
-                </div>
-                <p class="project-description"> Team Hackathon Project for IBM that uses AI API integration to deliver financial advice according to set user inputs</p>
-            </div> 
+      <!-- Finance Chatbot -->
+      <div class="case-card fade-in">
+        <div class="case-header">
+          <div class="case-id">CASE-002</div>
+          <div class="case-badge badge-blue" data-i18n="badge.ibm"></div>
+        </div>
+        <div class="case-title" data-i18n="p2.title"></div>
+        <div class="case-date" data-i18n="p2.date"></div>
+        <p class="case-desc" data-i18n="p2.desc"></p>
+        <div class="case-tags"><span class="tag">Java</span><span class="tag">Spring</span><span class="tag">HTML/CSS/JS</span><span class="tag">AI API</span></div>
+        <a href="https://github.com/raau1/FinanceAdviceChatbot" target="_blank" class="case-link" data-i18n="link.github"></a>
+      </div>
 
-            <div class="project-item">
-                <a href="CampusLocator/index.html" class="project-link">LeicesterCS Campus Locator app</a>
-                <!-- <a href="https://github.com/raau1/LeicesterCS-Hackathon-Winner" class="project-link">LeicesterCS Campus Locator app</a> -->
+      <!-- Campus Locator -->
+      <div class="case-card highlight fade-in">
+        <div class="case-header">
+          <div class="case-id">CASE-003</div>
+          <div class="case-badge badge-amber" data-i18n="badge.winner"></div>
+        </div>
+        <div class="case-title" data-i18n="p3.title"></div>
+        <div class="case-date" data-i18n="p3.date"></div>
+        <p class="case-desc" data-i18n="p3.desc"></p>
+        <div class="case-tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span><span class="tag">GitHub</span></div>
+        <a href="CampusLocator/index.html" class="case-link" data-i18n="link.view"></a>
+      </div>
 
-                <p class="project-date">3 NOVEMBER 2024</p>
-                <div class="tech-buttons">
-                    <span class="tech-btn">HTML</span>
-                    <span class="tech-btn">CSS</span>
-                    <span class="tech-btn">JavaScript</span>
-                    <span class="tech-btn">GitHub</span>
-                </div>
-                <p class="project-description"> Winner Hackathon Project Prototype for Capital One with LeicesterCS</p>
-            </div>
+      <!-- Forex Bot -->
+      <div class="case-card fade-in">
+        <div class="case-header">
+          <div class="case-id">CASE-004</div>
+          <div class="case-badge badge-green" data-i18n="badge.completed"></div>
+        </div>
+        <div class="case-title" data-i18n="p4.title"></div>
+        <div class="case-date" data-i18n="p4.date"></div>
+        <p class="case-desc" data-i18n="p4.desc"></p>
+        <div class="case-tags"><span class="tag">Python</span><span class="tag">Pandas</span><span class="tag">API</span><span class="tag">GitHub</span></div>
+        <a href="https://github.com/raau1/Double-EMA-Trading-Bot" target="_blank" class="case-link" data-i18n="link.github"></a>
+      </div>
 
-            <div class="project-item">
-                <a href="TechCon2023/index.html" class="project-link">TechCon 2023 Website</a>
-                <p class="project-date">30 NOVEMBER 2023</p>
-                <div class="tech-buttons">
-                    <span class="tech-btn">HTML</span>
-                    <span class="tech-btn">CSS</span>
-                    <span class="tech-btn">JavaScript</span>
-                </div>
-                <p class="project-description">TechCon 2023 was a groundbreaking (fictional) event showcasing emerging technologies like AI and quantum computing, providing a platform for industry leaders and enthusiasts to register.</p>
-            </div>
+      <!-- Room Booking -->
+      <div class="case-card fade-in">
+        <div class="case-header">
+          <div class="case-id">CASE-005</div>
+          <div class="case-badge badge-green" data-i18n="badge.completed"></div>
+        </div>
+        <div class="case-title" data-i18n="p5.title"></div>
+        <div class="case-date" data-i18n="p5.date"></div>
+        <p class="case-desc" data-i18n="p5.desc"></p>
+        <div class="case-tags"><span class="tag">UML</span><span class="tag">GitLab</span><span class="tag" data-i18n="p5.tag"></span></div>
+        <a href="University_Room_Booking_System.pdf" target="_blank" class="case-link" data-i18n="link.report"></a>
+      </div>
 
-            <div class="project-item">
-                <a href="https://raau1.github.io/raulblanco/University_Room_Booking_System.pdf" target="_blank" class="project-link">University Room Booking Project</a>
-                <p class="project-date">23 FEBRUARY 2024</p>
-                <div class="tech-buttons">
-                    <span class="tech-btn">UML</span>
-                    <span class="tech-btn">GitLab</span>
-                    <span class="tech-btn">Word</span>
-                </div>
-                <p class="project-description">A group project focused on improving the efficiency and management of university room bookings.</p>
-                <p class="project-description">I led the data collection phase, gathering key requirements through surveys and interviews, which I used to develop both the functional and non-functional requirements.</p>
-                <p class="project-description">Additionally, I oversaw the overall project flow, ensuring the final system was both efficient and user-centered.</p>
-            </div>
+    </div>
+  </section>
 
-    </main>
+  <!-- TOOLKIT -->
+  <section id="toolkit">
+    <div class="section-header fade-in">
+      <div class="section-label">03</div>
+      <h2 class="section-title" data-i18n="toolkit.title"></h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="toolkit-grid">
+      <div class="toolkit-group fade-in">
+        <div class="toolkit-group-title" data-i18n="toolkit.security"></div>
+        <div class="skill-item"><span class="skill-name" data-i18n="skill.ir"></span><div class="skill-bar"><div class="skill-bar-fill" data-w="80"></div></div></div>
+        <div class="skill-item"><span class="skill-name" data-i18n="skill.netsec"></span><div class="skill-bar"><div class="skill-bar-fill" data-w="75"></div></div></div>
+        <div class="skill-item"><span class="skill-name">Linux</span><div class="skill-bar"><div class="skill-bar-fill" data-w="78"></div></div></div>
+        <div class="skill-item"><span class="skill-name" data-i18n="skill.threat"></span><div class="skill-bar"><div class="skill-bar-fill" data-w="70"></div></div></div>
+      </div>
+      <div class="toolkit-group fade-in">
+        <div class="toolkit-group-title" data-i18n="toolkit.languages"></div>
+        <div class="skill-item"><span class="skill-name">Python</span><div class="skill-bar"><div class="skill-bar-fill blue" data-w="85"></div></div></div>
+        <div class="skill-item"><span class="skill-name">Java</span><div class="skill-bar"><div class="skill-bar-fill blue" data-w="82"></div></div></div>
+        <div class="skill-item"><span class="skill-name">HTML / CSS / JS</span><div class="skill-bar"><div class="skill-bar-fill blue" data-w="88"></div></div></div>
+        <div class="skill-item"><span class="skill-name">SQL</span><div class="skill-bar"><div class="skill-bar-fill blue" data-w="70"></div></div></div>
+      </div>
+      <div class="toolkit-group fade-in">
+        <div class="toolkit-group-title" data-i18n="toolkit.frameworks"></div>
+        <div class="skill-item"><span class="skill-name">Spring Boot</span><div class="skill-bar"><div class="skill-bar-fill amber" data-w="78"></div></div></div>
+        <div class="skill-item"><span class="skill-name">Firebase</span><div class="skill-bar"><div class="skill-bar-fill amber" data-w="65"></div></div></div>
+        <div class="skill-item"><span class="skill-name">Git / GitHub</span><div class="skill-bar"><div class="skill-bar-fill amber" data-w="90"></div></div></div>
+        <div class="skill-item"><span class="skill-name">Pandas</span><div class="skill-bar"><div class="skill-bar-fill amber" data-w="70"></div></div></div>
+      </div>
+      <div class="toolkit-group fade-in">
+        <div class="toolkit-group-title" data-i18n="toolkit.concepts"></div>
+        <div class="skill-item"><span class="skill-name" data-i18n="skill.ai"></span><div class="skill-bar"><div class="skill-bar-fill" data-w="72"></div></div></div>
+        <div class="skill-item"><span class="skill-name" data-i18n="skill.data"></span><div class="skill-bar"><div class="skill-bar-fill" data-w="75"></div></div></div>
+        <div class="skill-item"><span class="skill-name" data-i18n="skill.api"></span><div class="skill-bar"><div class="skill-bar-fill" data-w="85"></div></div></div>
+        <div class="skill-item"><span class="skill-name" data-i18n="skill.req"></span><div class="skill-bar"><div class="skill-bar-fill" data-w="80"></div></div></div>
+      </div>
+      <div class="toolkit-group fade-in">
+        <div class="toolkit-group-title" data-i18n="toolkit.softlang"></div>
+        <div class="skill-item"><span class="skill-name" data-i18n="skill.spanish"></span><div class="skill-bar"><div class="skill-bar-fill" data-w="100"></div></div></div>
+        <div class="skill-item"><span class="skill-name" data-i18n="skill.english"></span><div class="skill-bar"><div class="skill-bar-fill" data-w="100"></div></div></div>
+        <div style="height:1px; background:var(--border); margin: 0.6rem 0;"></div>
+        <div class="skill-item"><span class="skill-name" data-i18n="skill.leadership"></span><div class="skill-bar"><div class="skill-bar-fill blue" data-w="88"></div></div></div>
+        <div class="skill-item"><span class="skill-name" data-i18n="skill.communication"></span><div class="skill-bar"><div class="skill-bar-fill blue" data-w="90"></div></div></div>
+        <div class="skill-item"><span class="skill-name" data-i18n="skill.teamwork"></span><div class="skill-bar"><div class="skill-bar-fill blue" data-w="92"></div></div></div>
+      </div>
+    </div>
+  </section>
 
-    <!-- Footer -->
-    <footer>
-        <p>© 2025 Raul Blanco Vazquez</p>
-    </footer>
+  <!-- CERTS -->
+  <section id="certs">
+    <div class="section-header fade-in">
+      <div class="section-label">04</div>
+      <h2 class="section-title" data-i18n="certs.title"></h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="cert-card fade-in">
+      <div class="cert-img-wrap">
+        <img src="Images/cert.png" alt="Google Cybersecurity Certificate">
+      </div>
+      <div class="cert-info">
+        <div class="cert-issuer" data-i18n="certs.issuer"></div>
+        <div class="cert-name" data-i18n="certs.name"></div>
+        <p class="cert-desc" data-i18n="certs.desc"></p>
+        <div style="display:flex;gap:0.6rem;flex-wrap:wrap;margin-top:0.4rem;">
+          <span class="tag" data-i18n="skill.ir"></span>
+          <span class="tag" data-i18n="skill.netsec"></span>
+          <span class="tag">Python</span><span class="tag">Linux</span><span class="tag">SQL</span>
+        </div>
+        <a href="https://www.coursera.org/account/accomplishments/specialization/HYZY6KSOA8ET" target="_blank" class="btn btn-secondary" style="margin-top:0.8rem;align-self:flex-start;" data-i18n="certs.verify"></a>
+      </div>
+    </div>
+  </section>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const paragraphs = [
-                document.getElementById('about-paragraph-1'),
-                document.getElementById('about-paragraph-2'),
-                document.getElementById('about-paragraph-3')
-            ];
-    
-            // Function to start typing for a specific paragraph
-            function startTyping(paragraph, text, delay, isLast) {
-                paragraph.textContent = '';  // Empty paragraph content before typing
-                setTimeout(() => {
-                    let charIndex = 0;
-                    const interval = setInterval(() => {
-                        paragraph.textContent += text[charIndex];
-                        charIndex++;
-                        if (charIndex === text.length) {
-                            clearInterval(interval);
-                            if (isLast) {
-                                // Add blinking cursor inside the paragraph, without a new line
-                                const cursor = document.createElement('span');
-                                cursor.classList.add('blinking-cursor');
-                                paragraph.appendChild(cursor);
-                            }
-                        }
-                    }, 30); // Adjust typing speed here
-                }, delay);
-            }
-    
-            // Sequential typing with delay for each paragraph
-            let delay = 0;
-            paragraphs.forEach((paragraph, index) => {
-                const text = paragraph.getAttribute('data-text');  // Get the paragraph text from data attribute
-                const isLast = index === paragraphs.length - 1;
-                startTyping(paragraph, text, delay, isLast);
-                delay += (text.length * 30) + 1000; // Delay between paragraphs based on text length and extra 1s wait
-            });
-        });
-    </script>
-    
-    
-    <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        // Check if the booting sequence has already been shown in the current session
-        if (!sessionStorage.getItem('bootCompleted')) {
-            const bootScreen = document.getElementById('boot-screen');
-            const loadingBar = document.getElementById('loading-bar-progress');
-            const mainContent = document.getElementById('main-content');
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="section-header fade-in">
+      <div class="section-label">05</div>
+      <h2 class="section-title" data-i18n="contact.title"></h2>
+      <div class="section-line"></div>
+    </div>
+    <p class="fade-in" style="font-family:'Space Grotesk',sans-serif;font-size:0.95rem;color:var(--text);opacity:0.8;margin-bottom:2rem;max-width:500px;" data-i18n="contact.intro"></p>
+    <div class="contact-grid fade-in">
+      <a href="mailto:rbv3@student.le.ac.uk" class="contact-item">
+        <span class="contact-key" data-i18n="contact.email_label"></span>
+        <span class="contact-val">rbv3@student.le.ac.uk</span>
+      </a>
+      <a href="https://linkedin.com/in/raulblancovazquez" target="_blank" class="contact-item">
+        <span class="contact-key">LINKEDIN</span>
+        <span class="contact-val">Raul Blanco Vazquez</span>
+      </a>
+      <a href="https://github.com/raau1" target="_blank" class="contact-item">
+        <span class="contact-key">GITHUB</span>
+        <span class="contact-val">github.com/raau1</span>
+      </a>
+      <div class="contact-item" onclick="downloadCV()">
+        <span class="contact-key" data-i18n="contact.cv_label"></span>
+        <span class="contact-val" id="contact-cv-val"></span>
+      </div>
+    </div>
+  </section>
 
-            let width = 1;
-            const totalTime = 3000; // Total time for the booting sequence (3 seconds)
-            const intervalTime = 30; // Time for each interval (30ms)
-            const increment = (100 / (totalTime / intervalTime)); // Calculate percentage increment
+  <footer>
+    <span>© 2025 RAUL BLANCO VAZQUEZ</span>
+    <span data-i18n="footer.right"></span>
+  </footer>
 
-            const loading = setInterval(() => {
-                if (width >= 100) {
-                    clearInterval(loading);
-                    // Once loading is complete, hide boot screen and show main content
-                    bootScreen.style.display = 'none';
-                    mainContent.style.display = 'block';
-                    // Mark the boot sequence as completed in sessionStorage
-                    sessionStorage.setItem('bootCompleted', 'true');
-                } else {
-                    width += increment;
-                    loadingBar.style.width = width + '%'; // Increase width of loading bar
-                }
-            }, intervalTime); // Speed of the loading sequence
-        } else {
-            // If boot sequence has already been shown, just show the main content
-            document.getElementById('boot-screen').style.display = 'none';
-            document.getElementById('main-content').style.display = 'block';
-        }
-    });
-    </script>
+</main>
 
-    <script>
-        // Scroll-triggered menu button
-        const menuButton = document.getElementById("menu-button");
-        const navOverlay = document.getElementById("nav-overlay");
-    
-        // Variable to track the last scroll position
-        let lastScrollY = window.scrollY;
-    
-        // Show/hide menu button based on scroll
-        window.addEventListener("scroll", function () {
-            // Show the menu button after scrolling down 200px
-            if (window.scrollY > 200) {
-                menuButton.classList.add("visible");
-            } else {
-                menuButton.classList.remove("visible");
-            }
-    
-            // Close the overlay only if fully scrolled back up (e.g., < 100px from the top)
-            if (window.scrollY < 100 && navOverlay.classList.contains("open")) {
-                navOverlay.classList.remove("open");
-                menuButton.classList.remove("hidden"); // Show the button when the menu is closed
-            }
-    
-            // Update lastScrollY
-            lastScrollY = window.scrollY;
-        });
-    
-        // Toggle the full-screen navigation and hide the hamburger icon
-        menuButton.addEventListener("click", function () {
-            navOverlay.classList.toggle("open");
-            menuButton.classList.toggle("hidden"); // Hide the button when menu is open
-        });
-    
-        // Close the menu when clicking on the overlay and show the hamburger button
-        navOverlay.addEventListener("click", function () {
-            navOverlay.classList.remove("open");
-            menuButton.classList.remove("hidden"); // Show the button when menu is closed
-        });
-    </script>
+<script>
+// ── TRANSLATIONS ──
+const T = {
+  en: {
+    "nav.profile":   "PROFILE",
+    "nav.projects":  "PROJECTS",
+    "nav.toolkit":   "TOOLKIT",
+    "nav.certs":     "CERTS",
+    "nav.contact":   "CONTACT",
+    "nav.online":    "ONLINE",
+    "hero.eyebrow":  "> ANALYST PROFILE &nbsp;<span style='color:var(--green)'>//</span>&nbsp; LEICESTER, UK",
+    "hero.bio": "Computer Science student with a focus on Blue Team cybersecurity: incident response, network security, and building systems that matter. I bridge technical depth with hands-on project experience across security, AI, and full-stack development.",
+    "hero.cv":       "↓ DOWNLOAD CV",
+    "hero.contact_btn": "→ CONTACT",
+    "meta.location_label": "LOCATION",
+    "meta.location_val":   "Leicester, UK",
+    "meta.status_label":   "STATUS",
+    "meta.status_val":     "Open to Roles",
+    "meta.focus_label":    "FOCUS",
+    "meta.focus_val":      "Blue Team / SOC",
+    "meta.edu_label":      "EDUCATION",
+    "meta.edu_val":        "BSc Computer Science",
+    "about.title":         "ANALYST PROFILE",
+    "about.briefing_label":"BRIEFING",
+    "about.p1": "I'm Raul Blanco Vazquez, a Computer Science student at the University of Leicester with a passion for Blue Team cybersecurity. My work spans threat analysis, network security, and secure system design.",
+    "about.p2": "I've competed in multiple hackathons, winning one for Capital One and placing in others for IBM and LeicesterCS. I enjoy working at the intersection of security and engineering: writing clean code while thinking like an adversary.",
+    "about.p3": "My goal: join a SOC or Blue Team environment where I can grow into a skilled incident responder and threat hunter.",
+    "stats.projects":  "PROJECTS COMPLETED",
+    "stats.hackathons":"HACKATHONS ENTERED",
+    "stats.won":       "HACKATHON WON",
+    "stats.cert":      "INDUSTRY CERT",
+    "projects.title":  "PROJECTS",
+    "fyp.subtitle":    "FINAL YEAR PROJECT",
+    "fyp.title":       "Deepfake & Face Spoofing Detection System",
+    "fyp.date":        "2025 — 2026 · University of Leicester",
+    "fyp.desc":        "A four-checkpoint deepfake detection pipeline covering frame-level classification (XceptionNet baseline + EfficientNet-B4 ensemble), sequence-level classification (LSTM over a frozen XceptionNet backbone), and a compression-aware fine-tune for in-the-wild robustness. Served end-to-end through a CUDA-enabled FastAPI container with per-frame Grad-CAM explainability, a calibrated inconclusive band, and opt-in test-time augmentation.",
+    "fyp.stat_lift":   "CROSS-DATASET AUC LIFT",
+    "fyp.stat_models": "MODEL CHECKPOINTS",
+    "badge.completed": "COMPLETED",
+    "badge.ibm":       "IBM HACKATHON",
+    "badge.winner":    "WINNER",
+    "link.view":       "VIEW PROJECT →",
+    "link.github":     "VIEW ON GITHUB →",
+    "link.report":     "VIEW REPORT →",
+    "p1.date": "22 MARCH 2025",
+    "p1.desc": "Full-stack web app for students to find and connect with study partners by year, module, and preferences. Features real-time chat with integrated code sharing. Built during a team hackathon.",
+    "p2.title": "Finance AI Chatbot",
+    "p2.date":  "9 FEBRUARY 2025",
+    "p2.desc":  "AI-powered financial advice chatbot built for IBM. Integrates an AI API to deliver context-aware financial guidance based on user inputs. Full-stack, delivered under hackathon conditions.",
+    "p3.title": "LeicesterCS Campus Locator",
+    "p3.date":  "3 NOVEMBER 2024",
+    "p3.desc":  "Winning hackathon prototype built for Capital One with LeicesterCS. A campus navigation and locator app built in a single day under competition conditions. Judged best overall project.",
+    "p4.title": "Forex Trading Bot",
+    "p4.date":  "25 OCTOBER 2024",
+    "p4.desc":  "Algorithmic trading bot using the Double EMA strategy. Analyses live market trends and executes informed trading decisions via API integration.",
+    "p5.title": "University Room Booking System",
+    "p5.date":  "23 FEBRUARY 2024",
+    "p5.desc":  "Led requirements engineering for a university room booking system redesign. Conducted surveys and interviews, developed functional and non-functional requirements, oversaw overall project flow and UML design.",
+    "p5.tag":   "Requirements Eng.",
+    "toolkit.title":     "TOOLKIT",
+    "toolkit.security":  "SECURITY",
+    "toolkit.languages": "LANGUAGES",
+    "toolkit.frameworks":"FRAMEWORKS & TOOLS",
+    "toolkit.softlang":  "LANGUAGES & SOFT SKILLS",
+    "skill.spanish": "Spanish",
+    "skill.english": "English",
+    "skill.leadership":   "Team Leadership",
+    "skill.communication":"Communication",
+    "skill.teamwork":     "Teamwork",
+    "skill.ir":     "Incident Response",
+    "skill.netsec": "Network Security",
+    "skill.threat": "Threat Analysis",
+    "skill.ai":     "AI / ML",
+    "skill.data":   "Data Analysis",
+    "skill.api":    "API Integration",
+    "skill.req":    "Requirements",
+    "certs.title":  "CERTIFICATIONS",
+    "certs.issuer": "ISSUED BY // GOOGLE VIA COURSERA",
+    "certs.name":   "Google Cybersecurity\nProfessional Certificate",
+    "certs.desc":   "8-course professional certificate covering foundations of cybersecurity, network security, Linux, SQL, threat analysis, incident response, and Python automation for security tasks.",
+    "certs.verify": "→ VERIFY CREDENTIAL",
+    "contact.title":      "ESTABLISH CONNECTION",
+    "contact.intro":      "Available for Blue Team, SOC, and security-adjacent roles. Open to internships, placements, and graduate positions.",
+    "contact.email_label":"EMAIL",
+    "contact.cv_label":   "RESUME",
+    "contact.cv_val":     "Download CV (EN) ↓",
+    "footer.right":       "LEICESTER, UK // BSC COMPUTER SCIENCE",
+    "roles": ["BLUE TEAM ENTHUSIAST", "INCIDENT RESPONDER", "CS STUDENT // LEICESTER", "SOC ANALYST (ASPIRING)"]
+  },
+  es: {
+    "nav.profile":   "PERFIL",
+    "nav.projects":  "PROYECTOS",
+    "nav.toolkit":   "HERRAMIENTAS",
+    "nav.certs":     "CERTIFICADOS",
+    "nav.contact":   "CONTACTO",
+    "nav.online":    "EN LÍNEA",
+    "hero.eyebrow":  "> PERFIL DE ANALISTA &nbsp;<span style='color:var(--green)'>//</span>&nbsp; LEICESTER, UK",
+    "hero.bio": "Estudiante de Ingeniería Informática con enfoque en ciberseguridad defensiva: respuesta a incidentes, seguridad de redes y desarrollo de sistemas robustos. Combino profundidad técnica con experiencia práctica en seguridad, IA y desarrollo full-stack.",
+    "hero.cv":       "↓ DESCARGAR CV",
+    "hero.contact_btn": "→ CONTACTO",
+    "meta.location_label": "UBICACIÓN",
+    "meta.location_val":   "Leicester, UK",
+    "meta.status_label":   "ESTADO",
+    "meta.status_val":     "Disponible",
+    "meta.focus_label":    "ENFOQUE",
+    "meta.focus_val":      "Blue Team / SOC",
+    "meta.edu_label":      "EDUCACIÓN",
+    "meta.edu_val":        "Ingeniería Informática",
+    "about.title":         "PERFIL DE ANALISTA",
+    "about.briefing_label":"RESUMEN",
+    "about.p1": "Soy Raul Blanco Vazquez, estudiante de Ingeniería Informática en la Universidad de Leicester con pasión por la ciberseguridad defensiva. Mi trabajo abarca análisis de amenazas, seguridad de redes y diseño de sistemas seguros.",
+    "about.p2": "He participado en varios hackathons, ganando uno para Capital One con LeicesterCS y quedando finalista en otros para IBM. Disfruto trabajando en la intersección entre seguridad e ingeniería de software.",
+    "about.p3": "Mi objetivo: incorporarme a un entorno SOC o Blue Team donde pueda crecer como analista de respuesta a incidentes y cazador de amenazas.",
+    "stats.projects":  "PROYECTOS COMPLETADOS",
+    "stats.hackathons":"HACKATHONS PARTICIPADOS",
+    "stats.won":       "HACKATHON GANADO",
+    "stats.cert":      "CERTIFICACIÓN IND.",
+    "projects.title":  "PROYECTOS",
+    "fyp.subtitle":    "PROYECTO FIN DE GRADO",
+    "fyp.title":       "Sistema de Detección de Deepfakes y Spoofing Facial",
+    "fyp.date":        "2025 — 2026 · Universidad de Leicester",
+    "fyp.desc":        "Pipeline de detección de deepfakes con cuatro puntos de control: clasificación a nivel de fotograma (XceptionNet + EfficientNet-B4 en ensemble), clasificación secuencial (LSTM sobre backbone XceptionNet congelado) y ajuste fino con robustez a compresión. Servido mediante un contenedor FastAPI con CUDA, explicabilidad Grad-CAM por fotograma y aumento de datos en tiempo de inferencia.",
+    "fyp.stat_lift":   "MEJORA AUC ENTRE DATASETS",
+    "fyp.stat_models": "CHECKPOINTS DE MODELOS",
+    "badge.completed": "COMPLETADO",
+    "badge.ibm":       "HACKATHON IBM",
+    "badge.winner":    "GANADOR",
+    "link.view":       "VER PROYECTO →",
+    "link.github":     "VER EN GITHUB →",
+    "link.report":     "VER INFORME →",
+    "p1.date": "22 DE MARZO DE 2025",
+    "p1.desc": "Aplicación web full-stack para que los estudiantes encuentren compañeros de estudio según curso, módulo y preferencias. Incluye chat en tiempo real con compartición de código. Desarrollada en equipo durante un hackathon.",
+    "p2.title": "Chatbot de Asesoría Financiera con IA",
+    "p2.date":  "9 DE FEBRERO DE 2025",
+    "p2.desc":  "Chatbot de asesoría financiera con IA para IBM. Integra una API de IA para ofrecer orientación financiera contextual según las entradas del usuario. Full-stack, entregado bajo condiciones de hackathon.",
+    "p3.title": "LeicesterCS Campus Locator",
+    "p3.date":  "3 DE NOVIEMBRE DE 2024",
+    "p3.desc":  "Prototipo ganador del hackathon de Capital One con LeicesterCS. Aplicación de navegación y localización en el campus construida en un solo día bajo condiciones de competición. Elegida mejor proyecto general.",
+    "p4.title": "Bot de Trading en Forex",
+    "p4.date":  "25 DE OCTUBRE DE 2024",
+    "p4.desc":  "Bot de trading algorítmico con la estrategia de doble EMA. Analiza tendencias de mercado en tiempo real y ejecuta decisiones de trading informadas mediante integración con API.",
+    "p5.title": "Sistema de Reserva de Salas Universitarias",
+    "p5.date":  "23 DE FEBRERO DE 2024",
+    "p5.desc":  "Lideré la ingeniería de requisitos para el rediseño de un sistema de reserva de salas universitarias. Realicé encuestas y entrevistas, desarrollé requisitos funcionales y no funcionales, y supervisé el flujo general del proyecto.",
+    "p5.tag":   "Ingeniería de Requisitos",
+    "toolkit.title":     "HERRAMIENTAS",
+    "toolkit.security":  "SEGURIDAD",
+    "toolkit.languages": "LENGUAJES",
+    "toolkit.frameworks":"FRAMEWORKS Y HERRAMIENTAS",
+    "toolkit.softlang":  "IDIOMAS Y HABILIDADES",
+    "skill.spanish": "Español",
+    "skill.english": "Inglés",
+    "skill.leadership":   "Liderazgo de Equipos",
+    "skill.communication":"Comunicación",
+    "skill.teamwork":     "Trabajo en Equipo",
+    "skill.ir":     "Respuesta a Incidentes",
+    "skill.netsec": "Seguridad de Redes",
+    "skill.threat": "Análisis de Amenazas",
+    "skill.ai":     "IA / ML",
+    "skill.data":   "Análisis de Datos",
+    "skill.api":    "Integración de APIs",
+    "skill.req":    "Ing. de Requisitos",
+    "certs.title":  "CERTIFICACIONES",
+    "certs.issuer": "EMITIDO POR // GOOGLE VIA COURSERA",
+    "certs.name":   "Certificado Profesional de\nCiberseguridad de Google",
+    "certs.desc":   "Certificado profesional de 8 cursos que cubre fundamentos de ciberseguridad, seguridad de redes, Linux, SQL, análisis de amenazas, respuesta a incidentes y automatización con Python.",
+    "certs.verify": "→ VERIFICAR CREDENCIAL",
+    "contact.title":      "ESTABLECER CONEXIÓN",
+    "contact.intro":      "Disponible para puestos de Blue Team, SOC y roles afines a la seguridad. Abierto a prácticas, colocaciones y posiciones de recién graduado.",
+    "contact.email_label":"CORREO",
+    "contact.cv_label":   "CURRÍCULUM",
+    "contact.cv_val":     "Descargar CV (ES) ↓",
+    "footer.right": "LEICESTER, UK // INGENIERÍA INFORMÁTICA",
+    "roles": ["ENTUSIASTA DE BLUE TEAM", "RESPUESTA A INCIDENTES", "ESTUDIANTE CS // LEICESTER", "ANALISTA SOC (ASPIRANTE)"]
+  }
+};
+
+let currentLang = 'en';
+let typingRoles = T.en.roles;
+let typingRI = 0, typingCI = 0, typingDeleting = false;
+let typingTimer = null;
+
+function setLang(lang) {
+  currentLang = lang;
+  const t = T[lang];
+
+  // Update lang buttons
+  document.querySelectorAll('.lang-btn').forEach(b => {
+    b.classList.toggle('active', b.textContent.toLowerCase() === lang);
+  });
+
+  // Update html lang attr
+  document.documentElement.lang = lang === 'es' ? 'es' : 'en';
+
+  // Update data-i18n elements
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.dataset.i18n;
+    if (t[key] !== undefined) el.textContent = t[key];
+  });
+
+  // Update data-i18n-html elements
+  document.querySelectorAll('[data-i18n-html]').forEach(el => {
+    const key = el.dataset.i18nHtml;
+    if (t[key] !== undefined) el.innerHTML = t[key];
+  });
+
+  // CV file
+  const cvFile = lang === 'es'
+    ? 'Raul_BlancoVazquez_CV_ES.pdf'
+    : 'Raul_BlancoVazquez_CV_EN.pdf';
+  const cvBtn = document.getElementById('cv-download-btn');
+  if (cvBtn) { cvBtn.href = cvFile; cvBtn.setAttribute('download', cvFile); }
+
+  // Contact CV label
+  const contactCvVal = document.getElementById('contact-cv-val');
+  if (contactCvVal) contactCvVal.textContent = t['contact.cv_val'];
+
+  // Update typing roles
+  typingRoles = t.roles;
+  typingRI = 0; typingCI = 0; typingDeleting = false;
+  if (typingTimer) clearTimeout(typingTimer);
+  const el = document.getElementById('typed-role');
+  if (el) { el.textContent = ''; tick(); }
+
+  // cert name line breaks
+  document.querySelectorAll('[data-i18n="certs.name"]').forEach(el => {
+    el.innerHTML = t['certs.name'].replace('\n', '<br>');
+  });
+}
+
+function downloadCV() {
+  const file = currentLang === 'es'
+    ? 'Raul_BlancoVazquez_CV_ES.pdf'
+    : 'Raul_BlancoVazquez_CV_EN.pdf';
+  const a = document.createElement('a');
+  a.href = file; a.download = file; a.click();
+}
+
+// ── TYPING ──
+function tick() {
+  const el = document.getElementById('typed-role');
+  if (!el) return;
+  const role = typingRoles[typingRI];
+  if (!typingDeleting) {
+    el.textContent = role.slice(0, typingCI + 1);
+    typingCI++;
+    if (typingCI === role.length) { typingDeleting = true; typingTimer = setTimeout(tick, 2000); return; }
+  } else {
+    el.textContent = role.slice(0, typingCI - 1);
+    typingCI--;
+    if (typingCI === 0) { typingDeleting = false; typingRI = (typingRI + 1) % typingRoles.length; }
+  }
+  typingTimer = setTimeout(tick, typingDeleting ? 40 : 70);
+}
+
+// ── BOOT ──
+(function() {
+  const booted = sessionStorage.getItem('booted');
+  const boot = document.getElementById('boot');
+  const main = document.getElementById('main');
+  const fill = document.getElementById('boot-bar-fill');
+  const lines = document.querySelectorAll('.boot-line');
+
+  function showMain() {
+    boot.style.transition = 'opacity 0.5s'; boot.style.opacity = '0';
+    setTimeout(() => {
+      boot.style.display = 'none';
+      main.style.display = 'block';
+      sessionStorage.setItem('booted', '1');
+      init();
+    }, 500);
+  }
+
+  function init() {
+    setLang('en');
+    initFadeIn();
+    initSkillBars();
+  }
+
+  if (booted) {
+    boot.style.display = 'none';
+    main.style.display = 'block';
+    setTimeout(init, 100);
+    return;
+  }
+
+  let delay = 200;
+  lines.forEach(line => {
+    setTimeout(() => { line.style.opacity = '1'; }, delay);
+    delay += 250 + Math.random() * 150;
+  });
+
+  let w = 0;
+  setTimeout(() => {
+    const iv = setInterval(() => {
+      w += 1.2; fill.style.width = Math.min(w, 100) + '%';
+      if (w >= 100) { clearInterval(iv); setTimeout(showMain, 300); }
+    }, 20);
+  }, delay - 200);
+})();
+
+function initFadeIn() {
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+}
+
+function initSkillBars() {
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.style.width = e.target.dataset.w + '%'; obs.unobserve(e.target); } });
+  }, { threshold: 0.3 });
+  document.querySelectorAll('.skill-bar-fill').forEach(b => obs.observe(b));
+}
+</script>
 </body>
 </html>
